@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>SNK | Μύκονος GR - Εμπιστευτικός Επενδυτικός Φάκελος</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+:root{--gold:#B88918;--gold2:#D4AF37;--ink:#111827;--muted:#5E6877;--cream:#F8F4EA}
+*{box-sizing:border-box}body{margin:0;font-family:Montserrat,Arial,sans-serif;background:var(--cream);color:var(--ink);overflow:hidden}
+.page{display:none;position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}.page.active{display:flex;animation:fade .38s ease}
+@keyframes fade{from{opacity:.7;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.06) contrast(1.08) brightness(.98)}
+.photo{filter:saturate(1.05) contrast(1.06) brightness(.99)}
+.cover .bg{filter:saturate(1.24) contrast(1.18) brightness(1.01)}
+.logo{position:absolute;top:34px;left:48px;z-index:7;display:flex;align-items:center;gap:16px}.logo img{max-width:180px;max-height:82px;object-fit:contain}.logo-text{font-family:Georgia,serif;font-size:42px;color:var(--gold);letter-spacing:.05em}
+.brand-small{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);line-height:1.7;border-left:1px solid var(--gold);padding-left:16px}
+.page-no{position:absolute;right:34px;bottom:26px;color:var(--gold);font-size:12px;letter-spacing:.18em;z-index:8;font-weight:700}.snk-mini{position:absolute;left:34px;bottom:26px;color:var(--gold);font-family:Georgia,serif;font-size:22px;z-index:8}
+.kicker{color:var(--gold);letter-spacing:.28em;text-transform:uppercase;font-size:12px;font-weight:800;margin-bottom:20px}.rule{width:120px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2),transparent);margin:26px 0}
+h1{font-family:Georgia,'Times New Roman',serif;font-weight:400;color:var(--ink);letter-spacing:-.035em;margin:0}p{color:var(--muted);font-size:18px;line-height:1.75;margin:0}
+.cover{align-items:center}.cover:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.86) 0%,rgba(255,255,255,.58) 38%,rgba(255,255,255,.14) 67%,rgba(255,255,255,.02) 100%);z-index:1}.cover .copy{position:relative;z-index:4;margin-left:58px;width:min(880px,62vw);padding-top:60px}.cover h1{font-size:clamp(56px,7vw,112px);line-height:.94}.cover .sub{font-size:15px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);line-height:1.8}
+.statement,.quote{align-items:center;justify-content:center;text-align:center}.statement:before,.quote:before{content:"";position:absolute;inset:0;background:rgba(255,255,255,.86);z-index:1}.statement .box,.quote .box{position:relative;z-index:3;max-width:1040px;padding:70px}.statement h1,.quote h1{font-size:clamp(46px,6vw,88px);line-height:1.03;white-space:pre-line}.statement p,.quote p{max-width:820px;margin:28px auto 0}
+.split{display:none;grid-template-columns:42% 58%}.split.active{display:grid}.panel{padding:120px 70px 80px;background:linear-gradient(180deg,#fffdf8,#f8f4ea)}.panel h1{font-size:56px;line-height:1.05}.panel p{white-space:pre-line}.photo{width:100%;height:100%;object-fit:cover}
+.cards,.featuregrid,.specs{display:none;align-items:center;justify-content:center;padding:100px 70px 86px;background:#fff}.cards.active,.featuregrid.active,.specs.active{display:flex}.wrap{width:100%;max-width:1220px}.wrap h1{font-size:58px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:38px}.card{border:1px solid rgba(184,137,24,.25);padding:28px;min-height:140px;background:linear-gradient(180deg,#fff,#FFFCF5)}.card h3{color:var(--gold);text-transform:uppercase;letter-spacing:.14em;font-size:12px;margin:0 0 12px}.card p{font-size:17px;line-height:1.55;color:var(--ink)}.note{margin-top:28px;color:var(--muted);font-size:15px;line-height:1.7}
+.fin-table{display:grid;grid-template-columns:1.1fr repeat(3,1fr);border:1px solid rgba(184,137,24,.25);margin-top:34px;background:#fff}.fin-table div{padding:16px 18px;border-right:1px solid rgba(184,137,24,.16);border-bottom:1px solid rgba(184,137,24,.16);font-size:15px}.fin-table div:nth-child(4n){border-right:0}.fin-head{color:var(--gold);text-transform:uppercase;letter-spacing:.12em;font-weight:800;font-size:12px!important}.fin-label{font-weight:700;color:var(--ink)}
+.spec-table{display:grid;grid-template-columns:repeat(2,1fr);gap:0 34px;margin-top:32px}.spec-row{display:flex;justify-content:space-between;border-bottom:1px solid rgba(184,137,24,.18);padding:12px 0;gap:18px}.spec-row span:first-child{color:var(--gold);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}.spec-row span:last-child{text-align:right;color:var(--ink);font-weight:600}
+.contact{align-items:center;justify-content:center;text-align:center;background:linear-gradient(180deg,#fffdf8,#f8f4ea)}.contact .box{max-width:820px;padding:60px}.contact h1{font-size:66px}.contact p{white-space:pre-line;font-size:20px}
+.nav{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:99;display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.82);border:1px solid rgba(184,137,24,.36);border-radius:999px;padding:10px 14px;backdrop-filter:blur(10px);box-shadow:0 18px 48px rgba(0,0,0,.12)}
+.nav button{width:52px;height:52px;border-radius:50%;border:0;background:var(--gold2);color:#050505;font-size:28px;font-weight:800;cursor:pointer}.nav button:disabled{opacity:.35}.counter{color:var(--gold);letter-spacing:.16em;font-size:12px;min-width:78px;text-align:center;font-weight:800}.print{width:auto!important;border-radius:999px!important;background:transparent!important;color:var(--gold)!important;border:1px solid rgba(184,137,24,.55)!important;font-size:11px!important;letter-spacing:.12em!important;padding:0 18px!important}
+
+.gallery{display:none;align-items:center;justify-content:center;padding:96px 56px 86px;background:linear-gradient(180deg,#fffdf8,#f8f4ea)}.gallery.active{display:flex}.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}.gallery-grid img{width:100%;height:190px;object-fit:cover;cursor:pointer;filter:saturate(1.06) contrast(1.06);box-shadow:0 12px 30px rgba(0,0,0,.10)}.lightbox{position:fixed;inset:0;background:rgba(10,10,10,.9);z-index:200;display:none;align-items:center;justify-content:center}.lightbox img{max-width:92vw;max-height:88vh;object-fit:contain}.lightbox.active{display:flex}.lightbox:after{content:'×';position:absolute;top:26px;right:42px;color:#fff;font-size:46px;font-weight:300;cursor:pointer}
+@media(max-width:800px){.logo{left:22px;top:20px}.brand-small{display:none}.cover .copy{margin-left:24px;width:88vw}.panel{padding:100px 28px 90px}.split.active{display:flex;flex-direction:column}.split .photo{height:42vh}.grid,.spec-table,.gallery-grid{grid-template-columns:1fr}.gallery-grid img{height:220px}.wrap h1,.panel h1{font-size:40px}.nav{bottom:12px}.print{display:none!important}}
+@media print{body{overflow:visible}.nav{display:none}.page{display:flex!important;page-break-after:always;height:100vh}.split{display:grid!important}.cards,.featuregrid,.specs,.statement,.quote,.contact,.gallery{display:flex!important}.page.active{animation:none}}
+
+/* SNK V8 flow revision */
+.cover .bg{filter:saturate(1.34) contrast(1.24) brightness(1.03)!important;}
+.nav button{background:var(--gold2)!important;color:#050505!important;}
+
+/* SNK Greek Master v2 adjustments */
+.page .wrap p{line-height:1.65;}
+.page .card p{line-height:1.45;}
+.page .card h3{line-height:1.25;}
+.spec-table .spec-row span:first-child{letter-spacing:.12em;}
+.final-access-sub{max-width:620px;margin-left:auto;margin-right:auto;}
+</style>
+<style>
+/* v10 final nav cleanup */
+.nav{gap:18px!important;}
+.counter{min-width:88px!important;}
+</style><style>
+/* Page 8 aviation access photo replacement */
+@media(max-width:800px){.aviation-access-panel{padding:36px 28px 90px!important}.aviation-access-panel .grid{grid-template-columns:1fr!important}.aviation-access-panel h1{font-size:40px!important}}
+</style><style>
+/* v10C locked corrections before contact form */
+.page4-locked-photo{object-fit:cover!important;object-position:center center!important;}
+.heli-locked-photo{object-fit:contain!important;object-position:center center!important;background:linear-gradient(180deg,#fffdf8,#f8f4ea)!important;padding:34px!important;}
+@media(max-width:800px){.heli-locked-photo{padding:18px!important;}}
+</style><style>
+/* v10D final page 1-26 fixes */
+.rule{width:150px!important;height:2px!important;}
+.heli-locked-photo{object-fit:contain!important;background:#F8F4EA!important;padding:28px!important;}
+.page:nth-of-type(8).split{grid-template-columns:42% 58%;}
+.page:nth-of-type(8) .panel{padding-right:64px;}
+.contact-lock-title{text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:2px;text-underline-offset:10px;}
+@media(max-width:800px){.heli-locked-photo{padding:14px!important;}}
+</style><style>
+/* SNK v10E final corrections */
+.page:nth-of-type(8) .heli-locked-photo{
+  object-fit:contain!important;
+  object-position:center center!important;
+  background:#fffdf8!important;
+  padding:36px!important;
+  filter:none!important;
+  image-rendering:auto!important;
+}
+.no-faint-lines .rule{display:none!important;}
+.contact-underlined{
+  text-decoration:underline!important;
+  text-decoration-color:#b88718!important;
+  text-underline-offset:8px!important;
+  text-decoration-thickness:1.5px!important;
+}
+@media(max-width:800px){.page:nth-of-type(8) .heli-locked-photo{padding:18px!important;}}
+</style>
+<style id="snk-mykonos-page27-final-css">
+/* SNK Mykonos Page 27 — Paros contact form adapted, warm grey background */
+.page27-final{
+  background:#EFECE6!important;
+  color:#111827!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:86px 60px 96px!important;
+}
+.page27-final .p27-wrap{width:100%;max-width:1180px;margin:0 auto;position:relative;z-index:4;}
+.page27-final .p27-head{text-align:center;margin:0 auto 34px;max-width:850px;}
+.page27-final .p27-kicker{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.34em;text-transform:uppercase;margin-bottom:16px;}
+.page27-final h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(42px,5vw,70px);line-height:1.02;color:#111827;margin:0;font-weight:400;letter-spacing:-.035em;}
+.page27-final .p27-divider{width:138px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),transparent);margin:24px auto 22px;}
+.page27-final .p27-lead{font-size:16px;line-height:1.75;color:#5E6877;margin:0 auto;max-width:760px;}
+.page27-final .p27-grid{display:grid;grid-template-columns:0.82fr 1.18fr;gap:28px;align-items:stretch;}
+.page27-final .p27-card{background:rgba(255,255,255,.78);border:1px solid rgba(184,137,24,.28);border-radius:24px;box-shadow:0 24px 70px rgba(17,24,39,.10);backdrop-filter:blur(8px);}
+.page27-final .p27-left{padding:28px;display:flex;flex-direction:column;gap:18px;}
+.page27-final .p27-badge{display:inline-flex;align-items:center;gap:10px;padding:9px 13px;border:1px solid rgba(184,137,24,.32);border-radius:999px;color:var(--gold);background:rgba(184,137,24,.07);font-size:10px;text-transform:uppercase;letter-spacing:.20em;font-weight:800;width:max-content;}
+.page27-final .p27-dot{width:7px;height:7px;border-radius:999px;background:var(--gold);display:inline-block;}
+.page27-final .p27-step{padding:0 0 18px;border-bottom:1px solid rgba(184,137,24,.18);}
+.page27-final .p27-step:last-child{border-bottom:0;padding-bottom:0;}
+.page27-final .p27-step-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--gold);margin-bottom:8px;}
+.page27-final .p27-step h3{margin:0 0 8px;color:#111827;font-size:19px;font-weight:700;letter-spacing:-.02em;}
+.page27-final .p27-step p{margin:0;color:#5E6877;font-size:14px;line-height:1.55;}
+.page27-final .p27-contact-mini{padding:24px 0 0;margin-top:2px;border-top:1px solid rgba(184,137,24,.18);}
+.page27-final .p27-contact-mini .mini-title{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:800;color:var(--gold);margin-bottom:10px;}
+.page27-final .p27-contact-mini strong{display:block;color:#111827;font-size:20px;margin-bottom:4px;}
+.page27-final .p27-contact-mini span{display:block;color:#5E6877;font-size:14px;line-height:1.7;}
+.page27-final .p27-form-card{position:relative;overflow:hidden;padding:30px;background:rgba(255,255,255,.86);}
+.page27-final .p27-form-card:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at top left,rgba(212,175,55,.13),transparent 35%),radial-gradient(circle at bottom right,rgba(212,175,55,.09),transparent 42%);}
+.page27-final .p27-form-inner{position:relative;z-index:2;}
+.page27-final .p27-form-kicker{color:var(--gold);font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:800;margin-bottom:10px;}
+.page27-final .p27-form-title{font-size:30px;color:#111827;font-weight:800;letter-spacing:-.035em;margin:0 0 8px;font-family:Montserrat,Arial,sans-serif;}
+.page27-final .p27-form-copy{font-size:14px;line-height:1.65;color:#5E6877;margin:0 0 22px;}
+.page27-final form{display:flex;flex-direction:column;gap:14px;}
+.page27-final .p27-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.page27-final label{display:block;}
+.page27-final .p27-label{display:block;color:var(--gold);font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:7px;}
+.page27-final .p27-input{width:100%;border-radius:13px;padding:13px 14px;background:#fff;border:1px solid rgba(184,137,24,.26);color:#111827;outline:none;font-size:14px;transition:.22s ease;}
+.page27-final .p27-input::placeholder{color:rgba(94,104,119,.52);}
+.page27-final .p27-input:focus{border-color:rgba(184,137,24,.76);box-shadow:0 0 0 3px rgba(184,137,24,.12);}
+.page27-final textarea.p27-input{min-height:110px;resize:vertical;}
+.page27-final .p27-submit{border:0;width:100%;border-radius:14px;padding:16px 20px;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:.16em;background:linear-gradient(135deg,var(--gold),var(--gold2),#A97812);box-shadow:0 16px 40px rgba(184,137,24,.28);cursor:pointer;transition:.22s ease;}
+.page27-final .p27-submit:hover{transform:translateY(-1px);filter:brightness(1.04);box-shadow:0 20px 52px rgba(184,137,24,.34);}
+.page27-final .p27-status{display:none;border:1px solid rgba(184,137,24,.30);border-radius:13px;padding:12px 14px;text-align:center;background:rgba(184,137,24,.08);color:var(--gold);font-size:13px;}
+.page27-final .p27-status.active{display:block;}
+.page27-final .p27-note{text-align:center;margin:24px auto 0;color:#7A8290;font-size:13px;letter-spacing:.03em;}
+@media(max-width:900px){.page27-final{padding:92px 24px 110px!important}.page27-final .p27-grid{grid-template-columns:1fr}.page27-final .p27-fields{grid-template-columns:1fr}.page27-final .p27-left,.page27-final .p27-form-card{padding:24px}.page27-final h1{font-size:40px}}
+@media print{.page27-final{background:#EFECE6!important;page-break-after:always}}
+</style>
+<style id="snk-page28-final-css">
+/* SNK Mykonos Page 28 — Final QR & Back Cover */
+.page.back-cover.final-qr-page{
+  background:radial-gradient(circle at 50% 8%,rgba(212,175,55,.14),transparent 34%),linear-gradient(180deg,#fbfaf7 0%,#efece6 100%)!important;
+  color:#111!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:54px 36px 104px!important;
+  position:relative;
+  overflow:hidden;
+}
+.page.back-cover.final-qr-page:before{content:"";position:absolute;inset:22px;border:1px solid rgba(184,137,24,.34);pointer-events:none;z-index:1;}
+.page.back-cover.final-qr-page:after{content:"";position:absolute;inset:38px;border:1px solid rgba(184,137,24,.12);pointer-events:none;z-index:1;}
+.final-qr-page .snk-mini{color:#b98a18!important;position:absolute;left:42px;bottom:34px;font-family:Georgia,'Times New Roman',serif;font-size:30px;letter-spacing:.05em;z-index:5;}
+.final-qr-page .page-no{position:absolute;right:42px;bottom:36px;color:#b98a18!important;font-size:12px;letter-spacing:.16em;z-index:5;}
+.final-back-inner{width:min(900px,92vw);text-align:center;margin:0 auto;position:relative;z-index:3;}
+.final-logo-word{font-family:Georgia,'Times New Roman',serif;font-size:clamp(54px,8vw,92px);line-height:.92;font-weight:700;letter-spacing:.055em;background:linear-gradient(135deg,#8F6410,#F4D56A 46%,#A67612 82%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:7px;text-shadow:0 20px 60px rgba(184,137,24,.10);}
+.final-logo-sub{font-size:12px;text-transform:uppercase;letter-spacing:.34em;color:#b98a18;margin-bottom:24px;font-weight:700;}
+.final-motto{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:clamp(22px,2.4vw,32px);line-height:1.33;color:#111;margin:10px auto 18px;max-width:760px;}
+.final-divider{width:170px;height:1px;background:#b98a18;margin:23px auto;position:relative;}
+.final-divider:after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;background:#b98a18;transform:translate(-50%,-50%) rotate(45deg);box-shadow:0 0 0 8px #f4f1ea;}
+.final-name{font-family:Georgia,'Times New Roman',serif;font-size:clamp(30px,3.5vw,44px);color:#111;margin-top:20px;}
+.final-role{font-family:Georgia,'Times New Roman',serif;font-size:20px;color:#b98a18;margin-top:6px;}
+.final-contact-lines{font-family:Georgia,'Times New Roman',serif;font-size:18px;line-height:1.55;color:#111;margin-top:18px;}
+.final-access-title{margin-top:25px;color:#b98a18;font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:800;}
+.final-access-sub{font-family:Georgia,'Times New Roman',serif;font-style:italic;color:#111;font-size:16px;margin-top:7px;}
+.final-qr-wrap{display:inline-flex;align-items:center;justify-content:center;width:148px;height:148px;background:#fff;border:2px solid #b98a18;margin:15px auto 9px;padding:9px;box-sizing:border-box;box-shadow:0 22px 58px rgba(17,24,39,.13);}
+.final-qr-wrap img{width:126px;height:126px;display:block;image-rendering:pixelated;}
+.final-copy{font-family:Georgia,'Times New Roman',serif;font-size:14px;color:#111;margin-top:8px;}
+.final-confidential{margin-top:10px;color:#7a6a46;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;}
+@media(max-width:700px){.page.back-cover.final-qr-page{padding-top:28px!important}.final-motto{font-size:19px}.final-contact-lines{font-size:16px}.final-qr-wrap{width:124px;height:124px}.final-qr-wrap img{width:104px;height:104px}.final-logo-sub{letter-spacing:.24em}}
+</style>
+</head><body>
+<section class="page cover active"><img class="bg" src="images/img_001_dbafc4b88196.jpg"/><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">1 / 28</div><div class="copy"><div class="kicker">ΕΜΠΙΣΤΕΥΤΙΚΟΣ ΕΠΕΝΔΥΤΙΚΟΣ ΦΑΚΕΛΟΣ</div><h1>Μια σπάνια επενδυτική ευκαιρία στη Μύκονο</h1><div class="rule"></div><div class="sub">ΜΥΚΟΝΟΣ • ΚΥΚΛΑΔΕΣ</div></div></section>
+<section class="page statement"><img class="bg" src="images/img_003_1f7ab9f6c63f.jpg"/><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">2 / 28</div><div class="box"><div class="kicker">ΕΠΕΝΔΥΤΙΚΗ ΘΕΣΗ</div><h1>Ορισμένες επενδύσεις αποδίδουν. Άλλες δημιουργούν διαχρονική αξία.</h1><p>Μία εξαιρετικά σπάνια επενδυτική ευκαιρία στη Μύκονο, που συνδυάζει προνομιακή τοποθεσία, σύγχρονη αρχιτεκτονική, υψηλές προδιαγραφές κατασκευής και διαχρονική επενδυτική αξία, σε μία από τις πλέον περιζήτητες παραθαλάσσιες περιοχές του νησιού.</p></div></section>
+<section class="page cards"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">3 / 28</div><div class="wrap"><div class="kicker">ΒΑΣΙΚΑ ΣΤΟΙΧΕΙΑ</div><h1>Επενδυτική Σύνοψη</h1><div class="rule"></div><div class="grid"><div class="card"><h3>ΤΙΜΗ ΔΙΑΘΕΣΗΣ</h3><p>€19.000.000</p></div><div class="card"><h3>ΕΠΙΦΑΝΕΙΑ ΑΚΙΝΗΤΟΥ</h3><p>1.245 τ.μ.</p></div><div class="card"><h3>ΕΚΤΑΣΗ ΟΙΚΟΠΕΔΟΥ</h3><p>4.750 τ.μ.</p></div><div class="card"><h3>ΥΠΝΟΔΩΜΑΤΙΑ</h3><p>10</p></div><div class="card"><h3>ΛΟΥΤΡΑ</h3><p>10 + 2 WC</p></div><div class="card"><h3>ΑΠΟΣΤΑΣΗ ΑΠΟ ΤΗΝ ΠΑΡΑΛΙΑ</h3><p>200 μ. από το Καλό Λιβάδι</p></div></div><div class="note">Εκτιμώμενο ημερήσιο μίσθωμα κατά την τουριστική περίοδο: €15.000 – €19.500, ανάλογα με την εποχικότητα, την πληρότητα και τη στρατηγική διαχείρισης του ακινήτου.</div></div></section>
+<section class="page split"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">4 / 28</div><div class="panel"><div class="kicker">ΠΡΟΝΟΜΙΑΚΗ ΤΟΠΟΘΕΣΙΑ</div><h1>Πανοραμική Θέα 180° στο Αιγαίο</h1><div class="rule"></div><p>Σε μία από τις πλέον προνομιακές τοποθεσίες της Μυκόνου, το ακίνητο απολαμβάνει ανεμπόδιστη πανοραμική θέα 180° στο Αιγαίο Πέλαγος, με ορίζοντα που εκτείνεται έως τη Νάξο και την Πάρο.</p></div><img alt="Authentic panoramic view from the villa over Kalo Livadi, infinity pool and Aegean bay" class="photo page4-locked-photo" src="images/img_004_cf7a3effb7f9.jpg"/></section>
+<section class="page quote"><img class="bg" src="images/img_005_8267d88869a0.jpg"/><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">5 / 28</div><div class="box"><div class="kicker">ΔΙΑΧΡΟΝΙΚΗ ΑΞΙΑ &amp; ΣΥΓΧΡΟΝΗ ΑΝΑΓΕΝΝΗΣΗ</div><h1>Αρχική Οικοδομική Άδεια: 2010
+Πλήρης Ανασχεδιασμός: 2025</h1><p>Μία σπάνια επενδυτική ευκαιρία απόκτησης ενός πλήρως εκσυγχρονισμένου ακινήτου, το οποίο αναπτύχθηκε βάσει υφιστάμενης οικοδομικής άδειας και βρίσκεται σε μία από τις πλέον περιορισμένης προσφοράς περιοχές της Μυκόνου.</p></div></section>
+<section class="page split"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">6 / 28</div><div class="panel"><div class="kicker">Η ΑΞΙΑ ΤΗΣ ΣΠΑΝΙΟΤΗΤΑΣ</div><h1>Περιοχή Περιορισμένης Δόμησης</h1><div class="rule"></div><p>Μία από τις πλέον καταξιωμένες οικιστικές περιοχές της Μυκόνου, όπου η χαμηλή δόμηση και οι μεγάλες αποστάσεις μεταξύ των ιδιοκτησιών διασφαλίζουν ιδιωτικότητα, ηρεμία και διαχρονική αξία.
+
+Η περιορισμένη δυνατότητα μελλοντικής ανάπτυξης ενισχύει τη σπανιότητα των ακινήτων και τη διαχρονική επενδυτική τους αξία σε μία από τις πλέον περιζήτητες περιοχές του νησιού.</p></div><img class="photo" src="images/img_006_c934b6e2c39b.jpg"/></section>
+<section class="page featuregrid"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">7 / 28</div><div class="wrap"><div class="kicker">ΧΑΡΑΚΤΗΡΙΣΤΙΚΑ → ΑΞΙΑ</div><h1>Μια Ξεχωριστή Επενδυτική Ευκαιρία</h1><div class="rule"></div><div class="grid"><div class="card"><h3>ΟΙΚΟΠΕΔΟ 4.750 Τ.Μ.</h3><p>Μεγάλη έκταση που εξασφαλίζει ιδιωτικότητα και δυνατότητα ανάπτυξης υψηλών προδιαγραφών.</p></div><div class="card"><h3>ΕΠΙΦΑΝΕΙΑ ΑΚΙΝΗΤΟΥ 1.245 Τ.Μ.</h3><p>Σημαντική δομημένη επιφάνεια, ιδιαίτερα σπάνια για τα δεδομένα της Μυκόνου.</p></div><div class="card"><h3>10 ΥΠΝΟΔΩΜΑΤΙΑ</h3><p>Σχεδιασμένο για ιδιωτική χρήση, πολυγενεακή διαμονή ή φιλοξενία υψηλών απαιτήσεων.</p></div><div class="card"><h3>ΝΟΤΙΟΑΝΑΤΟΛΙΚΟΣ ΠΡΟΣΑΝΑΤΟΛΙΣΜΟΣ</h3><p>Βέλτιστος προσανατολισμός για φυσικό φωτισμό και άνετη υπαίθρια διαβίωση καθ’ όλη τη διάρκεια της ημέρας.</p></div><div class="card"><h3>200 Μ. ΑΠΟ ΤΗΝ ΠΑΡΑΛΙΑ ΚΑΛΟ ΛΙΒΑΔΙ</h3><p>Σε απόσταση λίγων λεπτών με τα πόδια από μία από τις πλέον δημοφιλείς παραλίες της Μυκόνου.</p></div><div class="card"><h3>ΠΛΗΡΗΣ ΑΝΑΣΧΕΔΙΑΣΜΟΣ ΤΟ 2025</h3><p>Πλήρως εκσυγχρονισμένο σύμφωνα με σύγχρονες προδιαγραφές, με περιορισμένες άμεσες ανάγκες πρόσθετων επενδύσεων.</p></div></div></div></section>
+<section class="page split"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">8 / 28</div><div class="panel"><div class="kicker">ΔΙΕΘΝΗΣ ΠΡΟΣΒΑΣΙΜΟΤΗΤΑ</div><h1>Πρόσβαση με Ιδιωτική Αεροπορία</h1><div class="rule"></div><p>Σε απόσταση μόλις 800 μέτρων από το επίσημο Ελικοδρόμιο Καλού Λιβαδιού, το ακίνητο εξασφαλίζει άμεση πρόσβαση μέσω ιδιωτικής αεροπορίας.
+
+Ένα από τα πλέον δραστήρια ελικοδρόμια ιδιωτικής αεροπορίας του νησιού, με πέντε αποκλειστικές θέσεις προσγείωσης (Spots 1–5), στρατηγικά τοποθετημένο πάνω από την παραλία Καλό Λιβάδι. Εξυπηρετεί ελικόπτερα τύπου Robinson, καθώς και μεγαλύτερα VIP ελικόπτερα, προσφέροντας άμεση και διακριτική πρόσβαση σε ιδιοκτήτες, family offices και διεθνείς επισκέπτες.
+
+Σε συνδυασμό με τη 24ωρη επιχειρησιακή λειτουργία και τις υπηρεσίες VIP εξυπηρέτησης, προσφέρει υψηλό επίπεδο προσβασιμότητας, άνεσης και ιδιωτικότητας καθ’ όλη τη διάρκεια της τουριστικής περιόδου.</p></div><img alt="Kalo Livadi Heliport and landed VIP helicopter" class="photo heli-locked-photo" src="images/img_007_21808ad83e84.png"/></section>
+<section class="page split"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">9 / 28</div><div class="panel"><div class="kicker">ΕΠΙΣΚΟΠΗΣΗ ΑΚΙΝΗΤΟΥ</div><h1>Διαβίωση Υψηλών Προδιαγραφών</h1><div class="rule"></div><p>Πλήρως επιπλωμένο ακίνητο δύο επιπέδων, το οποίο διαθέτει δύο καθιστικά, δύο κουζίνες, 10 λουτρά, 2 WC επισκεπτών, αίθουσα ψυχαγωγίας, τζάκι, κλιματισμό, ηλιακό θερμοσίφωνα, θωρακισμένη πόρτα ασφαλείας και σύστημα συναγερμού.
+
+Η κύρια κουζίνα αποτελεί έναν φωτεινό και πλήρως εξοπλισμένο χώρο, σχεδιασμένο να συνδέει αρμονικά την προετοιμασία γευμάτων, την τραπεζαρία και το καθιστικό με θέα στη θάλασσα, δημιουργώντας το ιδανικό περιβάλλον για καθημερινή διαβίωση και υψηλού επιπέδου φιλοξενία.</p></div><img class="photo" src="images/img_008_629f25c15ea3.jpg"/></section>
+<section class="page gallery"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">10 / 28</div><div class="wrap"><div class="kicker">ΦΩΤΟΓΡΑΦΙΚΗ ΠΑΡΟΥΣΙΑΣΗ</div><h1>Εξωτερικοί Χώροι &amp; Πισίνα</h1><div class="rule"></div><div class="gallery-grid"><img src="images/img_001_dbafc4b88196.jpg"/><img src="images/img_006_c934b6e2c39b.jpg"/><img src="images/img_009_3ee67164b6b2.jpg"/><img src="images/img_005_8267d88869a0.jpg"/><img src="images/img_010_1639e421a0c2.jpg"/><img src="images/img_011_56e8ea66e148.jpg"/><img src="images/img_012_25ece6511368.jpg"/><img src="images/img_013_998590c353d5.jpg"/></div></div></section>
+<section class="page gallery"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">11 / 28</div><div class="wrap"><div class="kicker">ΦΩΤΟΓΡΑΦΙΚΗ ΠΑΡΟΥΣΙΑΣΗ</div><h1>Εσωτερικοί Χώροι</h1><div class="rule"></div><div class="gallery-grid"><img src="images/img_014_0ac802ae8635.jpg"/><img src="images/img_015_a03974b13c15.jpg"/><img src="images/img_016_2aafe4a84284.jpg"/><img src="images/img_003_1f7ab9f6c63f.jpg"/><img src="images/img_008_629f25c15ea3.jpg"/><img src="images/img_017_d58f31236631.jpg"/><img src="images/img_018_a285bf1c5b5b.jpg"/><img src="images/img_019_8613c29667e3.jpg"/></div></div></section>
+<section class="page gallery"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">12 / 28</div><div class="wrap"><div class="kicker">ΦΩΤΟΓΡΑΦΙΚΗ ΠΑΡΟΥΣΙΑΣΗ</div><h1>Υπνοδωμάτια, Λεπτομέρειες &amp; Θέα στο Αιγαίο</h1><div class="rule"></div><div class="gallery-grid"><img src="images/img_020_2fae889be308.jpg"/><img src="images/img_021_8b3137b67753.jpg"/><img src="images/img_022_60e317184dd0.jpg"/><img src="images/img_023_7b800734aed5.jpg"/><img src="images/img_024_665f687924ae.jpg"/><img src="images/img_025_02349f0e6172.jpg"/><img src="images/img_017_d58f31236631.jpg"/><img src="images/img_026_aa6d5b5dd051.jpg"/></div></div></section>
+<section class="page cards"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">13 / 28</div><div class="wrap"><div class="kicker">ΥΠΟΔΟΜΕΣ ΑΚΙΝΗΤΟΥ</div><h1>Ολοκληρωμένες Υποδομές</h1><div class="rule"></div><div class="grid"><div class="card"><h3>ΥΠΟΓΕΙΑ ΑΠΟΘΗΚΗ</h3><p>200 τ.μ. λειτουργικών και τεχνικών αποθηκευτικών χώρων</p></div><div class="card"><h3>ΒΟΗΘΗΤΙΚΗ ΑΠΟΘΗΚΗ</h3><p>50 τ.μ. επιπλέον αποθηκευτικού χώρου</p></div><div class="card"><h3>ΧΩΡΟΣ ΣΥΝΤΗΡΗΣΗΣ ΚΗΠΟΥ</h3><p>30 τ.μ. ειδικά διαμορφωμένων εγκαταστάσεων συντήρησης</p></div><div class="card"><h3>ΧΩΡΟΣ ΣΤΑΘΜΕΥΣΗΣ</h3><p>Ιδιωτικές εγκαταστάσεις στάθμευσης</p></div><div class="card"><h3>ΑΣΦΑΛΕΙΑ</h3><p>Σύστημα συναγερμού και θωρακισμένη πόρτα ασφαλείας</p></div><div class="card"><h3>ΕΝΕΡΓΕΙΑΚΗ ΚΛΑΣΗ</h3><p>B</p></div></div><div class="note">Οι υποδομές αυτές υποστηρίζουν την αποδοτική διαχείριση του ακινήτου, την ιδιωτικότητα και την απρόσκοπτη λειτουργία του καθ’ όλη τη διάρκεια του έτους.</div></div></section>
+<section class="page split"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">14 / 28</div><div class="panel"><div class="kicker">ΕΞΩΤΕΡΙΟΙ ΧΩΡΟΙ</div><h1>Υψηλής Αξίας Υπαίθρια Εμπειρία</h1><div class="rule"></div><p>Οι εξωτερικοί χώροι του ακινήτου αποτελούν βασικό στοιχείο της συνολικής επενδυτικής του αξίας. Η πισίνα υπερχείλισης, οι εκτεταμένες βεράντες, οι διαμορφωμένοι μεσογειακοί κήποι και η ανεμπόδιστη θέα στο Αιγαίο συνθέτουν ένα περιβάλλον που ανταποκρίνεται στις απαιτήσεις της διεθνούς αγοράς πολυτελών ακινήτων.</p><p>Ο νοτιοανατολικός προσανατολισμός εξασφαλίζει ιδανικές συνθήκες φυσικού φωτισμού καθ' όλη τη διάρκεια της ημέρας, ενώ η αρμονική σύνδεση εσωτερικών και εξωτερικών χώρων ενισχύει τόσο τη λειτουργικότητα όσο και τη συνολική εμπειρία του ακινήτου.</p><p>Η ποιότητα του σχεδιασμού, η ιδιωτικότητα και η διαχρονική αισθητική δημιουργούν ένα ακίνητο με ισχυρή θέση στην αγορά πολυτελών επενδύσεων, ικανό να διατηρεί την ελκυστικότητά του και να υποστηρίζει μακροπρόθεσμη αξία.</p></div><img class="photo" src="images/img_010_1639e421a0c2.jpg"/></section>
+<section class="page split"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">15 / 28</div><div class="panel"><div class="kicker">ΕΣΩΤΕΡΙΚΟΙ ΧΩΡΟΙ</div><h1>Διαχρονική Κυκλαδίτικη Κομψότητα</h1><div class="rule"></div><p>Οι εσωτερικοί χώροι του ακινήτου εκφράζουν μια σύγχρονη προσέγγιση της κυκλαδίτικης αρχιτεκτονικής, όπου η αυθεντικότητα συνδυάζεται με τη λειτουργικότητα και την υψηλή αισθητική. Η φυσική πέτρα, οι ξύλινες λεπτομέρειες και τα προσεκτικά επιλεγμένα υλικά δημιουργούν ένα περιβάλλον διαχρονικής ποιότητας που ανταποκρίνεται στις προσδοκίες της διεθνούς αγοράς πολυτελών ακινήτων.</p><p>Η άριστη αξιοποίηση του φυσικού φωτισμού, η ευρύτητα των χώρων και η αρμονική σύνδεση με τους εξωτερικούς χώρους προσδίδουν στο ακίνητο μοναδική αίσθηση άνεσης, ιδιωτικότητας και φιλοξενίας υψηλών προδιαγραφών.</p><p>Πλήρως επιπλωμένο και άριστα συντηρημένο, το ακίνητο είναι άμεσα αξιοποιήσιμο, προσφέροντας στον επενδυτή ένα ολοκληρωμένο περιουσιακό στοιχείο χωρίς την ανάγκη πρόσθετων παρεμβάσεων, διασφαλίζοντας υψηλή λειτουργικότητα και διαχρονική εμπορική αξία.</p></div><img class="photo" src="images/img_027_faaa5a509927.jpg"/></section>
+<section class="page cards"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">16 / 28</div><div class="wrap"><div class="kicker">ΣΤΡΑΤΗΓΙΚΕΣ ΑΞΙΟΠΟΙΗΣΗΣ ΕΠΕΝΔΥΣΗΣ</div><h1>Δυνατότητες Ετήσιας Λειτουργίας &amp; Αξιοποίησης</h1><div class="rule"></div><p>Τα παρακάτω σενάρια παρουσιάζουν ενδεικτικές επιλογές αξιοποίησης ενός πολυτελούς ακινήτου στη Μύκονο, ανάλογα με τη στρατηγική του επενδυτή, τον επιθυμητό βαθμό ιδιωτικής χρήσης και το επιχειρηματικό μοντέλο λειτουργίας.</p><div class="fin-table" style="grid-template-columns:1.25fr 1fr 1.6fr;"><div class="fin-head">ΣΕΝΑΡΙΟ</div><div class="fin-head">ΗΜΕΡΕΣ ΛΕΙΤΟΥΡΓΙΑΣ</div><div class="fin-head">ΣΤΡΑΤΗΓΙΚΗ ΑΞΙΟΠΟΙΗΣΗΣ</div><div class="fin-label">Αποκλειστική Ιδιωτική Χρήση</div><div>30</div><div>Ιδιωτική χρήση από τον ιδιοκτήτη με περιορισμένη εποχική εκμετάλλευση.</div><div class="fin-label">Επιλεκτική Εποχική Εκμετάλλευση</div><div>60</div><div>Στόχευση στις περιόδους υψηλής ζήτησης με περιορισμένη λειτουργία.</div><div class="fin-label">Premium Luxury Operation</div><div>90</div><div>Ισορροπημένη λειτουργία κατά την κύρια τουριστική περίοδο της Μυκόνου.</div><div class="fin-label">Διευρυμένη Luxury Season</div><div>120</div><div>Επέκταση της περιόδου λειτουργίας σε υψηλή και ενδιάμεση τουριστική περίοδο.</div><div class="fin-label">Premium Mediterranean Season</div><div>150</div><div>Εκτεταμένη εποχική λειτουργία με επαγγελματική διαχείριση και υψηλή πληρότητα.</div><div class="fin-label">Μέγιστο Ενδεικτικό Σενάριο</div><div>180</div><div>Μέγιστη αξιοποίηση, ανάλογα με τη ζήτηση, τη στρατηγική τιμολόγησης και τη διαχείριση του ακινήτου.</div></div><div class="note">Τα παραπάνω σενάρια είναι ενδεικτικά και δεν αποτελούν πρόβλεψη ή εγγύηση οικονομικής απόδοσης. Τα πραγματικά αποτελέσματα εξαρτώνται από τις συνθήκες της αγοράς, τη στρατηγική διαχείρισης, την τιμολογιακή πολιτική και τα στοιχεία που θα επιβεβαιωθούν κατά τη διαδικασία του Due Diligence.</div></div></section>
+<section class="page featuregrid"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">17 / 28</div><div class="wrap"><div class="kicker">ΕΠΕΝΔΥΤΙΚΗ ΤΕΚΜΗΡΙΩΣΗ</div><h1>Βασικά Επενδυτικά Πλεονεκτήματα</h1><div class="rule"></div><div class="grid"><div class="card"><h3>Σπανιότητα</h3><p>Τα ακίνητα αυτής της κατηγορίας σε προνομιακές τοποθεσίες της Μυκόνου είναι περιορισμένα, γεγονός που ενισχύει τη μακροπρόθεσμη αξία και τη διατήρηση της επένδυσης.</p></div><div class="card"><h3>Τοποθεσία</h3><p>Το Καλό Λιβάδι αποτελεί μία από τις πλέον περιζήτητες περιοχές του νησιού, συνδυάζοντας άμεση πρόσβαση σε κορυφαίες παραλίες, ιδιωτικότητα και ισχυρή διεθνή αναγνωρισιμότητα.</p></div><div class="card"><h3>Προσβασιμότητα</h3><p>Η απόσταση μόλις 800 μέτρων από το ελικοδρόμιο προσφέρει ταχύτητα μετακίνησης και εξυπηρέτηση υψηλών προδιαγραφών για διεθνείς επισκέπτες και ιδιώτες επενδυτές.</p></div><div class="card"><h3>Κατάσταση Ακινήτου</h3><p>Η πλήρης ανακατασκευή και ο εκσυγχρονισμός του το 2025 καθιστούν το ακίνητο άμεσα αξιοποιήσιμο, χωρίς την ανάγκη πρόσθετων κεφαλαιουχικών δαπανών.</p></div><div class="card"><h3>Κλίμακα Επένδυσης</h3><p>Με συνολική δομημένη επιφάνεια 1.245 τ.μ. σε οικόπεδο 4.750 τ.μ., το ακίνητο διαθέτει τα χαρακτηριστικά ενός πραγματικά εμβληματικού περιουσιακού στοιχείου.</p></div><div class="card"><h3>Δυναμική Απόδοσης</h3><p>Η θέση του στην αγορά πολυτελών μισθώσεων, σε συνδυασμό με τα ποιοτικά χαρακτηριστικά του, δημιουργεί ισχυρές προοπτικές διατήρησης αξίας και μακροχρόνιας επενδυτικής απόδοσης.</p></div></div></div></section>
+<section class="page specs"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">18 / 28</div><div class="wrap"><div class="kicker">ΤΕΧΝΙΚΑ ΣΤΟΙΧΕΙΑ ΑΚΙΝΗΤΟΥ</div><h1>Βασικά Τεχνικά Στοιχεία</h1><div class="rule"></div><div class="spec-table"><div class="spec-row"><span>ΤΙΜΗ ΠΩΛΗΣΗΣ</span><span>€19.000.000</span></div><div class="spec-row"><span>ΤΙΜΗ ΑΝΑ Τ.Μ.</span><span>€15.261,04</span></div><div class="spec-row"><span>ΔΟΜΗΜΕΝΗ ΕΠΙΦΑΝΕΙΑ</span><span>1.245 τ.μ.</span></div><div class="spec-row"><span>ΕΜΒΑΔΟ ΟΙΚΟΠΕΔΟΥ</span><span>4.750 τ.μ.</span></div><div class="spec-row"><span>ΕΠΙΠΕΔΑ</span><span>2</span></div><div class="spec-row"><span>ΟΡΟΦΟΣ</span><span>Ισόγειο &amp; Α΄ Όροφος</span></div><div class="spec-row"><span>ΚΑΘΙΣΤΙΚΑ</span><span>2</span></div><div class="spec-row"><span>ΚΟΥΖΙΝΕΣ</span><span>2</span></div><div class="spec-row"><span>ΥΠΝΟΔΩΜΑΤΙΑ</span><span>10</span></div><div class="spec-row"><span>ΛΟΥΤΡΑ</span><span>10</span></div><div class="spec-row"><span>WC ΕΠΙΣΚΕΠΤΩΝ</span><span>2</span></div><div class="spec-row"><span>ΘΕΡΜΑΝΣΗ</span><span>Αυτόνομη Ηλεκτρική</span></div><div class="spec-row"><span>ΕΝΕΡΓΕΙΑΚΗ ΚΛΑΣΗ</span><span>Β</span></div><div class="spec-row"><span>ΕΤΟΣ ΚΑΤΑΣΚΕΥΗΣ</span><span>2010</span></div><div class="spec-row"><span>ΑΝΑΚΑΙΝΙΣΗ</span><span>2025</span></div><div class="spec-row"><span>ΠΡΟΣΑΝΑΤΟΛΙΣΜΟΣ</span><span>Νοτιοανατολικός</span></div><div class="spec-row"><span>ΤΟΠΟΘΕΣΙΑ</span><span>Καλό Λιβάδι, Μύκονος, Κυκλάδες</span></div></div></div></section>
+<section class="page cards"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">19 / 28</div><div class="wrap"><div class="kicker">ΔΙΑΔΙΚΑΣΙΑ ΕΠΕΝΔΥΣΗΣ</div><h1>Εμπιστευτική Διαδικασία Απόκτησης</h1><div class="rule"></div><p>Η πρόσβαση σε αναλυτικά στοιχεία, τεχνική και οικονομική τεκμηρίωση, καθώς και η οργάνωση ιδιωτικών επισκέψεων στο ακίνητο, παρέχονται αποκλειστικά σε πιστοποιημένους επενδυτές ή στους εξουσιοδοτημένους εκπροσώπους τους, στο πλαίσιο μιας αυστηρά εμπιστευτικής διαδικασίας.</p><div class="grid"><div class="card"><h3>1. Εκδήλωση Επενδυτικού Ενδιαφέροντος</h3><p>Αρχική επικοινωνία και επιβεβαίωση του επενδυτικού ενδιαφέροντος, καθώς και του προφίλ του υποψήφιου επενδυτή.</p></div><div class="card"><h3>2. Υπογραφή Συμφωνητικού Εμπιστευτικότητας (NDA)</h3><p>Η πρόσβαση σε εμπιστευτικά έγγραφα και πληροφορίες παρέχεται μετά την υπογραφή Συμφωνητικού Εμπιστευτικότητας.</p></div><div class="card"><h3>3. Πρόσβαση στο Due Diligence</h3><p>Διάθεση οικονομικών, τεχνικών και νομικών στοιχείων για αξιολόγηση από τον επενδυτή και τους συμβούλους του.</p></div><div class="card"><h3>4. Ιδιωτική Επίσκεψη Ακινήτου</h3><p>Οργάνωση διακριτικής επίσκεψης στο ακίνητο, κατόπιν συνεννόησης και έγκρισης του ιδιοκτήτη.</p></div><div class="card"><h3>5. Υποβολή Προσφοράς</h3><p>Υποβολή μη δεσμευτικής ή δεσμευτικής προσφοράς, σύμφωνα με τη συμφωνημένη εμπιστευτική διαδικασία.</p></div><div class="card"><h3>6. Ολοκλήρωση Συναλλαγής</h3><p>Συντονισμός όλων των απαιτούμενων νομικών, φορολογικών και τεχνικών διαδικασιών έως την επιτυχή ολοκλήρωση της μεταβίβασης.</p></div></div><div class="note">Όλες οι πληροφορίες παρέχονται αποκλειστικά για σκοπούς αξιολόγησης της επένδυσης και υπόκεινται σε διαδικασία εμπιστευτικότητας, επιβεβαίωση στοιχείων, έγκριση του ιδιοκτήτη και ολοκλήρωση του απαραίτητου Due Diligence.</div></div></section>
+<section class="page cards"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">20 / 28</div><div class="wrap"><div class="kicker">ΟΙΚΟΝΟΜΙΚΗ ΕΠΙΣΚΟΠΗΣΗ</div><h1>Βασικά Οικονομικά Στοιχεία</h1><div class="rule"></div><div class="grid"><div class="card"><h3>Ζητούμενη Τιμή</h3><p>€19.000.000</p></div><div class="card"><h3>Τιμή ανά τ.μ.</h3><p>€15.261,04</p></div><div class="card"><h3>Δομημένη Επιφάνεια</h3><p>1.245 τ.μ.</p></div><div class="card"><h3>Εμβαδό Οικοπέδου</h3><p>4.750 τ.μ.</p></div><div class="card"><h3>Ενδεικτική Ημερήσια Μισθωτική Αξία</h3><p>€15.000 – €19.500<br/>Υψηλή περίοδος</p></div><div class="card"><h3>Θέση στην Αγορά</h3><p>Υπερπολυτελές επενδυτικό ακίνητο υψηλών προδιαγραφών στη Μύκονο.</p></div></div><div class="note">Τα οικονομικά στοιχεία που παρουσιάζονται είναι ενδεικτικά και παρέχονται αποκλειστικά για σκοπούς προκαταρκτικής αξιολόγησης της επένδυσης. Η οριστική τεκμηρίωση, καθώς και κάθε πρόσθετο οικονομικό ή τεχνικό στοιχείο, διατίθενται αποκλειστικά στο πλαίσιο της διαδικασίας Due Diligence και κατόπιν υπογραφής Συμφωνητικού Εμπιστευτικότητας (NDA).</div></div></section>
+<section class="page cards"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">21 / 28</div><div class="wrap"><div class="kicker">ΕΝΔΕΙΚΤΙΚΗ ΔΥΝΑΜΙΚΗ ΕΣΟΔΩΝ</div><h1>Σενάρια Δυνητικής Μισθωτικής Απόδοσης</h1><div class="rule"></div><p>Τα παρακάτω στοιχεία παρουσιάζουν ενδεικτικά σενάρια ακαθάριστων εσόδων, βασισμένα στο εύρος ημερήσιας μισθωτικής αξίας κατά την υψηλή τουριστική περίοδο. Τα σενάρια έχουν αποκλειστικά ενημερωτικό χαρακτήρα και δεν αποτελούν πρόβλεψη ή εγγύηση οικονομικής απόδοσης.</p><div class="fin-table" style="grid-template-columns:1.1fr 1fr 1.1fr 1.2fr;"><div class="fin-head">ΣΕΝΑΡΙΟ</div><div class="fin-head">ΔΙΑΝΥΚΤΕΡΕΥΣΕΙΣ</div><div class="fin-head">ΗΜΕΡΗΣΙΑ ΜΙΣΘΩΤΙΚΗ ΑΞΙΑ</div><div class="fin-head">ΕΝΔΕΙΚΤΙΚΑ ΑΚΑΘΑΡΙΣΤΑ ΕΣΟΔΑ</div><div class="fin-label">Συντηρητικό Σενάριο</div><div>60</div><div>€15.000</div><div>€900.000</div><div class="fin-label">Βασικό Σενάριο</div><div>90</div><div>€17.250</div><div>€1.552.500</div><div class="fin-label">Ενισχυμένη Υψηλή Περίοδος</div><div>120</div><div>€19.500</div><div>€2.340.000</div><div class="fin-label">Διευρυμένη Εποχική Λειτουργία</div><div>150</div><div>€19.500</div><div>€2.925.000</div><div class="fin-label">Σενάριο Μέγιστης Αξιοποίησης</div><div>180</div><div>€19.500</div><div>€3.510.000</div></div><div class="note">Οι παραπάνω υπολογισμοί είναι αποκλειστικά ενδεικτικοί και βασίζονται σε υποθετικά σενάρια λειτουργίας. Δεν περιλαμβάνουν λειτουργικά έξοδα, προμήθειες, φορολογικές επιβαρύνσεις, περιόδους μη πληρότητας ή άλλους παράγοντες που επηρεάζουν την τελική οικονομική απόδοση. Η αξιολόγηση των οικονομικών στοιχείων πραγματοποιείται στο πλαίσιο της διαδικασίας Due Diligence.</div></div></section>
+<section class="page cards"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">22 / 28</div><div class="wrap"><div class="kicker">ΕΠΕΝΔΥΤΙΚΗ ΣΤΡΑΤΗΓΙΚΗ</div><h1>Οικονομική Λογική της Επένδυσης</h1><div class="rule"></div><div class="grid"><div class="card"><h3>Διατήρηση Κεφαλαίου</h3><p>Η κατοχή ενός ακινήτου τέτοιου μεγέθους και ποιότητας σε μία από τις πλέον αναγνωρισμένες αγορές πολυτελών ακινήτων διεθνώς συμβάλλει στη διατήρηση και ενίσχυση της μακροπρόθεσμης αξίας του επενδυτικού κεφαλαίου.</p></div><div class="card"><h3>Δυνατότητα Δημιουργίας Εισοδήματος</h3><p>Η δυναμική της αγοράς πολυτελών μισθώσεων της Μυκόνου δημιουργεί προοπτικές εποχικής αξιοποίησης υψηλών προδιαγραφών, μέσω επαγγελματικής διαχείρισης.</p></div><div class="card"><h3>Αξία Σπανιότητας</h3><p>Η περιορισμένη διαθεσιμότητα μεγάλων ιδιωτικών ακινήτων με πανοραμική θέα στη θάλασσα ενισχύει τη διαχρονική ελκυστικότητα και την επενδυτική τους αξία.</p></div><div class="card"><h3>Λειτουργική Δυναμική</h3><p>Η διαμόρφωση του ακινήτου, με 10 υπνοδωμάτια, 10 λουτρά, δύο κουζίνες και εκτεταμένους εξωτερικούς χώρους, υποστηρίζει απαιτητικά πρότυπα φιλοξενίας και ευέλικτα μοντέλα αξιοποίησης.</p></div><div class="card"><h3>Πλήρης Έλεγχος Περιουσιακού Στοιχείου</h3><p>Το ακίνητο προσφέρει πλήρη αξιοποίηση των κτιριακών εγκαταστάσεων, του οικοπέδου και των υποστηρικτικών υποδομών, παρέχοντας στον επενδυτή απόλυτο έλεγχο του περιουσιακού στοιχείου.</p></div><div class="card"><h3>Μακροπρόθεσμη Ελκυστικότητα</h3><p>Τα χαρακτηριστικά του ακινήτου το καθιστούν ελκυστικό τόσο για ιδιώτες επενδυτές όσο και για family offices, επενδυτικά σχήματα και επαγγελματίες του κλάδου της πολυτελούς φιλοξενίας.</p></div></div></div></section>
+<section class="page cards"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">23 / 28</div><div class="wrap"><div class="kicker">ΕΜΠΙΣΤΕΥΤΙΚΗ ΤΕΚΜΗΡΙΩΣΗ</div><h1>Πρόσβαση σε Εμπιστευτικό Υλικό</h1><div class="rule"></div><p>Η πρόσβαση σε αναλυτικά οικονομικά, τεχνικά και νομικά στοιχεία του ακινήτου παρέχεται αποκλειστικά σε πιστοποιημένους επενδυτές, στο πλαίσιο ελεγχόμενης διαδικασίας εμπιστευτικότητας και επενδυτικής αξιολόγησης.</p><div class="grid"><div class="card"><h3>Υπογραφή Συμφωνητικού Εμπιστευτικότητας (NDA)</h3><p>Ο πλήρης επενδυτικός φάκελος και τα υποστηρικτικά έγγραφα διατίθενται μετά την ολοκλήρωση της διαδικασίας υπογραφής Συμφωνητικού Εμπιστευτικότητας.</p></div><div class="card"><h3>Οικονομική &amp; Τεχνική Επαλήθευση</h3><p>Τα οικονομικά στοιχεία, οι λειτουργικές παραδοχές και οι τεχνικές πληροφορίες αξιολογούνται από τους συμβούλους του επενδυτή στο πλαίσιο της διαδικασίας Due Diligence.</p></div><div class="card"><h3>Ιδιωτική Επίσκεψη Ακινήτου</h3><p>Οι επισκέψεις πραγματοποιούνται αποκλειστικά κατόπιν προγραμματισμού και μόνο για πιστοποιημένους ενδιαφερόμενους επενδυτές.</p></div><div class="card"><h3>Διαδικασία Ολοκλήρωσης Συναλλαγής</h3><p>Η δομή της συναλλαγής, το χρονοδιάγραμμα και η ανταλλαγή εγγράφων συντονίζονται με απόλυτη διακριτικότητα και σύμφωνα με τα διεθνή πρότυπα επαγγελματικών συναλλαγών.</p></div></div></div></section>
+<section class="page cards"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">24 / 28</div><div class="wrap"><div class="kicker">ΕΠΕΝΔΥΤΙΚΟ ΠΛΑΙΣΙΟ ΑΞΙΟΛΟΓΗΣΗΣ</div><h1>Βασικές Παραδοχές Αξιολόγησης</h1><div class="rule"></div><p>Οι πληροφορίες που περιλαμβάνονται στο παρόν ενημερωτικό υλικό παρέχονται αποκλειστικά για σκοπούς προκαταρκτικής αξιολόγησης της επενδυτικής ευκαιρίας. Κάθε επενδυτική απόφαση θα πρέπει να βασίζεται σε ανεξάρτητη οικονομική, νομική και τεχνική αξιολόγηση, καθώς και στην ολοκλήρωση της διαδικασίας Due Diligence.</p><div class="grid"><div class="card"><h3>Λειτουργικές Παραδοχές</h3><p>Τα ενδεικτικά οικονομικά στοιχεία δεν περιλαμβάνουν λειτουργικά έξοδα, δαπάνες διαχείρισης, συντήρησης, προσωπικού, κοινωφελών υπηρεσιών ή άλλες επιχειρησιακές επιβαρύνσεις.</p></div><div class="card"><h3>Φορολογικές Παράμετροι</h3><p>Η φορολογική μεταχείριση της επένδυσης διαφοροποιείται ανάλογα με το καθεστώς και τη φορολογική κατοικία κάθε επενδυτή και απαιτεί εξειδικευμένη συμβουλευτική υποστήριξη.</p></div><div class="card"><h3>Συνθήκες Αγοράς</h3><p>Η μελλοντική απόδοση επηρεάζεται από τη ζήτηση της αγοράς, την εποχικότητα, τις γενικότερες οικονομικές συνθήκες και τη στρατηγική αξιοποίησης του ακινήτου.</p></div><div class="card"><h3>Νομική &amp; Τεχνική Επιβεβαίωση</h3><p>Η ολοκλήρωση της συναλλαγής προϋποθέτει την επιτυχή ολοκλήρωση όλων των απαιτούμενων νομικών, τεχνικών, πολεοδομικών και οικονομικών ελέγχων.</p></div></div></div></section>
+<section class="page contact no-faint-lines"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">25 / 28</div><div class="wrap" style="margin-top: 70px;"><div class="kicker">ΝΟΜΙΚΗ ΕΝΗΜΕΡΩΣΗ</div><h1>Νομική Δήλωση</h1><div class="rule"></div><p>Το παρόν επενδυτικό ενημερωτικό υλικό έχει συνταχθεί αποκλειστικά για σκοπούς εμπιστευτικής ενημέρωσης και προκαταρκτικής αξιολόγησης από επιλεγμένους επενδυτές. Δεν αποτελεί δημόσια προσφορά, πρόσκληση για σύναψη συναλλαγής, εκτίμηση αξίας του ακινήτου, επενδυτική, νομική ή φορολογική συμβουλή.</p><p>Όλες οι πληροφορίες που περιλαμβάνονται στο παρόν βασίζονται σε στοιχεία που θεωρούνται αξιόπιστα κατά τον χρόνο σύνταξής του, υπόκεινται όμως σε επαλήθευση, ενδέχεται να τροποποιηθούν χωρίς προηγούμενη ειδοποίηση και θα πρέπει να επιβεβαιωθούν μέσω ανεξάρτητου νομικού, τεχνικού, φορολογικού και οικονομικού ελέγχου στο πλαίσιο της διαδικασίας Due Diligence.</p><p>Ουδεμία δήλωση του παρόντος εγγράφου δημιουργεί οποιαδήποτε συμβατική υποχρέωση ή εγγύηση εκ μέρους του ιδιοκτήτη ή της SNK Luxury Real Estate μέχρι την υπογραφή των οριστικών συμβατικών εγγράφων.</p></div></section>
+<section class="page contact no-faint-lines"><div class="logo"><img alt="SNK" src="images/img_002_3b60f38d6799.png"/><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">26 / 28</div><div class="wrap"><div class="kicker">ΕΠΙΚΟΙΝΩΝΙΑ ΓΙΑ ΕΠΕΝΔΥΣΕΙΣ</div><h1 class="contact-lock-title contact-underlined">Στοιχεία Επικοινωνίας</h1><div class="rule"></div><p>Σπύρος Ν. Κουλουρίδης<br/>SNK Luxury Real Estate<br/>investments@snkrealestate.com<br/>+30 6985 821 148</p><p>Για εμπιστευτικές επενδυτικές προτάσεις, προγραμματισμό ιδιωτικής επίσκεψης στο ακίνητο ή πρόσβαση στο πλήρες επενδυτικό υλικό κατόπιν υπογραφής Συμφωνητικού Εμπιστευτικότητας (NDA), παρακαλούμε επικοινωνήστε απευθείας με την SNK Luxury Real Estate.</p></div></section>
+<section class="page page27-final"><div class="logo"><div class="logo-text">SNK</div><div class="brand-small">Luxury Real Estate<br/>Private Investments</div></div><div class="snk-mini">SNK</div><div class="page-no">27 / 28</div>
+<div class="p27-wrap">
+<div class="p27-head">
+<div class="p27-kicker">SNK LUXURY REAL ESTATE</div>
+<h1>Private Investment Enquiry</h1>
+<div class="p27-divider"></div>
+<p class="p27-lead">Please complete the confidential enquiry form below. Qualified investors will be contacted promptly regarding the Mykonos private villa opportunity, execution of a Non-Disclosure Agreement (NDA), and access to detailed supporting material.</p>
+</div>
+<div class="p27-grid">
+<div class="p27-card p27-left">
+<div class="p27-badge"><span class="p27-dot"></span><span>Private Process</span></div>
+<div class="p27-step"><div class="p27-step-label">01 — Expression of Interest</div><h3>Confidential Request</h3><p>Submit your details through the SNK private investor form.</p></div>
+<div class="p27-step"><div class="p27-step-label">02 — Qualification</div><h3>Investor Review</h3><p>The enquiry is reviewed before any confidential material is released.</p></div>
+<div class="p27-step"><div class="p27-step-label">03 — NDA &amp; Data Room</div><h3>Next Steps</h3><p>Qualified investors proceed with NDA execution, supporting material access and private site visit coordination.</p></div>
+<div class="p27-contact-mini"><div class="mini-title">Direct Contact</div><strong>Speros Koulourides</strong><span>SNK Luxury Real Estate</span><span>+30 6985 821 148</span><span>investments@snkrealestate.com</span></div>
+</div>
+<div class="p27-card p27-form-card">
+<div class="p27-form-inner">
+<div class="p27-form-kicker">Confidential Investor Portal</div>
+<h2 class="p27-form-title">Request Investment Information</h2>
+<p class="p27-form-copy">All information submitted is treated in strict confidence and used solely for evaluating investment interest.</p>
+<form action="https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec" id="snkInvestorForm" method="POST" target="snkHiddenSubmitFrame">
+<div class="p27-fields">
+<label><span class="p27-label">Full Name *</span><input class="p27-input" name="fullName" placeholder="Your full name" required="" type="text"/></label>
+<label><span class="p27-label">Email Address *</span><input class="p27-input" name="email" placeholder="name@company.com" required="" type="email"/></label>
+<label><span class="p27-label">Company / Organization *</span><input class="p27-input" name="company" placeholder="Company, fund or family office" required="" type="text"/></label>
+<label><span class="p27-label">Position / Title *</span><input class="p27-input" name="position" placeholder="Managing Director, CEO, Investor" required="" type="text"/></label>
+<label><span class="p27-label">Country *</span><input class="p27-input" name="country" placeholder="Country" required="" type="text"/></label>
+<label><span class="p27-label">Mobile / Telephone *</span><input class="p27-input" name="mobile" placeholder="+30 ..." required="" type="text"/></label>
+</div>
+<label><span class="p27-label">Investor Type *</span><select class="p27-input" name="investorType" required=""><option disabled="" selected="" value="">Select investor type</option><option>Family Office</option><option>Private Investor</option><option>Investment Fund</option><option>Real Estate Investor / Developer</option><option>Institutional Investor</option><option>Other</option></select></label>
+<label><span class="p27-label">Message</span><textarea class="p27-input" name="message" placeholder="Briefly describe your investment interest"></textarea></label>
+<button class="p27-submit" id="snkSubmitButton" type="submit">REQUEST INVESTMENT INFORMATION</button>
+<p class="p27-status" id="snkFormStatus">Submitting your confidential enquiry securely...</p>
+</form>
+</div>
+</div>
+</div>
+<p class="p27-note">English only · Confidential investor communication · Subject to NDA</p>
+</div><iframe name="snkHiddenSubmitFrame" style="display:none;width:0;height:0;border:0;"></iframe></section>
+<section class="page contact back-cover final-qr-page">
+<div class="snk-mini">SNK</div>
+<div class="page-no">28 / 28</div>
+<div class="final-back-inner">
+<div class="final-logo-word">SNK</div>
+<div class="final-logo-sub">Luxury Real Estate</div>
+<div class="final-motto">Connecting Exceptional Properties<br/>with Exceptional People</div>
+<div class="final-divider"></div>
+<div class="final-name">Σπύρος Ν. Κουλουρίδης</div>
+<div class="final-role">Luxury Real Estate &amp; Investment Advisor</div>
+<div class="final-contact-lines">
+      +30 6985 821 148<br/>
+      investments@snkrealestate.com
+    </div>
+<div class="final-access-title">EXCLUSIVE INVESTOR ACCESS</div>
+<div class="final-access-sub">Scan to request confidential access to the complete Private Investment Dossier and Due Diligence process.</div>
+<div class="final-qr-wrap"><img alt="QR Code" id="mykonosFinalQr" src="images/img_028_05a35e08dacc.png"/></div>
+<div class="final-copy">© 2026 SNK Luxury Real Estate</div>
+<div class="final-confidential">STRICTLY CONFIDENTIAL • EXCLUSIVELY FOR QUALIFIED INVESTORS</div>
+</div>
+</section><div class="lightbox" id="lightbox"><img alt="Villa image" id="lightboxImg" src=""/></div>
+<div class="nav"><button id="prev">‹</button><div class="counter"><span id="cur">1</span> / 28</div><button id="next">›</button></div>
+<script>
+(()=>{const p=[...document.querySelectorAll('.page')];let i=0;const c=document.getElementById('cur'),pr=document.getElementById('prev'),ne=document.getElementById('next');
+function s(n){if(n<0||n>=p.length)return;p[i].classList.remove('active');i=n;p[i].classList.add('active');c.textContent=i+1;pr.disabled=i===0;ne.disabled=i===p.length-1;}
+pr.onclick=()=>s(i-1);ne.onclick=()=>s(i+1);document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')s(i-1);if(e.key==='ArrowRight')s(i+1);if(e.key==='Escape')lb.classList.remove('active');});
+const lb=document.getElementById('lightbox'), li=document.getElementById('lightboxImg');
+document.querySelectorAll('.gallery-grid img').forEach(img=>img.addEventListener('click',()=>{li.src=img.src;lb.classList.add('active');}));
+lb.addEventListener('click',()=>lb.classList.remove('active'));
+s(0);})();
+</script>
+<script id="snk-page27-form-script">
+(function(){
+  const form = document.getElementById('snkInvestorForm');
+  if(!form) return;
+  form.addEventListener('submit', function(){
+    const status = document.getElementById('snkFormStatus');
+    const button = document.getElementById('snkSubmitButton');
+    if(button){button.disabled=true;button.textContent='SUBMITTING CONFIDENTIAL ENQUIRY...';button.style.opacity='.82';button.style.cursor='wait';}
+    if(status){status.classList.add('active');status.textContent='Submitting your confidential enquiry securely...';}
+    setTimeout(function(){
+      if(status){status.textContent='Thank you. Your request has been securely received.';}
+      if(button){button.disabled=false;button.textContent='REQUEST INVESTMENT INFORMATION';button.style.opacity='1';button.style.cursor='pointer';}
+      try{form.reset();}catch(e){}
+    },2500);
+  });
+})();
+</script>
+<script id="snk-page28-qr-script">
+/* QR is embedded inline for offline reliability. */
+</script>
+</body></html>
