@@ -204,21 +204,27 @@ h1 {
 }
 
 .section {
-    padding: clamp(90px, 11vw, 180px) clamp(28px, 7vw, 130px)
+    padding: clamp(90px, 11vw, 180px)
+    clamp(28px, 7vw, 130px);
+}
+#company {
+    display: block;
+    padding-top: 70px;
 }
 
 .intro-grid {
     display: grid;
     grid-template-columns: 1.1fr .9fr;
-    gap: 10vw
+    gap: 10vw;
 }
 
 .intro-grid h2,
 .section-head h2 {
-    font-size: clamp(44px, 5.2vw, 78px);
+    font-size: clamp(38px, 4.6vw, 68px);
     line-height: 1.04;
-    letter-spacing: -.035em
+    letter-spacing: -.035em;
 }
+
 
 .intro-grid>div {
     padding-top: 12px
@@ -812,4 +818,30 @@ footer p {
 }
 [hidden] {
     display: none !important;
+}
+/* COMPANY — FINAL LAYOUT */
+#company {
+    display: block;
+    padding-top: 190px;
+}
+
+#company .intro-grid {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: clamp(60px, 9vw, 150px);
+    align-items: center;
+
+    max-width: 1320px;
+    width: 100%;
+    margin: 0 auto;
+}
+#company .intro-grid > div {
+    max-width: 520px;
+}
+#company .principles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    margin-top: 100px;
+    clear: both;
 }
