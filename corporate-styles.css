@@ -116,7 +116,7 @@ color:#7b7467;
 }
 
 .hero {
-    min-height: calc(100vh - 76px);
+    height: calc(100vh - 76px);
     display: grid;
     grid-template-columns: 1.05fr .95fr;
     background: var(--night);
@@ -134,7 +134,7 @@ color:#7b7467;
 .eyebrow {
     margin: 0 0 32px;
     color: #d5b351;
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: .24em
 }
@@ -152,12 +152,13 @@ h3 {
 }
 
 h1 {
-    font-size: clamp(58px, 5.5vw, 96px);
+    font-size: clamp(34px, 2.8vw, 54px);
     line-height: 1.08;
     letter-spacing: -.02em;
-    max-width: 12ch;
-    text-wrap: balance
+    max-width: 19ch;
+    text-wrap: normal;
 }
+
 
 .lead {
     max-width: 650px;
@@ -220,7 +221,7 @@ h1 {
 
 .intro-grid h2,
 .section-head h2 {
-    font-size: clamp(38px, 4.6vw, 68px);
+    font-size: clamp(30px, 3.5vw, 52px);
     line-height: 1.04;
     letter-spacing: -.035em;
 }
@@ -629,7 +630,7 @@ footer p {
 
 @media(max-width:520px) {
     h1 {
-        font-size: 48px
+        font-size: 36px
     }
 
     .section,
@@ -788,7 +789,7 @@ footer p {
 }
   
   .contact-transition{
-    max-width:700px;
+    max-width:520px;
     margin:170px auto 40px;
     text-align:center;
 }
@@ -814,7 +815,7 @@ footer p {
     color: rgba(255,255,255,.80);
     font-size: 19px;
     line-height: 1.9;
-    max-width: 660px;
+    max-width: 600px;
 }
 [hidden] {
     display: none !important;
@@ -822,7 +823,7 @@ footer p {
 /* COMPANY — FINAL LAYOUT */
 #company {
     display: block;
-    padding-top: 190px;
+    padding-top: 290px;
 }
 
 #company .intro-grid {
