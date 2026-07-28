@@ -435,116 +435,8 @@ h1 {
     color: #aeb4bb
 }
 
-.contact {
-    padding-top: 0;
-    text-align: center
-}
-
-.contact-intro {
-    margin: 24px auto 45px;
-    max-width: 640px;
-    color: #aeb4bb;
-    line-height: 1.7
-}
-
-.contact-form {
-    max-width: 920px;
-    margin: auto;
-    text-align: left
-}
-
-.contact-fields {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px
-}
-
-.contact-form label {
-    display: block;
-    color: var(--gold);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-}
-
-.contact-form label span {
-    display: block;
-    margin-bottom: 10px;
-    color: #d5b351;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: .18em;
-}
-
-.contact-form input,
-.contact-form select,
-.contact-form textarea {
-    width: 100%;
-    padding: 16px;
-    border: 1px solid rgba(213, 179, 81, .3);
-    border-radius: 0;
-    background: rgba(0, 0, 0, .32);
-    color: #fff;
-    font: 15px Montserrat;
-    outline: none
-}
-
-.contact-form input:focus,
-.contact-form select:focus,
-.contact-form textarea:focus {
-    border-color: #d5b351
-}
-
-.contact-form select option {
-    color: #111
-}
-
-.contact-form textarea {
-    resize: vertical
-}
-
-.contact-form button {
-    width: 100%;
-    padding: 18px;
-    border: 1px solid #d5b351;
-    background: #d5b351;
-    color: var(--night);
-    font: 600 9px Montserrat;
-    letter-spacing: .18em;
-    cursor: pointer
-}
-
-.contact-form button:disabled {
-    opacity: .75
-}
-
-.contact-status {
-    text-align: center;
-    color: #d5b351;
-    font-size: 13px
-}
-
-.contact-submit-frame {
-    display: none
-}
-
-.direct-contact {
-    margin-top: 28px;
-    display: flex;
-    justify-content: center;
-    gap: 36px;
-    color: #9da4ac;
-    font-size: 11px
-}
-
-.direct-contact a:hover {
-    color: #d5b351
-}
-
 footer {
-    padding: 34px clamp(24px, 4vw, 72px);
+    padding: 60px clamp(24px, 4vw, 72px);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -777,7 +669,9 @@ footer p {
 .direct-contact a {
     color: #555;
 }
-
+.contact-submit-frame {
+    display: none;
+}
     @media (max-width: 720px) {
 
     .contact-fields {
@@ -792,7 +686,7 @@ footer p {
   
   .contact-transition{
     max-width:520px;
-    margin:170px auto 40px;
+    margin:110px auto 30px;
     text-align:center;
 }
 
