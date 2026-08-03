@@ -131,25 +131,118 @@ Direct access.
 
 
 <section class="contact" id="contact">
-      <p class="eyebrow">PRIVATE INVESTOR CONTACT</p>
-      <h2>Submit your confidential enquiry.</h2>
-      <p class="contact-intro">Select your investment opportunity and submit your enquiry. Our team will respond confidentially.
+  <p class="eyebrow">PRIVATE INVESTOR CONTACT</p>
+  <h2>Submit your confidential enquiry.</h2>
+  <p class="contact-intro">
+    Select your investment opportunity and submit your enquiry. Our team will respond confidentially.
+  </p>
 
-        <iframe class="contact-submit-frame" name="snkHiddenSubmitFrame" title="Form submission"></iframe>
-      <form class="contact-form" id="snkInvestorForm" action="https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec" method="POST" target="snkHiddenSubmitFrame">
-        <div class="contact-fields">
-          <label><span>FULL NAME</span><input name="fullName" autocomplete="name" required></label>
-          <label><span>EMAIL</span><input type="email" name="email" autocomplete="email" required></label>
-          <label><span>PHONE</span><input type="tel" name="phone" autocomplete="tel"></label>
-          <label><span>AREA OF INTEREST</span><select name="interest"><option>General investment enquiry</option><option>Mykonos</option><option>Paros</option><option>Athens Investment</option><option>Golden Visa</option></select></label>
-        </div>
-        <label><span>MESSAGE</span><textarea name="message" rows="5" placeholder="How may we assist you?"></textarea></label>
-        <input type="hidden" name="source" value="SNK Corporate Website">
-        <button id="snkSubmitButton" type="submit">SUBMIT ENQUIRY</button>
-        <p class="contact-status" id="snkFormStatus" role="status" hidden></p>
-      </form>
-      <div class="direct-contact"><a href="mailto:investments@snkrealestate.com">investments@snkrealestate.com</a><a href="tel:+306985821148">+30 6985 821148</a></div>
-    </section>
+  <iframe class="contact-submit-frame" name="snkHiddenSubmitFrame" title="Form submission"></iframe>
+
+  <form
+    class="contact-form"
+    id="snkInvestorForm"
+    action="https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec"
+    method="POST"
+    target="snkHiddenSubmitFrame"
+  >
+    <input
+      type="text"
+      name="website"
+      autocomplete="off"
+      tabindex="-1"
+      aria-hidden="true"
+      style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;"
+    >
+    <input type="hidden" name="origin" value="https://snkrealestate.com">
+    <input type="hidden" name="source" value="SNK Corporate Website">
+
+    <div class="contact-fields">
+      <label>
+        <span>FULL NAME *</span>
+        <input name="fullName" type="text" placeholder="Your full name" autocomplete="name" required>
+      </label>
+
+      <label>
+        <span>EMAIL *</span>
+        <input name="email" type="email" placeholder="name@company.com" autocomplete="email" required>
+      </label>
+
+      <label>
+        <span>COMPANY / ORGANISATION *</span>
+        <input name="company" type="text" placeholder="Company, fund or family office" autocomplete="organization" required>
+      </label>
+
+      <label>
+        <span>POSITION / TITLE *</span>
+        <input name="position" type="text" placeholder="Managing Director, CEO, Investor" autocomplete="organization-title" required>
+      </label>
+
+      <label>
+        <span>COUNTRY *</span>
+        <input name="country" type="text" placeholder="Country" autocomplete="country-name" required>
+      </label>
+
+      <label>
+        <span>MOBILE / TELEPHONE *</span>
+        <input name="mobile" type="tel" placeholder="+30 ..." autocomplete="tel" required>
+      </label>
+    </div>
+
+    <label>
+      <span>INVESTOR TYPE *</span>
+      <select name="investorType" required>
+        <option value="" selected disabled>Select investor type</option>
+        <option>Family Office</option>
+        <option>Private Investor</option>
+        <option>Investment Fund</option>
+        <option>Hotel Group / Operator</option>
+        <option>Real Estate Investor / Developer</option>
+        <option>Institutional Investor</option>
+        <option>Other</option>
+      </select>
+    </label>
+
+    <label>
+      <span>INVESTMENT RANGE *</span>
+      <select name="investmentRange" required>
+        <option value="" selected disabled>Select investment range</option>
+        <option>€250K – €500K</option>
+        <option>€500K – €1M</option>
+        <option>€1M – €5M</option>
+        <option>€5M – €10M</option>
+        <option>€10M – €25M</option>
+        <option>€25M+</option>
+      </select>
+    </label>
+
+    <label>
+      <span>AREA OF INTEREST *</span>
+      <select name="interest" required>
+        <option value="" selected disabled>Select area of interest</option>
+        <option>General investment enquiry</option>
+        <option>Mykonos</option>
+        <option>Paros</option>
+        <option>Athens Investment</option>
+        <option>Golden Visa</option>
+        <option>Other</option>
+      </select>
+    </label>
+
+    <label class="message-field">
+      <span>MESSAGE</span>
+      <textarea name="message" rows="5" placeholder="How may we assist you?"></textarea>
+    </label>
+
+    <button id="snkSubmitButton" type="submit">SUBMIT ENQUIRY</button>
+    <p class="contact-status" id="snkFormStatus" role="status" hidden></p>
+  </form>
+
+  <div class="direct-contact">
+    <a href="mailto:investments@snkrealestate.com">investments@snkrealestate.com</a>
+    <a href="tel:+306985821148">+30 6985 821148</a>
+  </div>
+</section>
   </main>
 
   <footer><a class="brand" href="#top"><strong>SNK</strong><span>REAL ESTATE</span></a><p>PRIVATE REAL ESTATE · GREECE</p><p>© <span id="year"></span> SNK REAL ESTATE</p></footer>
@@ -158,7 +251,8 @@ Direct access.
     const menu=document.querySelector('.menu-button'), nav=document.getElementById('main-nav');
     menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!open));nav.classList.toggle('open',!open)});
     nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.setAttribute('aria-expanded','false');nav.classList.remove('open')}));
-    document.getElementById('snkInvestorForm').addEventListener('submit',function(){
+    const snkForm=document.getElementById('snkInvestorForm');
+    if(snkForm) snkForm.addEventListener('submit',function(){
       const form=this,button=document.getElementById('snkSubmitButton'),status=document.getElementById('snkFormStatus');
       button.disabled=true;button.textContent='SENDING…';status.hidden=false;status.textContent='Sending your enquiry…';
       setTimeout(()=>{status.textContent='Thank you. Your enquiry has been received and SNK Real Estate will contact you shortly.';button.disabled=false;button.textContent='SUBMIT ENQUIRY';form.reset()},2500);
