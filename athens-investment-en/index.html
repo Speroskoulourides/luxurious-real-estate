@@ -125,28 +125,71 @@
   aria-hidden="true"
   style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;"
    >
-        <label><span>FULL NAME *</span><input name="fullName" type="text" placeholder="Your full name" required></label><label><span>EMAIL *</span><input name="email" type="email" placeholder="name@company.com" required></label><label><span>COMPANY / ORGANISATION *</span><input name="company" type="text" placeholder="Company, fund or family office" required></label><label><span>POSITION / TITLE *</span><input name="position" type="text" placeholder="Managing Director, CEO, Investor" required></label><label><span>COUNTRY *</span><input name="country" type="text" placeholder="Country" required></label><label><span>MOBILE / TELEPHONE *</span><input name="phone" type="tel" placeholder="+30 ..." required></label>
-     <input type="hidden" name="origin" value="https://snkrealestate.com">
-      </div>
-  <option value="" selected disabled>Select investment range</option>
-        <option>€250K – €500K</option>
-        <option>€500K – €1M</option>
-        <option>€1M – €5M</option>
-        <option>€5M – €10M</option>
-        <option>€10M – €25M</option>
-        <option>€25M+</option>
-    </select>
-</label>
+      <input type="hidden" name="origin" value="https://snkrealestate.com">
 
-<label class="message-field">
+  <div class="contact-fields">
+    <label>
+      <span>FULL NAME *</span>
+      <input name="fullName" type="text" placeholder="Your full name" required>
+    </label>
+
+    <label>
+      <span>EMAIL *</span>
+      <input name="email" type="email" placeholder="name@company.com" required>
+    </label>
+
+    <label>
+      <span>COMPANY / ORGANISATION *</span>
+      <input name="company" type="text" placeholder="Company, fund or family office" required>
+    </label>
+
+    <label>
+      <span>POSITION / TITLE *</span>
+      <input name="position" type="text" placeholder="Managing Director, CEO, Investor" required>
+    </label>
+
+    <label>
+      <span>COUNTRY *</span>
+      <input name="country" type="text" placeholder="Country" required>
+    </label>
+
+    <label>
+      <span>MOBILE / TELEPHONE *</span>
+      <input name="mobile" type="tel" placeholder="+30 ..." required>
+    </label>
+  </div>
+
+  <label>
+    <span>INVESTOR TYPE *</span>
+    <select name="investorType" required>
+      <option value="" selected disabled>Select investor type</option>
+      <option>Family Office</option>
+      <option>Private Investor</option>
+      <option>Investment Fund</option>
+      <option>Hotel Group / Operator</option>
+      <option>Real Estate Investor / Developer</option>
+      <option>Institutional Investor</option>
+      <option>Other</option>
+    </select>
+  </label>
+
+  <label>
+    <span>INVESTMENT RANGE *</span>
+    <select name="investmentRange" required>
+      <option value="" selected disabled>Select investment range</option>
+      <option>€250K – €500K</option>
+      <option>€500K – €1M</option>
+      <option>€1M – €5M</option>
+      <option>€5M – €10M</option>
+      <option>€10M – €25M</option>
+      <option>€25M+</option>
+    </select>
+  </label>
+
+  <label class="message-field">
     <span>MESSAGE</span>
     <textarea name="message" rows="4" placeholder="Briefly describe your investment interest"></textarea>
-</label>
-
-<<label class="message-field">
-  <span>MESSAGE</span>
-  <textarea name="message" rows="4" placeholder="Briefly describe your investment interest"></textarea>
-</label>
+  </label>    
 
 <button class="cta" id="snkSubmitButton" type="submit">SUBMIT INVESTMENT ENQUIRY</button>
 <p class="contact-status" id="snkFormStatus" role="status" hidden></p>
