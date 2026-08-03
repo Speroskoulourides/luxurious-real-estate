@@ -117,12 +117,40 @@
     <p class="eyebrow">CONFIDENTIAL PROCESS</p><h2>Register your investment interest.</h2><p>Further information and private viewings are available to interested investors following direct communication with SNK Real Estate.</p>
     <iframe class="contact-submit-frame" name="snkHiddenSubmitFrame" title="Form submission"></iframe>
     <form class="contact-form" id="snkInvestorForm" action="https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec" method="POST" target="snkHiddenSubmitFrame">
-      <div class="contact-fields">
-        <label><span>FULL NAME *</span><input name="fullName" type="text" placeholder="Your full name" required></label><label><span>EMAIL *</span><input name="email" type="email" placeholder="name@company.com" required></label><label><span>COMPANY / ORGANISATION *</span><input name="company" type="text" placeholder="Company, fund or family office" required></label><label><span>POSITION / TITLE *</span><input name="position" type="text" placeholder="Managing Director, CEO, Investor" required></label><label><span>COUNTRY *</span><input name="country" type="text" placeholder="Country" required></label><label><span>MOBILE / TELEPHONE *</span><input name="mobile" type="tel" placeholder="+30 ..." required></label>
+   <input
+  type="text"
+  name="website"
+  autocomplete="off"
+  tabindex="-1"
+  aria-hidden="true"
+  style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;"
+   >
+        <label><span>FULL NAME *</span><input name="fullName" type="text" placeholder="Your full name" required></label><label><span>EMAIL *</span><input name="email" type="email" placeholder="name@company.com" required></label><label><span>COMPANY / ORGANISATION *</span><input name="company" type="text" placeholder="Company, fund or family office" required></label><label><span>POSITION / TITLE *</span><input name="position" type="text" placeholder="Managing Director, CEO, Investor" required></label><label><span>COUNTRY *</span><input name="country" type="text" placeholder="Country" required></label><label><span>MOBILE / TELEPHONE *</span><input name="phone" type="tel" placeholder="+30 ..." required></label>
+     <input type="hidden" name="origin" value="https://snkrealestate.com">
       </div>
-      <label><span>INVESTOR TYPE *</span><select name="investorType" required><option value="" selected disabled>Select investor type</option><option>Family Office</option><option>Private Investor</option><option>Investment Fund</option><option>Hotel Group / Operator</option><option>Real Estate Investor / Developer</option><option>Institutional Investor</option><option>Other</option></select></label>
-      <label class="message-field"><span>MESSAGE</span><textarea name="message" rows="4" placeholder="Briefly describe your investment interest"></textarea></label>
-      <button class="cta" id="snkSubmitButton" type="submit">SUBMIT INVESTMENT ENQUIRY</button><p class="contact-status" id="snkFormStatus" role="status" hidden></p><p class="contact-direct">investments@snkrealestate.com · +30 6985 821148</p>
+  <option value="" selected disabled>Select investment range</option>
+        <option>€250K – €500K</option>
+        <option>€500K – €1M</option>
+        <option>€1M – €5M</option>
+        <option>€5M – €10M</option>
+        <option>€10M – €25M</option>
+        <option>€25M+</option>
+    </select>
+</label>
+
+<label class="message-field">
+    <span>MESSAGE</span>
+    <textarea name="message" rows="4" placeholder="Briefly describe your investment interest"></textarea>
+</label>
+
+<<label class="message-field">
+  <span>MESSAGE</span>
+  <textarea name="message" rows="4" placeholder="Briefly describe your investment interest"></textarea>
+</label>
+
+<button class="cta" id="snkSubmitButton" type="submit">SUBMIT INVESTMENT ENQUIRY</button>
+<p class="contact-status" id="snkFormStatus" role="status" hidden></p>
+<p class="contact-direct">investments@snkrealestate.com · +30 6985 821148</p>
     </form>
   </section>
   <footer><div class="brand footer-brand"><span class="brand-mark">SNK</span><span>REAL ESTATE</span></div><p>Confidential Investment Presentation · Athens</p></footer>
