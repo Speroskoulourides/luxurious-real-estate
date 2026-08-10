@@ -51,18 +51,41 @@
     }
   }
   </script>
+
+<style id="snk-global-header-styles">
+#snk-global-header{position:fixed;top:0;left:0;right:0;height:74px;z-index:2147483000;background:#f5f2eb;color:#171714;display:flex;align-items:center;justify-content:space-between;padding:0 30px;border-bottom:1px solid rgba(23,23,20,.12);box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+#snk-global-header *{box-sizing:border-box}
+#snk-global-header a{text-decoration:none;color:inherit}
+.snk-global-brand{display:flex;align-items:center;gap:14px;min-width:245px}
+.snk-global-mark{font-family:Georgia,'Times New Roman',serif;font-size:27px;line-height:1;color:#b8913a;letter-spacing:.04em}
+.snk-global-brand-copy{display:flex;flex-direction:column;line-height:1.05;border-left:1px solid #b8913a;padding-left:13px}
+.snk-global-brand-copy strong{font-size:8px;letter-spacing:.28em;font-weight:700}
+.snk-global-brand-copy small{font-size:6px;letter-spacing:.16em;margin-top:6px;white-space:nowrap;color:#6b675f}
+.snk-global-nav{display:flex;align-items:center;gap:29px;font-size:9px;font-weight:700;letter-spacing:.16em;white-space:nowrap}
+.snk-global-nav a{padding:29px 0 27px}
+.snk-global-nav a:hover{color:#b8913a}
+@media(max-width:900px){#snk-global-header{height:64px;padding:0 16px}.snk-global-brand{min-width:auto}.snk-global-brand-copy small{display:none}.snk-global-nav{gap:14px;font-size:7px;letter-spacing:.1em}.snk-global-nav a{padding:25px 0 23px}}
+@media(max-width:640px){.snk-global-brand-copy{display:none}.snk-global-nav{gap:10px;font-size:6.5px}.snk-global-nav a:first-child,.snk-global-nav a:nth-child(4){display:none}}
+</style>
+<style id="snk-global-header-spacing">body{padding-top:74px!important}@media(max-width:900px){body{padding-top:64px!important}}</style>
 </head>
 <body>
-<main>
-  <header class="topbar">
-    <div class="brand" aria-label="SNK Real Estate"><span class="brand-mark">SNK</span><span>REAL ESTATE</span></div>
-    <nav class="topnav" aria-label="Main navigation">
-      <a href="#overview">INVESTMENT</a><a href="#property-overview">PROPERTY</a><a href="#location">LOCATION</a><a href="#gallery">GALLERY</a><a href="#contact">CONTACT</a>
-    </nav>
-    <span class="confidential">CONFIDENTIAL PRESENTATION</span>
-  </header>
+<header id="snk-global-header" aria-label="SNK Real Estate navigation">
+  <a class="snk-global-brand" href="/" aria-label="SNK Real Estate home">
+    <span class="snk-global-mark">SNK</span>
+    <span class="snk-global-brand-copy"><strong>REAL ESTATE</strong><small>Connecting Exceptional Properties with Exceptional People</small></span>
+  </a>
+  <nav class="snk-global-nav" aria-label="Main navigation">
+    <a href="/#company">COMPANY</a>
+    <a href="/#opportunities">OPPORTUNITIES</a>
+    <a href="/vouliagmeni-en/">SIGNATURE</a>
+    <a href="/#approach">APPROACH</a>
+    <a href="/#contact">CONTACT</a>
+  </nav>
+</header>
 
-  <section class="hero section-dark">
+<main>
+<section class="hero section-dark">
     <div class="hero-copy">
       <p class="eyebrow">SNK · CONFIDENTIAL INVESTMENT OPPORTUNITY</p>
       <h1>A complete hospitality asset in the heart of Athens.</h1>
