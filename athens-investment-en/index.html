@@ -52,40 +52,29 @@
   }
   </script>
 
-<style id="snk-global-header-styles">
-#snk-global-header{position:fixed;top:0;left:0;right:0;height:74px;z-index:2147483000;background:#f5f2eb;color:#171714;display:flex;align-items:center;justify-content:space-between;padding:0 30px;border-bottom:1px solid rgba(23,23,20,.12);box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-#snk-global-header *{box-sizing:border-box}
-#snk-global-header a{text-decoration:none;color:inherit}
-.snk-global-brand{display:flex;align-items:center;gap:14px;min-width:245px}
-.snk-global-mark{font-family:Georgia,'Times New Roman',serif;font-size:27px;line-height:1;color:#b8913a;letter-spacing:.04em}
-.snk-global-brand-copy{display:flex;flex-direction:column;line-height:1.05;border-left:1px solid #b8913a;padding-left:13px}
-.snk-global-brand-copy strong{font-size:8px;letter-spacing:.28em;font-weight:700}
-.snk-global-brand-copy small{font-size:6px;letter-spacing:.16em;margin-top:6px;white-space:nowrap;color:#6b675f}
-.snk-global-nav{display:flex;align-items:center;gap:29px;font-size:9px;font-weight:700;letter-spacing:.16em;white-space:nowrap}
-.snk-global-nav a{padding:29px 0 27px}
-.snk-global-nav a:hover{color:#b8913a}
-@media(max-width:900px){#snk-global-header{height:64px;padding:0 16px}.snk-global-brand{min-width:auto}.snk-global-brand-copy small{display:none}.snk-global-nav{gap:14px;font-size:7px;letter-spacing:.1em}.snk-global-nav a{padding:25px 0 23px}}
-@media(max-width:640px){.snk-global-brand-copy{display:none}.snk-global-nav{gap:10px;font-size:6.5px}.snk-global-nav a:first-child,.snk-global-nav a:nth-child(4){display:none}}
+<style id="snk-opportunity-language-css">
+.snk-lang-switch{display:flex;align-items:center;gap:6px;font-family:Montserrat,Arial,sans-serif;font-size:9px;font-weight:500;letter-spacing:.14em;white-space:nowrap;color:#5f6670}.snk-lang-switch a{text-decoration:none;color:inherit}.snk-lang-switch a:hover,.snk-lang-switch a.active{color:#b88918}.snk-lang-switch span{color:#9a9a94;font-size:8px}
+.snk-global-header{height:76px;padding:0 42px;display:flex;align-items:center;position:fixed;top:0;left:0;right:0;z-index:999999;background:rgba(248,244,234,.98);border-bottom:1px solid rgba(16,23,34,.16);backdrop-filter:blur(12px);font-family:Montserrat,Arial,sans-serif;color:#101722}.snk-global-header *{box-sizing:border-box}.snk-global-brand{display:flex;flex-direction:column;align-items:flex-start;gap:7px;text-decoration:none;color:inherit}.snk-global-brand-main{display:flex;align-items:baseline;gap:12px}.snk-global-brand-main strong{font:400 30px/1 Georgia,serif;letter-spacing:-.07em;color:#b88918}.snk-global-brand-main span{font-size:8px;font-weight:600;letter-spacing:.28em}.snk-global-slogan{font-size:8px;color:#7b7467;letter-spacing:.08em}.snk-global-right{display:flex;align-items:center;margin-left:auto;gap:34px}.snk-global-nav{display:flex;align-items:center;gap:26px}.snk-global-nav a{text-decoration:none;color:#101722;font-size:9px;font-weight:600;letter-spacing:.16em;white-space:nowrap}.snk-global-nav a:hover{color:#b88918}
+@media(max-width:1100px){.snk-global-header{padding:0 24px}.snk-global-right{gap:20px}.snk-global-nav{gap:16px}.snk-global-nav a{font-size:8px}.snk-lang-switch{font-size:8px;gap:4px}}@media(max-width:850px){.snk-global-nav{display:none}.snk-lang-switch{margin-left:auto}.snk-global-slogan{display:none}}
 </style>
-<style id="snk-global-header-spacing">body{padding-top:74px!important}@media(max-width:900px){body{padding-top:64px!important}}</style>
+<style id="snk-athens-lang-css">.topbar{gap:22px}.topbar .snk-lang-switch{margin-left:auto}.topbar .confidential{display:none}@media(max-width:1050px){.topbar .topnav{gap:14px}.topbar .snk-lang-switch{font-size:8px}}</style>
+<style id="snk-opportunity-corporate-header-css">
+body>header:not(.snk-opportunity-header){display:none!important}
+.snk-opportunity-header{height:76px;padding:0 40px;display:flex;align-items:center;position:fixed;top:0;left:0;right:0;z-index:999999;background:rgba(248,244,234,.98);border-bottom:1px solid rgba(16,23,34,.16);backdrop-filter:blur(12px);font-family:Montserrat,Arial,sans-serif;color:#101722;box-sizing:border-box}
+.snk-opportunity-header *{box-sizing:border-box}.snk-opportunity-header a{text-decoration:none;color:inherit}.snk-opportunity-brand{display:flex;flex-direction:column;align-items:flex-start;gap:7px;min-width:235px}.snk-opportunity-brand-main{display:flex;align-items:baseline;gap:12px}.snk-opportunity-brand-main strong{font:400 30px/1 Georgia,serif;letter-spacing:-.07em;color:#b88918}.snk-opportunity-brand-main span{font-size:8px;font-weight:600;letter-spacing:.28em}.snk-opportunity-slogan{font-size:8px;color:#7b7467;letter-spacing:.08em;white-space:nowrap}.snk-opportunity-right{display:flex;align-items:center;margin-left:auto;gap:30px}.snk-opportunity-nav{display:flex;align-items:center;gap:26px}.snk-opportunity-nav a{font-size:9px;font-weight:600;letter-spacing:.16em;white-space:nowrap}.snk-opportunity-nav a:hover{color:#b88918}.snk-opportunity-langs{display:flex;align-items:center;gap:6px;font-size:9px;font-weight:500;letter-spacing:.14em;white-space:nowrap;color:#5f6670}.snk-opportunity-langs a:hover,.snk-opportunity-langs a.active{color:#b88918}.snk-opportunity-langs span{color:#9a9a94;font-size:8px}@media(max-width:1180px){.snk-opportunity-header{padding:0 24px}.snk-opportunity-right{gap:18px}.snk-opportunity-nav{gap:16px}.snk-opportunity-nav a,.snk-opportunity-langs{font-size:8px}.snk-opportunity-langs{gap:4px}}@media(max-width:900px){.snk-opportunity-nav{display:none}.snk-opportunity-langs{margin-left:auto}.snk-opportunity-slogan{display:none}.snk-opportunity-brand{min-width:0}}
+</style>
 </head>
-<body>
-<header id="snk-global-header" aria-label="SNK Real Estate navigation">
-  <a class="snk-global-brand" href="/" aria-label="SNK Real Estate home">
-    <span class="snk-global-mark">SNK</span>
-    <span class="snk-global-brand-copy"><strong>REAL ESTATE</strong><small>Connecting Exceptional Properties with Exceptional People</small></span>
-  </a>
-  <nav class="snk-global-nav" aria-label="Main navigation">
-    <a href="/#company">COMPANY</a>
-    <a href="/#opportunities">OPPORTUNITIES</a>
-    <a href="/vouliagmeni-en/">SIGNATURE</a>
-    <a href="/#approach">APPROACH</a>
-    <a href="/#contact">CONTACT</a>
-  </nav>
-</header>
-
+<body><header class="snk-opportunity-header"><a class="snk-opportunity-brand" href="../index.html#top"><span class="snk-opportunity-brand-main"><strong>SNK</strong><span>REAL ESTATE</span></span><span class="snk-opportunity-slogan">Connecting Exceptional Properties with Exceptional People</span></a><div class="snk-opportunity-right"><nav class="snk-opportunity-nav" aria-label="Main navigation"><a href="../index.html#company">COMPANY</a><a href="../index.html#opportunities">OPPORTUNITIES</a><a href="../vouliagmeni-en/index.html">SIGNATURE</a><a href="../index.html#approach">APPROACH</a><a href="../index.html#contact">CONTACT</a></nav><div class="snk-opportunity-langs" aria-label="Language selection"><a class="active" aria-current="page" href="https://snkrealestate.com/">EN</a><span>·</span><a href="https://snkrealestate.com/el/">EL</a><span>·</span><a href="https://snkrealestate.com/fr/">FR</a><span>·</span><a href="https://snkrealestate.com/es/">ES</a><span>·</span><a href="https://snkrealestate.com/tr/">TR</a><span>·</span><a href="https://snkrealestate.com/pt/">PT</a></div></div></header>
 <main>
-<section class="hero section-dark">
+  <header class="topbar">
+    <div class="brand" aria-label="SNK Real Estate"><span class="brand-mark">SNK</span><span>REAL ESTATE</span></div>
+    <nav class="topnav" aria-label="Main navigation">
+      <a href="#overview">INVESTMENT</a><a href="#property-overview">PROPERTY</a><a href="#location">LOCATION</a><a href="#gallery">GALLERY</a><a href="#contact">CONTACT</a>
+    </nav>
+    <div class="snk-lang-switch" aria-label="Language selection"><a class="active" href="https://snkrealestate.com/">EN</a><span>·</span><a href="https://snkrealestate.com/el/">EL</a><span>·</span><a href="https://snkrealestate.com/fr/">FR</a><span>·</span><a href="https://snkrealestate.com/es/">ES</a><span>·</span><a href="https://snkrealestate.com/tr/">TR</a><span>·</span><a href="https://snkrealestate.com/pt/">PT</a></div><span class="confidential">CONFIDENTIAL PRESENTATION</span>
+  </header>
+
+  <section class="hero section-dark">
     <div class="hero-copy">
       <p class="eyebrow">SNK · CONFIDENTIAL INVESTMENT OPPORTUNITY</p>
       <h1>A complete hospitality asset in the heart of Athens.</h1>

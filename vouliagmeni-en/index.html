@@ -9,27 +9,53 @@
 .topbar .brand strong{font:400 30px/1 Georgia,serif;letter-spacing:-.07em;color:#b88918}
 .topbar .brand span{font-size:8px;font-weight:600;letter-spacing:.28em}
 .topbar .brand-slogan{font-size:9px;margin-top:6px;font-weight:500;letter-spacing:.08em;color:#7b7467;text-transform:none}
+.topbar .header-right{display:flex;align-items:center;gap:26px}
 .topbar nav{display:flex;gap:34px}
 .topbar nav a{font-size:9px;font-weight:600;letter-spacing:.18em;position:relative}
 .topbar nav a:after{content:"";position:absolute;left:0;right:100%;bottom:-10px;height:1px;background:#b88918;transition:.25s}
 .topbar nav a:hover:after{right:0}
+.topbar .language-switch{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.topbar .language-switch a,.topbar .language-switch span{font-size:8px;font-weight:500;letter-spacing:.12em;color:#7b7467}
+.topbar .language-switch a.active{color:#b88918;font-weight:700}
 .topbar .menu-button{display:none;border:0;background:none;font:600 9px Montserrat,Arial,sans-serif;letter-spacing:.18em}
-@media(max-width:900px){.topbar nav{display:none;position:absolute;top:76px;left:0;right:0;padding:28px;background:#f8f4ea;border-bottom:1px solid rgba(16,23,34,.16);flex-direction:column}.topbar nav.open{display:flex}.topbar .menu-button{display:block}}
-</style></head><body> <header class="topbar">
-   <a class="brand" href="../index.html" aria-label="SNK Real Estate home">
+@media(max-width:900px){.topbar .language-switch{display:none}.topbar nav{display:none;position:absolute;top:76px;left:0;right:0;padding:28px;background:#f8f4ea;border-bottom:1px solid rgba(16,23,34,.16);flex-direction:column}.topbar nav.open{display:flex}.topbar .menu-button{display:block}}
+</style>
+<style id="snk-opportunity-language-css">
+.snk-lang-switch{display:flex;align-items:center;gap:6px;font-family:Montserrat,Arial,sans-serif;font-size:9px;font-weight:500;letter-spacing:.14em;white-space:nowrap;color:#5f6670}.snk-lang-switch a{text-decoration:none;color:inherit}.snk-lang-switch a:hover,.snk-lang-switch a.active{color:#b88918}.snk-lang-switch span{color:#9a9a94;font-size:8px}
+.snk-global-header{height:76px;padding:0 42px;display:flex;align-items:center;position:fixed;top:0;left:0;right:0;z-index:999999;background:rgba(248,244,234,.98);border-bottom:1px solid rgba(16,23,34,.16);backdrop-filter:blur(12px);font-family:Montserrat,Arial,sans-serif;color:#101722}.snk-global-header *{box-sizing:border-box}.snk-global-brand{display:flex;flex-direction:column;align-items:flex-start;gap:7px;text-decoration:none;color:inherit}.snk-global-brand-main{display:flex;align-items:baseline;gap:12px}.snk-global-brand-main strong{font:400 30px/1 Georgia,serif;letter-spacing:-.07em;color:#b88918}.snk-global-brand-main span{font-size:8px;font-weight:600;letter-spacing:.28em}.snk-global-slogan{font-size:8px;color:#7b7467;letter-spacing:.08em}.snk-global-right{display:flex;align-items:center;margin-left:auto;gap:34px}.snk-global-nav{display:flex;align-items:center;gap:26px}.snk-global-nav a{text-decoration:none;color:#101722;font-size:9px;font-weight:600;letter-spacing:.16em;white-space:nowrap}.snk-global-nav a:hover{color:#b88918}
+@media(max-width:1100px){.snk-global-header{padding:0 24px}.snk-global-right{gap:20px}.snk-global-nav{gap:16px}.snk-global-nav a{font-size:8px}.snk-lang-switch{font-size:8px;gap:4px}}@media(max-width:850px){.snk-global-nav{display:none}.snk-lang-switch{margin-left:auto}.snk-global-slogan{display:none}}
+</style>
+<style id="snk-vouliagmeni-header-lang-css">.topbar .header-right{display:flex;align-items:center;margin-left:auto;gap:34px}.topbar .snk-lang-switch{color:#5f6670}@media(max-width:900px){.topbar .header-right{gap:12px}.topbar .snk-lang-switch{display:flex}.topbar nav{top:76px}}</style>
+<style id="snk-opportunity-corporate-header-css">
+body>header:not(.snk-opportunity-header){display:none!important}
+.snk-opportunity-header{height:76px;padding:0 40px;display:flex;align-items:center;position:fixed;top:0;left:0;right:0;z-index:999999;background:rgba(248,244,234,.98);border-bottom:1px solid rgba(16,23,34,.16);backdrop-filter:blur(12px);font-family:Montserrat,Arial,sans-serif;color:#101722;box-sizing:border-box}
+.snk-opportunity-header *{box-sizing:border-box}.snk-opportunity-header a{text-decoration:none;color:inherit}.snk-opportunity-brand{display:flex;flex-direction:column;align-items:flex-start;gap:7px;min-width:235px}.snk-opportunity-brand-main{display:flex;align-items:baseline;gap:12px}.snk-opportunity-brand-main strong{font:400 30px/1 Georgia,serif;letter-spacing:-.07em;color:#b88918}.snk-opportunity-brand-main span{font-size:8px;font-weight:600;letter-spacing:.28em}.snk-opportunity-slogan{font-size:8px;color:#7b7467;letter-spacing:.08em;white-space:nowrap}.snk-opportunity-right{display:flex;align-items:center;margin-left:auto;gap:30px}.snk-opportunity-nav{display:flex;align-items:center;gap:26px}.snk-opportunity-nav a{font-size:9px;font-weight:600;letter-spacing:.16em;white-space:nowrap}.snk-opportunity-nav a:hover{color:#b88918}.snk-opportunity-langs{display:flex;align-items:center;gap:6px;font-size:9px;font-weight:500;letter-spacing:.14em;white-space:nowrap;color:#5f6670}.snk-opportunity-langs a:hover,.snk-opportunity-langs a.active{color:#b88918}.snk-opportunity-langs span{color:#9a9a94;font-size:8px}@media(max-width:1180px){.snk-opportunity-header{padding:0 24px}.snk-opportunity-right{gap:18px}.snk-opportunity-nav{gap:16px}.snk-opportunity-nav a,.snk-opportunity-langs{font-size:8px}.snk-opportunity-langs{gap:4px}}@media(max-width:900px){.snk-opportunity-nav{display:none}.snk-opportunity-langs{margin-left:auto}.snk-opportunity-slogan{display:none}.snk-opportunity-brand{min-width:0}}
+</style>
+</head><body><header class="snk-opportunity-header"><a class="snk-opportunity-brand" href="../index.html#top"><span class="snk-opportunity-brand-main"><strong>SNK</strong><span>REAL ESTATE</span></span><span class="snk-opportunity-slogan">Connecting Exceptional Properties with Exceptional People</span></a><div class="snk-opportunity-right"><nav class="snk-opportunity-nav" aria-label="Main navigation"><a href="../index.html#company">COMPANY</a><a href="../index.html#opportunities">OPPORTUNITIES</a><a href="../vouliagmeni-en/index.html">SIGNATURE</a><a href="../index.html#approach">APPROACH</a><a href="../index.html#contact">CONTACT</a></nav><div class="snk-opportunity-langs" aria-label="Language selection"><a class="active" aria-current="page" href="https://snkrealestate.com/">EN</a><span>·</span><a href="https://snkrealestate.com/el/">EL</a><span>·</span><a href="https://snkrealestate.com/fr/">FR</a><span>·</span><a href="https://snkrealestate.com/es/">ES</a><span>·</span><a href="https://snkrealestate.com/tr/">TR</a><span>·</span><a href="https://snkrealestate.com/pt/">PT</a></div></div></header> <header class="topbar">
+   <a class="brand" href="#top" aria-label="SNK Real Estate home">
     <span class="brand-main"><strong>SNK</strong><span>REAL ESTATE</span></span>
    <span class="brand-slogan">Connecting Exceptional Properties with Exceptional People</span></a>
 
 
 
     <button class="menu-button" type="button" aria-expanded="false" aria-controls="main-nav">MENU</button>
-    <nav id="main-nav" aria-label="Main navigation">
-      <a href="../index.html#company">COMPANY</a>
-      <a href="../index.html#opportunities">OPPORTUNITIES</a>
-<a href="index.html" aria-current="page">SIGNATURE</a>
-      <a href="../index.html#approach">APPROACH</a>
-      <a href="../index.html#contact">CONTACT</a>
-    </nav>
+    <div class="header-right">
+      <nav id="main-nav" aria-label="Main navigation">
+        <a href="../index.html#company">COMPANY</a>
+        <a href="../index.html#opportunities">OPPORTUNITIES</a>
+        <a href="#">SIGNATURE</a>
+        <a href="../index.html#approach">APPROACH</a>
+        <a href="../index.html#contact">CONTACT</a>
+      </nav>
+      <div class="language-switch" aria-label="Language selection">
+        <a class="active" aria-current="page" href="https://snkrealestate.com/vouliagmeni-en/">EN</a><span>·</span>
+        <a href="https://snkrealestate.com/el/">EL</a><span>·</span>
+        <a href="https://snkrealestate.com/fr/">FR</a><span>·</span>
+        <a href="https://snkrealestate.com/es/">ES</a><span>·</span>
+        <a href="https://snkrealestate.com/tr/">TR</a><span>·</span>
+        <a href="https://snkrealestate.com/pt/">PT</a>
+      </div>
+    </div>
   </header>
  
 
@@ -52,9 +78,4 @@
 </section>
 <section class="section features"><div class="wrap"><div class="eyebrow">Residence Highlights</div><div class="feature-grid"><div class="feature"><h3>Private Wellness</h3><p>Full spa, gym and sauna designed as an integrated private wellness environment.</p></div><div class="feature"><h3>Entertainment</h3><p>Private cinema, wine cellar and expansive indoor-outdoor living spaces.</p></div><div class="feature"><h3>Outdoor Living</h3><p>95 m² infinity pool, approximately 1,200 m² of landscaped gardens and 230 m² of terraces.</p></div><div class="feature"><h3>Privacy</h3><p>Elevated positioning and mature natural landscaping create exceptional seclusion.</p></div><div class="feature"><h3>Newly Completed</h3><p>Completed in 2025 with Energy Class A+ and modern technical specifications.</p></div><div class="feature"><h3>Access</h3><p>Generous private parking for more than ten vehicles within the estate.</p></div></div></div></section>
 <section class="section location"><div class="wrap"><div class="eyebrow">Vouliagmeni · Athens Riviera</div><h2>Internationally recognised. Exceptionally scarce.</h2><p>Vouliagmeni is the most established ultra-prime residential destination on the Athens Riviera, combining protected coastline, beaches, the Four Seasons Astir Palace, Astir Marina and immediate access to the wider southern Athens lifestyle. Its limited supply of large private plots underpins the long-term scarcity of residences of this scale and positioning.</p></div></section>
-<section class="section enquire"><div class="wrap"><div class="eyebrow">Qualified Enquiries Only</div><h2>Further information is available exclusively upon qualified enquiry.</h2><p>Detailed supporting material, ownership-sensitive information and private viewing arrangements are handled directly by SNK Luxury Real Estate under a confidential process. NDA coordination is available where required.</p><a class="btn" href="mailto:investments@snkrealestate.com?subject=Private%20Enquiry%20-%20Vouliagmeni">Request Private Information</a></div></section></main><footer><div class="wrap footer"><span>© 2026 SNK Luxury Real Estate</span><span>Private &amp; Confidential</span></div></footer>
-<script>
-const menu=document.querySelector('.menu-button'), nav=document.getElementById('main-nav');
-if(menu&&nav){menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!open));nav.classList.toggle('open',!open)});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.setAttribute('aria-expanded','false');nav.classList.remove('open')}));}
-</script>
-</body></html>
+<section class="section enquire"><div class="wrap"><div class="eyebrow">Qualified Enquiries Only</div><h2>Further information is available exclusively upon qualified enquiry.</h2><p>Detailed supporting material, ownership-sensitive information and private viewing arrangements are handled directly by SNK Luxury Real Estate under a confidential process. NDA coordination is available where required.</p><a class="btn" href="../index.html#contact">Request Private Information</a></div></section></main><footer><div class="wrap footer"><span>© 2026 SNK Luxury Real Estate</span><span>Private &amp; Confidential</span></div></footer></body></html>
