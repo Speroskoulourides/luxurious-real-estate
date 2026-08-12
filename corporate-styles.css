@@ -760,3 +760,22 @@ footer p {
     margin-top: 100px;
     clear: both;
 }
+/* EN language switch */
+.language-switch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 42px;
+  white-space: nowrap;
+}
+
+.language-switch a {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: none;
+}
+
+.language-switch span {
+  font-size: 8px;
+}
