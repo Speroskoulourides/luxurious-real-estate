@@ -146,6 +146,7 @@
   <a href="https://snkrealestate.com/fr/">FR</a><span>·</span>
   <a href="https://snkrealestate.com/es/">ES</a><span>·</span>
   <a href="https://snkrealestate.com/tr/">TR</a><span>·</span>
+ <a href="#" class="language button" data-lang="zh">中文</a><span>·</span>
   <a href="https://snkrealestate.com/pt/">PT</a>
 </div>
 </header>
@@ -175,3 +176,4 @@ const translations={
 document.querySelectorAll('.language button').forEach(button=>button.addEventListener('click',()=>{const zh=button.dataset.lang==='zh';document.documentElement.lang=zh?'zh-CN':'en';Object.entries(translations).forEach(([selector,text])=>{const el=document.querySelector(selector);if(el)el.innerHTML=text[zh?1:0]});document.querySelectorAll('.language button').forEach(b=>b.classList.toggle('active',b===button));}));
 </script>
 </body></html>
+
