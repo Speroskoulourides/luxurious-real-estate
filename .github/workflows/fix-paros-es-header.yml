@@ -1,4 +1,4 @@
-name: Fix Paros ES header
+name: Remove PT from Paros headers
 
 on:
   push:
@@ -9,73 +9,90 @@ permissions:
   contents: write
 
 jobs:
-  repair:
+  update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
 
-      - name: Repair Paros ES language header
+      - name: Remove PT from Paros EN and FR language selectors
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import re
 
-          p = Path('paros-es/index.html')
-          s = p.read_text(encoding='utf-8')
+          files = [
+              Path('paros-en/index.html'),
+              Path('paros-fr/index.html'),
+          ]
 
-          pattern = re.compile(
+          selector_re = re.compile(
               r'<div(?=[^>]*class=["\']snk-opportunity-langs["\'])[^>]*>.*?</div>',
               re.S,
           )
-
-          replacement = (
-              '<div aria-label="Language selection" class="snk-opportunity-langs">'
-              '<a href="https://snkrealestate.com/paros-en/">EN</a><span>·</span>'
-              '<a href="https://snkrealestate.com/el/">EL</a><span>·</span>'
-              '<a href="/paros-fr/">FR</a><span>·</span>'
-              '<a aria-current="page" class="snk-lang-active" href="https://snkrealestate.com/paros-es/">ES</a><span>·</span>'
-              '<a href="https://snkrealestate.com/tr/">TR</a>'
-              '</div>'
+          pt_re = re.compile(
+              r'<span>\s*·\s*</span>\s*<a\b[^>]*>\s*PT\s*</a>',
+              re.S,
           )
 
-          s2, n = pattern.subn(replacement, s, count=1)
-          if n != 1:
-              raise SystemExit(f'Expected one language selector, found {n}')
+          changed = []
+          for p in files:
+              s = p.read_text(encoding='utf-8')
+              m = selector_re.search(s)
+              if not m:
+                  raise SystemExit(f'Language selector not found in {p}')
 
-          p.write_text(s2, encoding='utf-8')
+              block = m.group(0)
+              if '>PT</a>' not in block:
+                  print(f'{p}: PT already absent')
+                  continue
+
+              new_block, n = pt_re.subn('', block, count=1)
+              if n != 1:
+                  raise SystemExit(f'Could not safely remove PT from {p}')
+              if '>PT</a>' in new_block:
+                  raise SystemExit(f'PT still present in {p}')
+
+              s2 = s[:m.start()] + new_block + s[m.end():]
+              p.write_text(s2, encoding='utf-8')
+              changed.append(str(p))
+              print(f'{p}: PT removed')
+
+          Path('/tmp/changed.txt').write_text('\n'.join(changed), encoding='utf-8')
           PY
 
-      - name: Verify repair
+      - name: Verify Paros language selectors
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import re
-          s = Path('paros-es/index.html').read_text(encoding='utf-8')
-          m = re.search(r'<div(?=[^>]*class=["\']snk-opportunity-langs["\'])[^>]*>(.*?)</div>', s, re.S)
-          if not m:
-              raise SystemExit('Language selector missing after repair')
-          block = m.group(1)
-          for code in ('EN', 'EL', 'FR', 'ES', 'TR'):
-              if f'>{code}</a>' not in block:
-                  raise SystemExit(f'{code} missing after repair')
-          if '>PT</a>' in block:
-              raise SystemExit('PT still present after repair')
-          print('Paros ES language selector verified')
+
+          for p in [Path('paros-en/index.html'), Path('paros-fr/index.html')]:
+              s = p.read_text(encoding='utf-8')
+              m = re.search(r'<div(?=[^>]*class=["\']snk-opportunity-langs["\'])[^>]*>(.*?)</div>', s, re.S)
+              if not m:
+                  raise SystemExit(f'Language selector missing in {p}')
+              block = m.group(1)
+              for code in ('EN', 'EL', 'FR', 'ES', 'TR'):
+                  if f'>{code}</a>' not in block:
+                      raise SystemExit(f'{code} missing in {p}')
+              if '>PT</a>' in block:
+                  raise SystemExit(f'PT still present in {p}')
+              print(f'{p}: verified')
           PY
 
-      - name: Commit repaired header
+      - name: Commit changes
         shell: bash
         run: |
-          if git diff --quiet -- paros-es/index.html; then
-            echo 'No repair needed'
+          if git diff --quiet -- paros-en/index.html paros-fr/index.html; then
+            echo 'No changes needed'
             exit 0
           fi
-          git config user.name 'SNK header repair'
+          git config user.name 'SNK header update'
           git config user.email 'actions@users.noreply.github.com'
-          git add paros-es/index.html
-          git commit -m 'Fix Paros ES language header links'
+          git add paros-en/index.html paros-fr/index.html
+          git commit -m 'Remove PT from Paros EN and FR headers'
           git push origin HEAD:main
