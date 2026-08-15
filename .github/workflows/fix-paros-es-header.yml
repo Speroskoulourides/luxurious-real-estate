@@ -1,0 +1,81 @@
+name: Fix Paros ES header
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-paros-es-header.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Repair Paros ES language header
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('paros-es/index.html')
+          s = p.read_text(encoding='utf-8')
+
+          pattern = re.compile(
+              r'<div(?=[^>]*class=["\']snk-opportunity-langs["\'])[^>]*>.*?</div>',
+              re.S,
+          )
+
+          replacement = (
+              '<div aria-label="Language selection" class="snk-opportunity-langs">'
+              '<a href="https://snkrealestate.com/paros-en/">EN</a><span>·</span>'
+              '<a href="https://snkrealestate.com/el/">EL</a><span>·</span>'
+              '<a href="/paros-fr/">FR</a><span>·</span>'
+              '<a aria-current="page" class="snk-lang-active" href="https://snkrealestate.com/paros-es/">ES</a><span>·</span>'
+              '<a href="https://snkrealestate.com/tr/">TR</a>'
+              '</div>'
+          )
+
+          s2, n = pattern.subn(replacement, s, count=1)
+          if n != 1:
+              raise SystemExit(f'Expected one language selector, found {n}')
+
+          p.write_text(s2, encoding='utf-8')
+          PY
+
+      - name: Verify repair
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s = Path('paros-es/index.html').read_text(encoding='utf-8')
+          m = re.search(r'<div(?=[^>]*class=["\']snk-opportunity-langs["\'])[^>]*>(.*?)</div>', s, re.S)
+          if not m:
+              raise SystemExit('Language selector missing after repair')
+          block = m.group(1)
+          for code in ('EN', 'EL', 'FR', 'ES', 'TR'):
+              if f'>{code}</a>' not in block:
+                  raise SystemExit(f'{code} missing after repair')
+          if '>PT</a>' in block:
+              raise SystemExit('PT still present after repair')
+          print('Paros ES language selector verified')
+          PY
+
+      - name: Commit repaired header
+        shell: bash
+        run: |
+          if git diff --quiet -- paros-es/index.html; then
+            echo 'No repair needed'
+            exit 0
+          fi
+          git config user.name 'SNK header repair'
+          git config user.email 'actions@users.noreply.github.com'
+          git add paros-es/index.html
+          git commit -m 'Fix Paros ES language header links'
+          git push origin HEAD:main
