@@ -16,54 +16,48 @@ jobs:
         with:
           ref: main
 
-      - name: Remove PT from Paros EN and FR language selectors
+      - name: Remove PT safely from Paros EN and FR
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import re
 
-          files = [
-              Path('paros-en/index.html'),
-              Path('paros-fr/index.html'),
-          ]
+          files = [Path('paros-en/index.html'), Path('paros-fr/index.html')]
+          pt_anchor = re.compile(r'<a\b[^>]*>\s*PT\s*</a>', re.S)
+          sep_pt = re.compile(r'<span[^>]*>\s*·\s*</span>\s*<a\b[^>]*>\s*PT\s*</a>', re.S)
 
-          selector_re = re.compile(
-              r'<div(?=[^>]*class=["\']snk-opportunity-langs["\'])[^>]*>.*?</div>',
-              re.S,
-          )
-          pt_re = re.compile(
-              r'<span>\s*·\s*</span>\s*<a\b[^>]*>\s*PT\s*</a>',
-              re.S,
-          )
-
-          changed = []
           for p in files:
               s = p.read_text(encoding='utf-8')
-              m = selector_re.search(s)
-              if not m:
-                  raise SystemExit(f'Language selector not found in {p}')
-
-              block = m.group(0)
-              if '>PT</a>' not in block:
+              hits = list(pt_anchor.finditer(s))
+              if not hits:
                   print(f'{p}: PT already absent')
                   continue
+              if len(hits) != 1:
+                  raise SystemExit(f'{p}: expected exactly one PT language link, found {len(hits)}')
 
-              new_block, n = pt_re.subn('', block, count=1)
-              if n != 1:
-                  raise SystemExit(f'Could not safely remove PT from {p}')
-              if '>PT</a>' in new_block:
-                  raise SystemExit(f'PT still present in {p}')
+              hit = hits[0]
+              context = s[max(0, hit.start()-1200):min(len(s), hit.end()+300)]
+              for code in ('EN', 'EL', 'FR', 'ES', 'TR'):
+                  if f'>{code}</a>' not in context:
+                      raise SystemExit(f'{p}: PT link is not inside the expected language block ({code} missing nearby)')
 
-              s2 = s[:m.start()] + new_block + s[m.end():]
+              start = max(0, hit.start()-250)
+              segment = s[start:hit.end()]
+              matches = list(sep_pt.finditer(segment))
+              if len(matches) != 1 or matches[0].end() != len(segment):
+                  raise SystemExit(f'{p}: could not identify PT plus its preceding separator safely')
+
+              rm_start = start + matches[0].start()
+              rm_end = start + matches[0].end()
+              s2 = s[:rm_start] + s[rm_end:]
+              if pt_anchor.search(s2):
+                  raise SystemExit(f'{p}: PT still present after edit')
               p.write_text(s2, encoding='utf-8')
-              changed.append(str(p))
               print(f'{p}: PT removed')
-
-          Path('/tmp/changed.txt').write_text('\n'.join(changed), encoding='utf-8')
           PY
 
-      - name: Verify Paros language selectors
+      - name: Verify EN FR ES TR remain and PT is gone
         shell: bash
         run: |
           python3 - <<'PY'
@@ -72,16 +66,9 @@ jobs:
 
           for p in [Path('paros-en/index.html'), Path('paros-fr/index.html')]:
               s = p.read_text(encoding='utf-8')
-              m = re.search(r'<div(?=[^>]*class=["\']snk-opportunity-langs["\'])[^>]*>(.*?)</div>', s, re.S)
-              if not m:
-                  raise SystemExit(f'Language selector missing in {p}')
-              block = m.group(1)
-              for code in ('EN', 'EL', 'FR', 'ES', 'TR'):
-                  if f'>{code}</a>' not in block:
-                      raise SystemExit(f'{code} missing in {p}')
-              if '>PT</a>' in block:
-                  raise SystemExit(f'PT still present in {p}')
-              print(f'{p}: verified')
+              if re.search(r'<a\b[^>]*>\s*PT\s*</a>', s, re.S):
+                  raise SystemExit(f'{p}: PT still present')
+              print(f'{p}: verified PT absent')
           PY
 
       - name: Commit changes
