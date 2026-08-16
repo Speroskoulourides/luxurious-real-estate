@@ -1,4 +1,4 @@
-name: Add Greek Approach section to EL homepage
+name: Fix Signature EL Contact direct link
 
 on:
   push:
@@ -16,55 +16,38 @@ jobs:
         with:
           ref: main
 
-      - name: Add Approach section
+      - name: Fix Signature EL Contact link
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
-          path = Path('el/index.html')
+          path = Path('vouliagmeni/index.html')
           text = path.read_text(encoding='utf-8')
-
-          if 'id="approach"' in text:
-              raise SystemExit('Approach section already exists')
-
-          section = '''
-    <section class="approach section-dark" id="approach">
-      <p class="eyebrow">Η ΠΡΟΣΕΓΓΙΣΗ ΜΑΣ</p>
-      <h2>Από το πρώτο ενδιαφέρον<br>στην ιδιωτική αξιολόγηση.</h2>
-      <div class="process">
-        <article><span>01</span><h3>Ανακαλύψτε</h3><p>Δείτε το επιλεγμένο επενδυτικό έργο μέσα από την ειδικά διαμορφωμένη παρουσίασή του.</p></article>
-        <article><span>02</span><h3>Επικοινωνήστε</h3><p>Εκδηλώστε το ενδιαφέρον σας απευθείας στην ομάδα της SNK Real Estate.</p></article>
-        <article><span>03</span><h3>Αξιολογήστε</h3><p>Λάβετε πρόσθετες πληροφορίες και οργανώστε ιδιωτική επίσκεψη, όπου αυτό είναι κατάλληλο.</p></article>
-      </div>
-      <div class="contact-transition">
-        <p class="transition-label">ΕΤΟΙΜΟΙ ΓΙΑ ΙΔΙΩΤΙΚΗ ΑΞΙΟΛΟΓΗΣΗ;</p>
-        <p>Υποβάλετε το εμπιστευτικό σας αίτημα για περισσότερες πληροφορίες<br>και οργανώστε <span class="gold-text">το επόμενο βήμα.</span></p>
-      </div>
-    </section>
-'''
-
-          marker = '</main>'
-          if marker not in text:
-              raise SystemExit('No </main> found')
-          text = text.replace(marker, section + marker, 1)
-          path.write_text(text, encoding='utf-8')
-          print('Added EL Approach section')
+          old = '<a href="/el/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>'
+          new = '<a href="/el-contact/">ΕΠΙΚΟΙΝΩΝΙΑ</a>'
+          if text.count(old) != 1:
+              raise SystemExit(f'Expected exactly one old Contact link, found {text.count(old)}')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          print('Signature EL Contact now points directly to /el-contact/')
           PY
 
       - name: Verify and commit
         shell: bash
         run: |
-          grep -F 'id="approach"' el/index.html
-          grep -F 'Η ΠΡΟΣΕΓΓΙΣΗ ΜΑΣ' el/index.html
+          grep -F '<a href="/el-contact/">ΕΠΙΚΟΙΝΩΝΙΑ</a>' vouliagmeni/index.html
+          if grep -F '<a href="/el/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>' vouliagmeni/index.html; then
+            echo 'Old Contact link still present'
+            exit 1
+          fi
           changed="$(git diff --name-only)"
-          if [ "$changed" != "el/index.html" ]; then
+          if [ "$changed" != "vouliagmeni/index.html" ]; then
             echo "Unexpected changed files: $changed"
             exit 1
           fi
           git diff --check
-          git config user.name 'SNK EL approach update'
+          git config user.name 'SNK Signature EL update'
           git config user.email 'actions@users.noreply.github.com'
-          git add el/index.html
-          git commit -m 'Add Greek Approach section to EL homepage'
+          git add vouliagmeni/index.html
+          git commit -m 'Fix Signature EL Contact direct link'
           git push origin HEAD:main
