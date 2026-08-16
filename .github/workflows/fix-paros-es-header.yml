@@ -1,4 +1,4 @@
-name: Audit SNK global headers and Greek terminology
+name: Apply SNK universal header and Greek terminology
 
 on:
   push:
@@ -6,61 +6,323 @@ on:
       - '.github/workflows/fix-paros-es-header.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  audit:
+  update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
 
-      - name: Audit live HTML pages
+      - name: Apply universal header and terminology
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import re
 
-          excluded_tokens = (
-              'backup', 'old', 'before-menu-fix', 'index_mykonos_old',
-              'vouliagmeni-index-fixed'
-          )
+          pages = [
+              Path('index.html'),
+              Path('el/index.html'),
+              Path('fr/index.html'),
+              Path('es/index.html'),
+              Path('opportunities/index.html'),
+              Path('vouliagmeni/index.html'),
+              Path('vouliagmeni-en/index.html'),
+              Path('vouliagmeni-es/index.html'),
+              Path('signature-fr.html'),
+              Path('mykonos/index.html'),
+              Path('mykonos-en/index.html'),
+              Path('mykonos-fr/index.html'),
+              Path('mykonos-es/index.html'),
+              Path('MYKONOS.html'),
+              Path('SNK_MYKONOS_GR.html'),
+              Path('paros/index.html'),
+              Path('paros-en/index.html'),
+              Path('paros-fr/index.html'),
+              Path('paros-es/index.html'),
+              Path('PAROS.html'),
+              Path('SNK_PAROS_GR.html'),
+              Path('athens-investment/index.html'),
+              Path('athens-investment-en/index.html'),
+              Path('athens-investment-en/athens-investment-en/index.html'),
+              Path('athens-investment-fr/index.html'),
+              Path('athens-investment-es/index.html'),
+              Path('golden-visa/index.html'),
+              Path('golden-visa-fr/index.html'),
+              Path('golden-visa-es/index.html'),
+          ]
 
-          files = []
-          for p in sorted(Path('.').rglob('*.html')):
-              rel = p.as_posix().lower()
-              if any(token in rel for token in excluded_tokens):
-                  continue
-              files.append(p)
+          missing = [p.as_posix() for p in pages if not p.exists()]
+          if missing:
+              raise SystemExit('Missing expected live pages: ' + ', '.join(missing))
 
-          print('=== HEADER AUDIT ===')
-          for p in files:
-              s = p.read_text(encoding='utf-8', errors='replace')
-              corporate = any(marker in s for marker in (
-                  'snk-opportunity-header',
-                  'snk-global-header',
-                  'class="topbar"',
-                  "class='topbar'",
-                  'class="topbar ',
-                  "class='topbar "
-              ))
-              any_header = bool(re.search(r'<header\b', s, re.I))
-              print(f'{p.as_posix()}\tcorporate={corporate}\tany_header={any_header}\tsize={len(s)}')
+          STYLE_START = '<!-- SNK UNIVERSAL HEADER STYLES START -->'
+          STYLE_END = '<!-- SNK UNIVERSAL HEADER STYLES END -->'
+          HEADER_START = '<!-- SNK UNIVERSAL HEADER START -->'
+          HEADER_END = '<!-- SNK UNIVERSAL HEADER END -->'
 
-          print('\n=== GREEK ΕΥΚΑΙΡ* OCCURRENCES ===')
-          pat = re.compile(r'.{0,90}ευκαιρ.{0,130}', re.I | re.S)
-          total = 0
-          for p in files:
-              s = p.read_text(encoding='utf-8', errors='replace')
-              matches = list(pat.finditer(s))
-              if not matches:
-                  continue
-              total += len(matches)
-              print(f'-- {p.as_posix()} ({len(matches)})')
-              for i, m in enumerate(matches, 1):
-                  snippet = re.sub(r'\s+', ' ', m.group(0)).strip()
-                  print(f'  {i}: {snippet}')
-          print(f'TOTAL={total}')
+          style_block = r'''<!-- SNK UNIVERSAL HEADER STYLES START -->
+          <style id="snk-universal-header-styles">
+          html{scroll-padding-top:92px!important}
+          body.snk-universal-header-enabled{padding-top:76px!important}
+          body.snk-universal-header-enabled>main{margin-top:0!important;padding-top:0!important}
+          body.snk-universal-header-enabled>header:not(#snk-universal-header),
+          body.snk-universal-header-enabled header.topbar,
+          body.snk-universal-header-enabled header.snk-opportunity-header:not(#snk-universal-header),
+          body.snk-universal-header-enabled .snk-global-header:not(#snk-universal-header),
+          body.snk-universal-header-enabled #snk-global-header:not(#snk-universal-header){display:none!important}
+          body.snk-mykonos-document .page{height:calc(100vh - 76px)!important;min-height:calc(100vh - 76px)!important}
+          body.snk-paros-document .page{min-height:calc(100vh - 76px)!important}
+          main [id]{scroll-margin-top:92px}
+          #snk-universal-header,
+          #snk-universal-header *{box-sizing:border-box!important}
+          #snk-universal-header{
+            position:fixed!important;top:0!important;left:0!important;right:0!important;z-index:2147483646!important;
+            height:76px!important;display:flex!important;align-items:center!important;padding:0 36px!important;
+            background:rgba(248,244,234,.985)!important;color:#101722!important;
+            border-bottom:1px solid rgba(16,23,34,.14)!important;box-shadow:0 1px 0 rgba(255,255,255,.55)!important;
+            backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important;
+            font-family:Montserrat,Arial,sans-serif!important
+          }
+          #snk-universal-header a{text-decoration:none!important;color:inherit!important}
+          .snk-universal-brand{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:6px!important;min-width:260px!important}
+          .snk-universal-brand-main{display:flex!important;align-items:baseline!important;gap:12px!important;white-space:nowrap!important}
+          .snk-universal-brand-main strong{font:400 30px/1 Georgia,'Times New Roman',serif!important;letter-spacing:-.07em!important;color:#b88918!important}
+          .snk-universal-brand-main span{font-size:8px!important;font-weight:700!important;letter-spacing:.28em!important;color:#101722!important}
+          .snk-universal-slogan{font-size:7px!important;font-weight:500!important;letter-spacing:.18em!important;color:#7b7467!important;white-space:nowrap!important}
+          .snk-universal-right{display:flex!important;align-items:center!important;margin-left:auto!important;gap:30px!important;min-width:0!important}
+          .snk-universal-nav{display:flex!important;align-items:center!important;gap:28px!important}
+          .snk-universal-nav a{position:relative!important;font-size:9px!important;font-weight:700!important;letter-spacing:.16em!important;white-space:nowrap!important;transition:color .2s ease!important}
+          .snk-universal-nav a:after{content:''!important;position:absolute!important;left:0!important;right:100%!important;bottom:-9px!important;height:1px!important;background:#b88918!important;transition:right .22s ease!important}
+          .snk-universal-nav a:hover{color:#b88918!important}.snk-universal-nav a:hover:after{right:0!important}
+          .snk-universal-langs{display:flex!important;align-items:center!important;gap:6px!important;white-space:nowrap!important;font-size:9px!important;font-weight:600!important;letter-spacing:.12em!important;color:#5f6670!important}
+          .snk-universal-langs a:hover,.snk-universal-langs a.active{color:#b88918!important}.snk-universal-langs span{font-size:8px!important;color:#9a9a94!important}
+          .snk-universal-menu-button{display:none!important;border:0!important;background:transparent!important;color:#101722!important;padding:10px 0!important;font-size:9px!important;font-weight:700!important;letter-spacing:.18em!important;cursor:pointer!important}
+          @media(max-width:1180px){
+            #snk-universal-header{padding:0 24px!important}.snk-universal-brand{min-width:220px!important}.snk-universal-right{gap:18px!important}.snk-universal-nav{gap:16px!important}.snk-universal-nav a,.snk-universal-langs{font-size:8px!important}.snk-universal-langs{gap:4px!important}
+          }
+          @media(max-width:940px){
+            .snk-universal-brand{min-width:0!important}.snk-universal-slogan{display:none!important}.snk-universal-menu-button{display:block!important;order:1!important}.snk-universal-langs{order:2!important}
+            .snk-universal-nav{position:fixed!important;top:76px!important;left:0!important;right:0!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;padding:14px 24px 20px!important;background:rgba(248,244,234,.995)!important;border-bottom:1px solid rgba(16,23,34,.14)!important;box-shadow:0 18px 36px rgba(16,23,34,.12)!important;opacity:0!important;visibility:hidden!important;transform:translateY(-10px)!important;pointer-events:none!important;transition:opacity .2s ease,transform .2s ease,visibility .2s ease!important}
+            #snk-universal-header.snk-menu-open .snk-universal-nav{opacity:1!important;visibility:visible!important;transform:translateY(0)!important;pointer-events:auto!important}
+            .snk-universal-nav a{padding:14px 0!important;border-bottom:1px solid rgba(16,23,34,.09)!important;font-size:10px!important}.snk-universal-nav a:last-child{border-bottom:0!important}.snk-universal-nav a:after{display:none!important}
+          }
+          @media(max-width:560px){
+            #snk-universal-header{height:68px!important;padding:0 16px!important}.snk-universal-brand-main strong{font-size:27px!important}.snk-universal-brand-main span{font-size:7px!important;letter-spacing:.22em!important}.snk-universal-right{gap:12px!important}.snk-universal-langs{font-size:7px!important;gap:3px!important}.snk-universal-menu-button{font-size:8px!important}.snk-universal-nav{top:68px!important;padding-left:18px!important;padding-right:18px!important}body.snk-universal-header-enabled{padding-top:68px!important}body.snk-mykonos-document .page{height:calc(100vh - 68px)!important;min-height:calc(100vh - 68px)!important}body.snk-paros-document .page{min-height:calc(100vh - 68px)!important}
+          }
+          </style>
+          <!-- SNK UNIVERSAL HEADER STYLES END -->'''
+
+          home_map = {'en':'/','el':'/el/','fr':'/fr/','es':'/es/'}
+          signature_map = {'en':'/vouliagmeni-en/','el':'/vouliagmeni/','fr':'/signature-fr.html','es':'/vouliagmeni-es/'}
+          labels = {
+              'en':('COMPANY','OPPORTUNITIES','SIGNATURE','APPROACH','CONTACT'),
+              'el':('ΕΤΑΙΡΕΙΑ','ΕΡΓΑ','SIGNATURE','ΠΡΟΣΕΓΓΙΣΗ','ΕΠΙΚΟΙΝΩΝΙΑ'),
+              'fr':('SOCIÉTÉ','OPPORTUNITÉS','SIGNATURE','APPROCHE','CONTACT'),
+              'es':('EMPRESA','OPORTUNIDADES','SIGNATURE','ENFOQUE','CONTACTO'),
+          }
+          equivalents = {
+              'home': {'en':'/','el':'/el/','fr':'/fr/','es':'/es/'},
+              'opportunities': {'en':'/opportunities/','el':'/el/#opportunities','fr':'/fr/#opportunities','es':'/es/#opportunities'},
+              'vouliagmeni': {'en':'/vouliagmeni-en/','el':'/vouliagmeni/','fr':'/signature-fr.html','es':'/vouliagmeni-es/'},
+              'mykonos': {'en':'/mykonos-en/','el':'/mykonos/','fr':'/mykonos-fr/','es':'/mykonos-es/'},
+              'paros': {'en':'/paros-en/','el':'/paros/','fr':'/paros-fr/','es':'/paros-es/'},
+              'athens': {'en':'/athens-investment-en/','el':'/athens-investment/','fr':'/athens-investment-fr/','es':'/athens-investment-es/'},
+              'golden-visa': {'en':'/golden-visa/','el':'/el/#opportunities','fr':'/golden-visa-fr/','es':'/golden-visa-es/'},
+          }
+
+          def language_for(path):
+              s = path.as_posix().lower()
+              if path.name in {'MYKONOS.html','SNK_MYKONOS_GR.html','PAROS.html','SNK_PAROS_GR.html'}:
+                  return 'el'
+              if s.startswith('el/') or s.startswith('mykonos/') or s.startswith('paros/') or s.startswith('athens-investment/') or s.startswith('vouliagmeni/'):
+                  return 'el'
+              if s.startswith('fr/') or '-fr/' in s or s == 'signature-fr.html':
+                  return 'fr'
+              if s.startswith('es/') or '-es/' in s:
+                  return 'es'
+              return 'en'
+
+          def group_for(path):
+              s = path.as_posix().lower()
+              if s == 'opportunities/index.html': return 'opportunities'
+              if 'golden-visa' in s: return 'golden-visa'
+              if 'mykonos' in s: return 'mykonos'
+              if 'paros' in s: return 'paros'
+              if 'athens-investment' in s: return 'athens'
+              if 'vouliagmeni' in s or s == 'signature-fr.html': return 'vouliagmeni'
+              return 'home'
+
+          def add_body_classes(text, classes):
+              match = re.search(r'<body\b[^>]*>', text, re.I | re.S)
+              if not match:
+                  raise SystemExit('No body tag found')
+              tag = match.group(0)
+              class_match = re.search(r'class\s*=\s*(["\'])(.*?)\1', tag, re.I | re.S)
+              wanted = list(classes)
+              if class_match:
+                  existing = class_match.group(2).split()
+                  merged = existing + [c for c in wanted if c not in existing]
+                  replacement = f'class={class_match.group(1)}{" ".join(merged)}{class_match.group(1)}'
+                  new_tag = tag[:class_match.start()] + replacement + tag[class_match.end():]
+              else:
+                  new_tag = tag[:-1] + ' class="' + ' '.join(wanted) + '">'
+              return text[:match.start()] + new_tag + text[match.end():]
+
+          def remove_marked(text, start, end):
+              return re.sub(re.escape(start) + r'.*?' + re.escape(end), '', text, flags=re.S)
+
+          def header_for(path):
+              lang = language_for(path)
+              group = group_for(path)
+              base = home_map[lang]
+              company, projects, signature, approach, contact = labels[lang]
+              nav = [
+                  (company, base + '#company'),
+                  (projects, base + '#opportunities'),
+                  (signature, signature_map[lang]),
+                  (approach, base + '#approach'),
+                  (contact, base + '#contact'),
+              ]
+              nav_html = ''.join(f'<a href="{href}">{label}</a>' for label, href in nav)
+              lang_html = []
+              for code in ('en','el','fr','es'):
+                  active = ' class="active" aria-current="page"' if code == lang else ''
+                  lang_html.append(f'<a{active} href="{equivalents[group][code]}">{code.upper()}</a>')
+              langs = '<span>·</span>'.join(lang_html)
+              return f'''<!-- SNK UNIVERSAL HEADER START -->
+          <header id="snk-universal-header" class="snk-opportunity-header" role="banner">
+            <a class="snk-universal-brand" href="{base}#top" aria-label="SNK Real Estate home">
+              <span class="snk-universal-brand-main"><strong>SNK</strong><span>REAL ESTATE</span></span>
+              <span class="snk-universal-slogan">Connecting Exceptional Properties with Exceptional People</span>
+            </a>
+            <div class="snk-universal-right">
+              <button class="snk-universal-menu-button" type="button" aria-expanded="false" aria-controls="snk-universal-nav">MENU</button>
+              <nav id="snk-universal-nav" class="snk-universal-nav" aria-label="Main navigation">{nav_html}</nav>
+              <div class="snk-universal-langs" aria-label="Language selection">{langs}</div>
+            </div>
+          </header>
+          <script id="snk-universal-header-script">
+          (()=>{{const h=document.getElementById('snk-universal-header');if(!h)return;const b=h.querySelector('.snk-universal-menu-button');const n=h.querySelector('.snk-universal-nav');if(!b||!n)return;const close=()=>{{h.classList.remove('snk-menu-open');b.setAttribute('aria-expanded','false')}};b.addEventListener('click',()=>{{const open=h.classList.toggle('snk-menu-open');b.setAttribute('aria-expanded',String(open))}});n.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));document.addEventListener('keydown',e=>{{if(e.key==='Escape')close()}});}})();
+          </script>
+          <!-- SNK UNIVERSAL HEADER END -->'''
+
+          paros_files = {Path('PAROS.html'), Path('SNK_PAROS_GR.html'), Path('paros/index.html')}
+          mykonos_files = {Path('MYKONOS.html'), Path('SNK_MYKONOS_GR.html')}
+
+          paros_replacements = [
+              ('SNK Luxury Real Estate | Εμπιστευτική Παρουσίαση Επενδυτικής Ευκαιρίας', 'SNK Luxury Real Estate | Εμπιστευτικός Επενδυτικός Φάκελος'),
+              ('Ξενοδοχειακή Επενδυτική Ευκαιρία', 'Ξενοδοχειακό Επενδυτικό Έργο'),
+              ('Μια σπάνια ξενοδοχειακή επενδυτική ευκαιρία στην Πάρο.', 'Ένα σπάνιο ξενοδοχειακό επενδυτικό έργο στην Πάρο.'),
+              ('Η παρούσα εμπιστευτική παρουσίαση αφορά μία ξενοδοχειακή επενδυτική ευκαιρία στην Πάρο', 'Ο παρών εμπιστευτικός επενδυτικός φάκελος αφορά ένα ξενοδοχειακό επενδυτικό έργο στην Πάρο'),
+          ]
+          mykonos_replacements = [
+              ('Μια σπάνια επενδυτική ευκαιρία στη Μύκονο', 'Ένα σπάνιο επενδυτικό έργο στη Μύκονο'),
+              ('Μία εξαιρετικά σπάνια επενδυτική ευκαιρία στη Μύκονο', 'Ένα εξαιρετικά σπάνιο επενδυτικό έργο στη Μύκονο'),
+              ('Μία σπάνια επενδυτική ευκαιρία απόκτησης ενός πλήρως εκσυγχρονισμένου ακινήτου', 'Ένα σπάνιο επενδυτικό έργο που αφορά την απόκτηση ενός πλήρως εκσυγχρονισμένου ακινήτου'),
+              ('Μια Ξεχωριστή Επενδυτική Ευκαιρία', 'Ένα Ξεχωριστό Επενδυτικό Έργο'),
+              ('της επενδυτικής ευκαιρίας', 'του επενδυτικού έργου'),
+          ]
+          el_home_replacements = [
+              ('<a href="#opportunities">ΕΥΚΑΙΡΙΕΣ</a>', '<a href="#opportunities">ΕΡΓΑ</a>'),
+              ('Επιλεγμένες<br>Επενδυτικές Ευκαιρίες.', 'Επιλεγμένα<br>Επενδυτικά Έργα.'),
+              ('προσεκτικά επιλεγμένες επενδυτικές ευκαιρίες', 'προσεκτικά επιλεγμένα επενδυτικά έργα'),
+              ('ΔΕΙΤΕ ΤΙΣ ΕΥΚΑΙΡΙΕΣ', 'ΔΕΙΤΕ ΤΑ ΕΡΓΑ'),
+              ('Μια εξειδικευμένη πλατφόρμα για εξαιρετικές επενδυτικές ευκαιρίες.', 'Μια εξειδικευμένη πλατφόρμα για εξαιρετικά επενδυτικά έργα.'),
+              ('καθιστούμε κάθε ευκαιρία κατανοητή, προσβάσιμη και έτοιμη', 'καθιστούμε κάθε επενδυτικό έργο κατανοητό, προσβάσιμο και έτοιμο'),
+              ('ΕΠΙΛΕΓΜΕΝΕΣ ΕΥΚΑΙΡΙΕΣ', 'ΕΠΙΛΕΓΜΕΝΑ ΕΡΓΑ'),
+              ('Επιλεγμένες Επενδυτικές Ευκαιρίες', 'Επιλεγμένα Επενδυτικά Έργα'),
+              ('Κάθε ευκαιρία διαθέτει τη δική της ξεχωριστή παρουσίαση.', 'Κάθε επενδυτικό έργο διαθέτει τον δικό του ξεχωριστό επενδυτικό φάκελο.'),
+              ('Επενδυτική Ευκαιρία Υψηλής Αξίας', 'Επενδυτικό Έργο Υψηλής Αξίας'),
+              ('ΑΝΑΚΑΛΥΨΤΕ ΤΗΝ ΕΠΕΝΔΥΤΙΚΗ ΕΥΚΑΙΡΙΑ', 'ΑΝΑΚΑΛΥΨΤΕ ΤΟ ΕΠΕΝΔΥΤΙΚΟ ΕΡΓΟ'),
+          ]
+          vouliagmeni_replacements = [
+              ('Ιδιωτική και εμπιστευτική ultra-prime επενδυτική ευκαιρία', 'Ιδιωτικό και εμπιστευτικό ultra-prime επενδυτικό έργο'),
+              ('Επενδυτική Ευκαιρία Υψηλής Αξίας', 'Επενδυτικό Έργο Υψηλής Αξίας'),
+              ('<a href="/el/#opportunities">ΕΥΚΑΙΡΙΕΣ</a>', '<a href="/el/#opportunities">ΕΡΓΑ</a>'),
+              ('Ultra-Prime Επενδυτική Ευκαιρία', 'Ultra-Prime Επενδυτικό Έργο'),
+          ]
+          athens_replacements = [
+              ('SNK · ΕΜΠΙΣΤΕΥΤΙΚΗ ΕΠΕΝΔΥΤΙΚΗ ΕΥΚΑΙΡΙΑ', 'SNK · ΕΜΠΙΣΤΕΥΤΙΚΟΣ ΕΠΕΝΔΥΤΙΚΟΣ ΦΑΚΕΛΟΣ'),
+              ('Σπάνια ευκαιρία στο ιστορικό κέντρο.', 'Ένα διακεκριμένο επενδυτικό έργο στο ιστορικό κέντρο.'),
+          ]
+
+          for p in pages:
+              text = p.read_text(encoding='utf-8')
+              text = remove_marked(text, STYLE_START, STYLE_END)
+              text = remove_marked(text, HEADER_START, HEADER_END)
+
+              replacements = []
+              if p in paros_files: replacements += paros_replacements
+              if p in mykonos_files: replacements += mykonos_replacements
+              if p == Path('el/index.html'): replacements += el_home_replacements
+              if p == Path('vouliagmeni/index.html'): replacements += vouliagmeni_replacements
+              if p == Path('athens-investment/index.html'): replacements += athens_replacements
+              for old, new in replacements:
+                  count = text.count(old)
+                  if count:
+                      text = text.replace(old, new)
+                      print(f'{p}: replaced {count} x {old[:70]}')
+
+              classes = ['snk-universal-header-enabled']
+              if group_for(p) == 'mykonos' and p != Path('mykonos/index.html'):
+                  classes.append('snk-mykonos-document')
+              if group_for(p) == 'paros':
+                  classes.append('snk-paros-document')
+              text = add_body_classes(text, classes)
+
+              head_close = re.search(r'</head\s*>', text, re.I)
+              if not head_close:
+                  raise SystemExit(f'{p}: no closing head tag')
+              text = text[:head_close.start()] + '\n' + style_block + '\n' + text[head_close.start():]
+
+              body_open = re.search(r'<body\b[^>]*>', text, re.I | re.S)
+              if not body_open:
+                  raise SystemExit(f'{p}: no body tag after class update')
+              header = header_for(p)
+              text = text[:body_open.end()] + '\n' + header + '\n' + text[body_open.end():]
+              p.write_text(text, encoding='utf-8')
+              print(f'{p}: universal header installed')
+
+          greek_files = [
+              Path('MYKONOS.html'), Path('SNK_MYKONOS_GR.html'), Path('PAROS.html'),
+              Path('SNK_PAROS_GR.html'), Path('paros/index.html'), Path('el/index.html'),
+              Path('athens-investment/index.html'), Path('vouliagmeni/index.html'),
+          ]
+          leftovers = []
+          for p in greek_files:
+              text = p.read_text(encoding='utf-8')
+              for m in re.finditer(r'ευκαιρ', text, re.I):
+                  context = re.sub(r'\s+', ' ', text[max(0,m.start()-80):m.end()+120])
+                  leftovers.append(f'{p}: {context}')
+          if leftovers:
+              raise SystemExit('Greek terminology remains:\n' + '\n'.join(leftovers))
+
+          for p in pages:
+              text = p.read_text(encoding='utf-8')
+              if text.count('id="snk-universal-header"') != 1:
+                  raise SystemExit(f'{p}: expected exactly one universal header')
+              if text.count(STYLE_START) != 1 or text.count(STYLE_END) != 1:
+                  raise SystemExit(f'{p}: universal header styles are missing or duplicated')
+              for destination in ('#company', '#opportunities', '#approach', '#contact'):
+                  if destination not in text[text.find(HEADER_START):text.find(HEADER_END)]:
+                      raise SystemExit(f'{p}: header destination {destination} missing')
+          print(f'Verified {len(pages)} live pages with one universal header each')
           PY
+
+      - name: Commit site-wide update
+        shell: bash
+        run: |
+          git status --short
+          if git diff --quiet; then
+            echo 'No changes needed'
+            exit 0
+          fi
+          git config user.name 'SNK site-wide navigation update'
+          git config user.email 'actions@users.noreply.github.com'
+          git add -A
+          git commit -m 'Add universal header and institutional Greek terminology'
+          git push origin HEAD:main
