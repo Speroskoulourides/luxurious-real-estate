@@ -244,5 +244,15 @@ const translations={
 };
 document.querySelectorAll('.zh-button').forEach(button=>button.addEventListener('click',()=>{const zh=button.dataset.lang==='zh';document.documentElement.lang=zh?'zh-CN':'en';Object.entries(translations).forEach(([selector,text])=>{const el=document.querySelector(selector);if(el)el.innerHTML=text[zh?1:0]});document.querySelectorAll('.language.button').forEach(b=>b.classList.toggle('active',b===button));}));
 </script>
+<script id="snk-golden-visa-direct-zh">
+(()=>{
+  const activate=()=>{
+    if(new URLSearchParams(window.location.search).get('lang')!=='zh')return;
+    const button=document.querySelector('.zh-button[data-lang="zh"]');
+    if(button)button.click();
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',activate,{once:true});else activate();
+})();
+</script>
 </body></html>
 
