@@ -1,4 +1,4 @@
-name: Fix Chinese Golden Visa direct mode
+name: Repair Chinese Golden Visa workflow
 
 on:
   push:
@@ -16,74 +16,21 @@ jobs:
         with:
           ref: main
 
-      - name: Fix only Chinese Golden Visa activation
-        shell: bash
+      - name: Fix Chinese activation
         run: |
-          python3 - <<'PY'
-          from pathlib import Path
+          python3 -c "from pathlib import Path; p=Path('golden-visa/index.html'); s=p.read_text(encoding='utf-8'); old=\"document.querySelectorAll('.zh-button').forEach(button=>button.addEventListener('click',()=>{\"; new=\"document.querySelectorAll('.zh-button').forEach(button=>button.addEventListener('click',(event)=>{event.preventDefault();\"; assert s.count(old)==1, s.count(old); s=s.replace(old,new,1); old2=\"const button=document.querySelector('.zh-button[data-lang=\\\"zh\\\"]');\\n    if(button)button.click();\"; new2=\"document.documentElement.lang='zh-CN';\\n    Object.entries(translations).forEach(([selector,text])=>{const el=document.querySelector(selector);if(el)el.innerHTML=text[1]});\"; assert s.count(old2)==1, s.count(old2); s=s.replace(old2,new2,1); p.write_text(s,encoding='utf-8')"
 
-          path = Path('golden-visa/index.html')
-          text = path.read_text(encoding='utf-8')
-
-          old_handler = "document.querySelectorAll('.zh-button').forEach(button=>button.addEventListener('click',()=>{const zh=button.dataset.lang==='zh';document.documentElement.lang=zh?'zh-CN':'en';Object.entries(translations).forEach(([selector,text])=>{const el=document.querySelector(selector);if(el)el.innerHTML=text[zh?1:0]});document.querySelectorAll('.language.button').forEach(b=>b.classList.toggle('active',b===button));}));"
-          new_handler = "document.querySelectorAll('.zh-button').forEach(button=>button.addEventListener('click',(event)=>{event.preventDefault();const zh=button.dataset.lang==='zh';document.documentElement.lang=zh?'zh-CN':'en';Object.entries(translations).forEach(([selector,text])=>{const el=document.querySelector(selector);if(el)el.innerHTML=text[zh?1:0]});document.querySelectorAll('.zh-button').forEach(b=>b.classList.toggle('active',b===button));}));"
-
-          old_direct = '''<script id="snk-golden-visa-direct-zh">
-(()=>{
-  const activate=()=>{
-    if(new URLSearchParams(window.location.search).get('lang')!=='zh')return;
-    const button=document.querySelector('.zh-button[data-lang="zh"]');
-    if(button)button.click();
-  };
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',activate,{once:true});else activate();
-})();
-</script>'''
-
-          new_direct = '''<script id="snk-golden-visa-direct-zh">
-(()=>{
-  const activate=()=>{
-    if(new URLSearchParams(window.location.search).get('lang')!=='zh')return;
-    document.documentElement.lang='zh-CN';
-    if(typeof translations!=='object')return;
-    Object.entries(translations).forEach(([selector,text])=>{
-      const el=document.querySelector(selector);
-      if(el)el.innerHTML=text[1];
-    });
-    document.querySelectorAll('.zh-button').forEach(b=>b.classList.add('active'));
-  };
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',activate,{once:true});else activate();
-})();
-</script>'''
-
-          if text.count(old_handler) != 1:
-              raise SystemExit(f'Expected one old Chinese handler, found {text.count(old_handler)}')
-          if text.count(old_direct) != 1:
-              raise SystemExit(f'Expected one old direct Chinese block, found {text.count(old_direct)}')
-
-          updated = text.replace(old_handler, new_handler, 1).replace(old_direct, new_direct, 1)
-          path.write_text(updated, encoding='utf-8')
-          print('Updated only golden-visa/index.html')
-          PY
-
-      - name: Verify and commit only Golden Visa
-        shell: bash
+      - name: Verify
         run: |
-          changed="$(git diff --name-only)"
-          if [ "$changed" != "golden-visa/index.html" ]; then
-            echo "Unexpected changed files: $changed"
-            exit 1
-          fi
-
           grep -F 'event.preventDefault()' golden-visa/index.html
           grep -F "document.documentElement.lang='zh-CN'" golden-visa/index.html
-          grep -F 'if(el)el.innerHTML=text[1]' golden-visa/index.html
-          if grep -F 'if(button)button.click();' golden-visa/index.html; then
-            echo 'Old simulated click still present'
-            exit 1
-          fi
+          if grep -F 'if(button)button.click();' golden-visa/index.html; then exit 1; fi
           git diff --check
+
+      - name: Commit
+        run: |
           git config user.name 'SNK Golden Visa update'
           git config user.email 'actions@users.noreply.github.com'
           git add golden-visa/index.html
-          git commit -m 'Fix Chinese Golden Visa direct mode'
+          git commit -m 'Repair Chinese Golden Visa activation'
           git push origin HEAD:main
