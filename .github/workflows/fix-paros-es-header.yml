@@ -1,4 +1,4 @@
-name: Restore Greek Approach section on EL homepage
+name: Point EL contact to Paros Greek contact
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
         with:
           ref: main
 
-      - name: Add only Greek Approach section
+      - name: Change only EL Contact destination
         shell: bash
         run: |
           python3 - <<'PY'
@@ -25,34 +25,15 @@ jobs:
           path = Path('el/index.html')
           text = path.read_text(encoding='utf-8')
 
-          if 'id="approach"' in text:
-              raise SystemExit('EL approach section already exists; stopping to avoid duplication')
+          old = '<a href="/el/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>'
+          new = '<a href="/paros/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>'
 
-          marker = '\n  </main>'
-          if text.count(marker) != 1:
-              raise SystemExit(f'Expected exactly one main closing marker, found {text.count(marker)}')
+          if text.count(old) != 1:
+              raise SystemExit(f'Expected exactly one EL Contact link, found {text.count(old)}')
 
-          section = '''
-    <section class="approach section-dark" id="approach">
-      <p class="eyebrow">Η ΠΡΟΣΕΓΓΙΣΗ ΜΑΣ</p>
-      <h2>Από το πρώτο ενδιαφέρον<br>στην ιδιωτική αξιολόγηση.</h2>
-      <div class="process">
-        <article><span>01</span><h3>Ανακαλύψτε</h3><p>Δείτε το επιλεγμένο επενδυτικό έργο μέσα από την ειδικά διαμορφωμένη παρουσίασή του.</p></article>
-        <article><span>02</span><h3>Επικοινωνήστε</h3><p>Εκδηλώστε το ενδιαφέρον σας απευθείας στην ομάδα της SNK Real Estate.</p></article>
-        <article><span>03</span><h3>Αξιολογήστε</h3><p>Λάβετε πρόσθετες πληροφορίες και οργανώστε ιδιωτική επίσκεψη, όπου αυτό είναι κατάλληλο.</p></article>
-      </div>
-      <div class="contact-transition">
-        <p class="transition-label">ΕΤΟΙΜΟΙ ΓΙΑ ΙΔΙΩΤΙΚΗ ΑΞΙΟΛΟΓΗΣΗ;</p>
-        <p>Υποβάλετε το εμπιστευτικό σας αίτημα για περισσότερες πληροφορίες<br>και οργανώστε <span class="gold-text">το επόμενο βήμα.</span></p>
-      </div>
-    </section>'''
-
-          updated = text.replace(marker, section + marker, 1)
-          if updated.count('id="approach"') != 1:
-              raise SystemExit('Greek Approach section was not installed exactly once')
-
+          updated = text.replace(old, new, 1)
           path.write_text(updated, encoding='utf-8')
-          print('Added only Greek #approach to el/index.html')
+          print('Updated only EL Contact destination to Paros Greek contact')
           PY
 
       - name: Verify and commit only EL homepage
@@ -64,12 +45,10 @@ jobs:
             exit 1
           fi
 
-          grep -F 'id="approach"' el/index.html
-          grep -F 'Η ΠΡΟΣΕΓΓΙΣΗ ΜΑΣ' el/index.html
-          grep -F 'Από το πρώτο ενδιαφέρον' el/index.html
+          grep -F '<a href="/paros/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>' el/index.html
           git diff --check
-          git config user.name 'SNK EL page update'
+          git config user.name 'SNK EL contact update'
           git config user.email 'actions@users.noreply.github.com'
           git add el/index.html
-          git commit -m 'Restore Greek Approach section on EL homepage'
+          git commit -m 'Point EL Contact to Paros Greek contact'
           git push origin HEAD:main
