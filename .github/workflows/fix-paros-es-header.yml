@@ -1,4 +1,4 @@
-name: Add Chinese Golden Visa to EN header
+name: Restore Chinese Golden Visa query link in EN header
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
         with:
           ref: main
 
-      - name: Add Chinese Golden Visa only to EN universal header
+      - name: Change only EN Chinese Golden Visa link
         shell: bash
         run: |
           python3 - <<'PY'
@@ -24,16 +24,14 @@ jobs:
 
           path = Path('index.html')
           text = path.read_text(encoding='utf-8')
-          target = '<a href="/#contact">CONTACT</a></nav>'
-          replacement = '<a href="/#contact">CONTACT</a><a href="/golden-visa/">中文 GOLDEN VISA</a></nav>'
+          old = '<a href="/golden-visa/">中文 GOLDEN VISA</a>'
+          new = '<a href="/golden-visa/?lang=zh">中文 GOLDEN VISA</a>'
 
-          if replacement in text:
-              raise SystemExit('EN header already has Chinese Golden Visa')
-          if text.count(target) != 1:
-              raise SystemExit(f'Expected one EN header insertion point, found {text.count(target)}')
+          if text.count(old) != 1:
+              raise SystemExit(f'Expected exactly one EN Chinese Golden Visa link, found {text.count(old)}')
 
-          path.write_text(text.replace(target, replacement, 1), encoding='utf-8')
-          print('Added Chinese Golden Visa to EN universal header')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          print('Restored ?lang=zh in EN header')
           PY
 
       - name: Verify and commit only EN homepage
@@ -44,10 +42,10 @@ jobs:
             echo "Unexpected changed files: $changed"
             exit 1
           fi
-          grep -F '<a href="/#contact">CONTACT</a><a href="/golden-visa/">中文 GOLDEN VISA</a></nav>' index.html
+          grep -F '<a href="/golden-visa/?lang=zh">中文 GOLDEN VISA</a>' index.html
           git diff --check
           git config user.name 'SNK EN menu update'
           git config user.email 'actions@users.noreply.github.com'
           git add index.html
-          git commit -m 'Add Chinese Golden Visa to EN header'
+          git commit -m 'Restore Chinese Golden Visa query link in EN header'
           git push origin HEAD:main
