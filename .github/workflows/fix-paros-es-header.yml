@@ -1,4 +1,4 @@
-name: Add Greek investor contact form to EL homepage
+name: Link EL Contact to investor contact page
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
         with:
           ref: main
 
-      - name: Add EL investor contact section
+      - name: Update EL Contact link
         shell: bash
         run: |
           python3 - <<'PY'
@@ -25,154 +25,29 @@ jobs:
 
           path = Path('el/index.html')
           text = path.read_text(encoding='utf-8')
+          pattern = r'<a href="[^"]*">ΕΠΙΚΟΙΝΩΝΙΑ</a>'
+          matches = list(re.finditer(pattern, text))
+          if not matches:
+              raise SystemExit('No EL Contact links found')
 
-          # Point the EL universal header Contact item back to the EL page.
-          text, nav_count = re.subn(
-              r'<a href="/paros/#[^"]*">ΕΠΙΚΟΙΝΩΝΙΑ</a>',
-              '<a href="/el/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>',
-              text,
-              count=1
-          )
-          if nav_count == 0:
-              text, nav_count = re.subn(
-                  r'<a href="/el/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>',
-                  '<a href="/el/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>',
-                  text,
-                  count=1
-              )
-          if nav_count != 1:
-              raise SystemExit(f'Could not resolve exactly one EL Contact nav item: {nav_count}')
-
-          css = r'''
-<!-- SNK EL INVESTOR CONTACT STYLES START -->
-<style id="snk-el-investor-contact-styles">
-#contact.snk-el-investor-contact{background:#030303;color:#f4f4f4;padding:76px 7vw 42px;font-family:Montserrat,Arial,sans-serif}
-#contact .snk-el-contact-shell{max-width:1220px;margin:0 auto}
-#contact .snk-el-contact-kicker{text-align:center;color:#d6ab34;font-size:11px;font-weight:700;letter-spacing:.42em;margin:0 0 18px}
-#contact .snk-el-contact-title{text-align:center;color:#f0cf68;font:700 clamp(34px,4vw,58px)/1.05 Montserrat,Arial,sans-serif;letter-spacing:-.025em;margin:0}
-#contact .snk-el-contact-lead{max-width:830px;margin:30px auto 48px;text-align:center;color:#aeb5bf;font-size:14px;line-height:1.75}
-#contact .snk-el-contact-grid{display:grid;grid-template-columns:minmax(300px,.82fr) minmax(0,1.45fr);gap:34px;align-items:start}
-#contact .snk-el-contact-left{display:grid;gap:26px}
-#contact .snk-el-panel{border:1px solid rgba(201,157,31,.38);border-radius:16px;background:linear-gradient(145deg,#090909,#050505);padding:30px 32px}
-#contact .snk-el-pill{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(201,157,31,.45);border-radius:999px;padding:9px 15px;color:#e0b638;font-size:9px;font-weight:800;letter-spacing:.24em;margin-bottom:24px}
-#contact .snk-el-pill:before{content:'';width:7px;height:7px;border-radius:50%;background:#d1a51c}
-#contact .snk-el-step{padding:0 0 22px;margin:0 0 22px;border-bottom:1px solid rgba(255,255,255,.10)}
-#contact .snk-el-step:last-child{border-bottom:0;padding-bottom:0;margin-bottom:0}
-#contact .snk-el-step-num,#contact .snk-el-direct-label,#contact .snk-el-form-kicker,#contact .snk-el-field span{color:#d7ac2e;font-size:10px;font-weight:800;letter-spacing:.22em}
-#contact .snk-el-step h3{font-size:19px;margin:8px 0 10px;color:#fff}
-#contact .snk-el-step p,#contact .snk-el-direct p{margin:0;color:#a9b7c8;font-size:13px;line-height:1.6}
-#contact .snk-el-direct h3{font-size:21px;margin:18px 0 6px;color:#fff}
-#contact .snk-el-direct a{color:#fff;text-decoration:none}
-#contact .snk-el-direct-row{margin-top:22px}
-#contact .snk-el-form-panel{border:1px solid rgba(201,157,31,.55);border-radius:20px;background:radial-gradient(circle at 0 0,rgba(202,157,30,.24),transparent 30%),linear-gradient(145deg,#151515,#090909);padding:34px 36px 32px}
-#contact .snk-el-form-panel h3{font-size:29px;margin:10px 0 12px;color:#fff}
-#contact .snk-el-form-intro{margin:0 0 28px;color:#9ba3ad;font-size:13px;line-height:1.65}
-#contact .snk-el-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 16px}
-#contact .snk-el-field{display:flex;flex-direction:column;gap:8px}
-#contact .snk-el-field.full{grid-column:1/-1}
-#contact input,#contact select,#contact textarea{width:100%;box-sizing:border-box;border:1px solid rgba(201,157,31,.48);border-radius:13px;background:rgba(2,2,2,.75);color:#f4f4f4;font:500 15px/1.2 Montserrat,Arial,sans-serif;padding:15px 16px;outline:none}
-#contact input::placeholder,#contact textarea::placeholder{color:#64666c}
-#contact textarea{min-height:112px;resize:vertical}
-#contact input:focus,#contact select:focus,#contact textarea:focus{border-color:#d6aa2b;box-shadow:0 0 0 2px rgba(214,170,43,.10)}
-#contact .snk-el-submit{width:100%;margin-top:22px;border:0;border-radius:12px;background:linear-gradient(90deg,#d5a829,#f0d169,#c7910b);color:#090909;padding:17px 22px;font:800 16px/1 Montserrat,Arial,sans-serif;letter-spacing:.18em;cursor:pointer;box-shadow:0 12px 34px rgba(194,143,0,.22)}
-#contact .snk-el-contact-footer{text-align:center;margin-top:38px;color:#2e405c;font-size:12px}
-#contact .snk-el-confidential{text-align:center;margin:10px 0 0;color:#d7ac2e;font-size:10px;font-weight:800;letter-spacing:.24em}
-#contact .snk-el-submit-frame{display:none;width:0;height:0;border:0}
-@media(max-width:900px){#contact.snk-el-investor-contact{padding:58px 24px 34px}#contact .snk-el-contact-grid{grid-template-columns:1fr}#contact .snk-el-contact-left{grid-template-columns:1fr 1fr}}
-@media(max-width:640px){#contact.snk-el-investor-contact{padding:48px 18px 30px}#contact .snk-el-contact-left{grid-template-columns:1fr}#contact .snk-el-form-grid{grid-template-columns:1fr}#contact .snk-el-field.full{grid-column:auto}#contact .snk-el-panel,#contact .snk-el-form-panel{padding:24px 20px}#contact .snk-el-contact-title{font-size:34px}}
-</style>
-<!-- SNK EL INVESTOR CONTACT STYLES END -->
-'''
-
-          section = r'''
-<section class="snk-el-investor-contact" id="contact">
-  <div class="snk-el-contact-shell">
-    <p class="snk-el-contact-kicker">SNK LUXURY REAL ESTATE</p>
-    <h2 class="snk-el-contact-title">ΕΜΠΙΣΤΕΥΤΙΚΟ ΑΙΤΗΜΑ ΕΠΕΝΔΥΤΗ</h2>
-    <p class="snk-el-contact-lead">Παρακαλούμε συμπληρώστε την παρακάτω εμπιστευτική φόρμα ενδιαφέροντος. Οι επιλεγμένοι επενδυτές θα ενημερωθούν για τα επόμενα βήματα, την υπογραφή Συμφωνίας Εμπιστευτικότητας και την πρόσβαση στον Φάκελο Επενδυτικών Στοιχείων.</p>
-
-    <div class="snk-el-contact-grid">
-      <div class="snk-el-contact-left">
-        <div class="snk-el-panel">
-          <div class="snk-el-pill">ΕΜΠΙΣΤΕΥΤΙΚΗ ΔΙΑΔΙΚΑΣΙΑ</div>
-          <div class="snk-el-step"><div class="snk-el-step-num">01 — ΕΚΔΗΛΩΣΗ ΕΝΔΙΑΦΕΡΟΝΤΟΣ</div><h3>Εμπιστευτικό Αίτημα</h3><p>Συμπληρώστε τα στοιχεία σας μέσω της εμπιστευτικής φόρμας επενδυτή της SNK.</p></div>
-          <div class="snk-el-step"><div class="snk-el-step-num">02 — ΑΞΙΟΛΟΓΗΣΗ</div><h3>Έλεγχος Επενδυτή</h3><p>Το αίτημα αξιολογείται πριν διατεθεί οποιοδήποτε εμπιστευτικό υλικό.</p></div>
-          <div class="snk-el-step"><div class="snk-el-step-num">03 — ΣΥΜΦΩΝΙΑ ΕΜΠΙΣΤΕΥΤΙΚΟΤΗΤΑΣ &amp; ΦΑΚΕΛΟΣ ΣΤΟΙΧΕΙΩΝ</div><h3>Επόμενα Βήματα</h3><p>Οι επιλεγμένοι επενδυτές προχωρούν στην υπογραφή Συμφωνίας Εμπιστευτικότητας, στην πρόσβαση στον Φάκελο Επενδυτικών Στοιχείων και στον συντονισμό ιδιωτικής επίσκεψης στο ακίνητο.</p></div>
-        </div>
-
-        <div class="snk-el-panel snk-el-direct">
-          <div class="snk-el-direct-label">ΑΜΕΣΗ ΕΠΙΚΟΙΝΩΝΙΑ</div>
-          <h3>Speros Koulourides</h3>
-          <p>SNK Luxury Real Estate</p>
-          <div class="snk-el-direct-row"><div class="snk-el-direct-label">ΤΗΛΕΦΩΝΟ</div><p><a href="tel:+306985821148">+30 6985 821 148</a></p></div>
-          <div class="snk-el-direct-row"><div class="snk-el-direct-label">EMAIL</div><p><a href="mailto:investments@snkrealestate.com">investments@snkrealestate.com</a></p></div>
-        </div>
-      </div>
-
-      <div class="snk-el-form-panel">
-        <div class="snk-el-form-kicker">ΕΜΠΙΣΤΕΥΤΙΚΗ ΦΟΡΜΑ ΕΠΕΝΔΥΤΗ</div>
-        <h3>Αίτημα Επενδυτικής Πληροφόρησης</h3>
-        <p class="snk-el-form-intro">Όλα τα στοιχεία που υποβάλλονται αντιμετωπίζονται με απόλυτη εμπιστευτικότητα και χρησιμοποιούνται αποκλειστικά για την αξιολόγηση του επενδυτικού ενδιαφέροντος.</p>
-        <iframe class="snk-el-submit-frame" name="snkElHiddenSubmitFrame" title="Υποβολή φόρμας"></iframe>
-        <form action="https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec" method="POST" target="snkElHiddenSubmitFrame">
-          <input type="hidden" name="origin" value="https://snkrealestate.com/el/">
-          <input type="hidden" name="source" value="SNK EL Investor Contact">
-          <div class="snk-el-form-grid">
-            <label class="snk-el-field"><span>ΟΝΟΜΑΤΕΠΩΝΥΜΟ *</span><input name="fullName" required placeholder="Your full name"></label>
-            <label class="snk-el-field"><span>EMAIL *</span><input name="email" type="email" required placeholder="name@company.com"></label>
-            <label class="snk-el-field"><span>ΕΤΑΙΡΕΙΑ / ΟΡΓΑΝΙΣΜΟΣ *</span><input name="company" required placeholder="Company, fund or family office"></label>
-            <label class="snk-el-field"><span>ΘΕΣΗ / ΙΔΙΟΤΗΤΑ *</span><input name="position" required placeholder="Managing Director, CEO, Investor"></label>
-            <label class="snk-el-field"><span>ΧΩΡΑ *</span><input name="country" required placeholder="Country"></label>
-            <label class="snk-el-field"><span>ΚΙΝΗΤΟ / ΤΗΛΕΦΩΝΟ *</span><input name="mobile" type="tel" required placeholder="+30 ..."></label>
-            <label class="snk-el-field full"><span>ΤΥΠΟΣ ΕΠΕΝΔΥΤΗ *</span><select name="investorType" required><option value="">Επιλέξτε τύπο επενδυτή</option><option>Ιδιώτης Επενδυτής</option><option>Family Office</option><option>Επενδυτικό Fund</option><option>Εταιρεία / Οργανισμός</option><option>Άλλο</option></select></label>
-            <label class="snk-el-field full"><span>ΜΗΝΥΜΑ</span><textarea name="message" placeholder="Briefly describe your investment interest"></textarea></label>
-          </div>
-          <button class="snk-el-submit" type="submit">ΑΠΟΣΤΟΛΗ ΕΠΕΝΔΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ</button>
-        </form>
-      </div>
-    </div>
-    <div class="snk-el-contact-footer">SNK Luxury Real Estate</div>
-    <div class="snk-el-confidential">ΕΜΠΙΣΤΕΥΤΙΚΟ | ΜΟΝΟ ΓΙΑ ΕΠΙΛΕΓΜΕΝΟΥΣ ΕΠΕΝΔΥΤΕΣ</div>
-  </div>
-</section>
-'''
-
-          # Replace an existing EL contact section if one exists; otherwise add it before </main>.
-          contact_pattern = r'<section\b[^>]*\bid="contact"[^>]*>.*?</section>'
-          if re.search(contact_pattern, text, flags=re.S):
-              text = re.sub(contact_pattern, section.strip(), text, count=1, flags=re.S)
-          else:
-              if '</main>' not in text:
-                  raise SystemExit('No </main> found in EL homepage')
-              text = text.replace('</main>', section + '\n</main>', 1)
-
-          # Refresh or install scoped styles.
-          css_pattern = r'<!-- SNK EL INVESTOR CONTACT STYLES START -->.*?<!-- SNK EL INVESTOR CONTACT STYLES END -->'
-          if re.search(css_pattern, text, flags=re.S):
-              text = re.sub(css_pattern, css.strip(), text, count=1, flags=re.S)
-          else:
-              if '</head>' not in text:
-                  raise SystemExit('No </head> found in EL homepage')
-              text = text.replace('</head>', css + '\n</head>', 1)
-
+          first = matches[0]
+          text = text[:first.start()] + '<a href="/el-contact/">ΕΠΙΚΟΙΝΩΝΙΑ</a>' + text[first.end():]
           path.write_text(text, encoding='utf-8')
+          print('EL universal header Contact now points to /el-contact/')
           PY
 
-      - name: Verify and commit only EL homepage
+      - name: Verify and commit
         shell: bash
         run: |
+          grep -F '<a href="/el-contact/">ΕΠΙΚΟΙΝΩΝΙΑ</a>' el/index.html
           changed="$(git diff --name-only)"
           if [ "$changed" != "el/index.html" ]; then
             echo "Unexpected changed files: $changed"
             exit 1
           fi
-          grep -F '<a href="/el/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>' el/index.html
-          grep -F 'id="contact"' el/index.html
-          grep -F 'ΕΜΠΙΣΤΕΥΤΙΚΟ ΑΙΤΗΜΑ ΕΠΕΝΔΥΤΗ' el/index.html
-          grep -F 'ΑΠΟΣΤΟΛΗ ΕΠΕΝΔΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ' el/index.html
           git diff --check
           git config user.name 'SNK EL contact update'
           git config user.email 'actions@users.noreply.github.com'
           git add el/index.html
-          git commit -m 'Add Greek investor contact form to EL homepage'
+          git commit -m 'Link EL Contact to investor contact page'
           git push origin HEAD:main
