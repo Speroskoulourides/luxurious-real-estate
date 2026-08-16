@@ -1,4 +1,4 @@
-name: Add Chinese Golden Visa menu entry
+name: Restore EL approach section
 
 on:
   push:
@@ -16,65 +16,59 @@ jobs:
         with:
           ref: main
 
-      - name: Add Chinese Golden Visa link and direct Chinese activation
+      - name: Add only the missing EL approach section
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
-          # 1) EL homepage: add one standalone Chinese Golden Visa item to the universal header.
-          el_path = Path('el/index.html')
-          el = el_path.read_text(encoding='utf-8')
-          old_nav = '<a href="/vouliagmeni/">SIGNATURE</a><a href="/el/#approach">ΠΡΟΣΕΓΓΙΣΗ</a>'
-          new_nav = '<a href="/vouliagmeni/">SIGNATURE</a><a href="/golden-visa/?lang=zh">中文 GOLDEN VISA</a><a href="/el/#approach">ΠΡΟΣΕΓΓΙΣΗ</a>'
-          if el.count(old_nav) != 1:
-              raise SystemExit(f'Expected one EL universal nav insertion point, found {el.count(old_nav)}')
-          el = el.replace(old_nav, new_nav, 1)
-          if el.count('href="/golden-visa/?lang=zh">中文 GOLDEN VISA</a>') != 1:
-              raise SystemExit('Chinese Golden Visa menu item was not installed exactly once')
-          el_path.write_text(el, encoding='utf-8')
+          path = Path('el/index.html')
+          text = path.read_text(encoding='utf-8')
 
-          # 2) Golden Visa EN page: allow a direct ?lang=zh URL to activate the existing Chinese translation.
-          gv_path = Path('golden-visa/index.html')
-          gv = gv_path.read_text(encoding='utf-8')
-          marker = '</body></html>'
-          if gv.count(marker) != 1:
-              raise SystemExit(f'Expected one Golden Visa closing marker, found {gv.count(marker)}')
-          auto = '''<script id="snk-golden-visa-direct-zh">
-          (()=>{
-            const activate=()=>{
-              if(new URLSearchParams(window.location.search).get('lang')!=='zh')return;
-              const button=document.querySelector('.zh-button[data-lang="zh"]');
-              if(button)button.click();
-            };
-            if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',activate,{once:true});else activate();
-          })();
-          </script>
-          '''
-          if 'id="snk-golden-visa-direct-zh"' in gv:
-              raise SystemExit('Direct Chinese activation already exists; stopping to avoid duplication')
-          gv = gv.replace(marker, auto + marker, 1)
-          gv_path.write_text(gv, encoding='utf-8')
+          if 'id="approach"' in text:
+              raise SystemExit('EL approach section already exists; stopping to avoid duplication')
 
-          print('Updated only el/index.html and golden-visa/index.html')
+          marker = '\n  </main>'
+          if text.count(marker) != 1:
+              raise SystemExit(f'Expected exactly one main closing tag, found {text.count(marker)}')
+
+          section = '''
+    <section class="approach section-dark" id="approach">
+      <p class="eyebrow">Η ΠΡΟΣΕΓΓΙΣΗ ΜΑΣ</p>
+      <h2>Από το πρώτο ενδιαφέρον<br>στην ιδιωτική αξιολόγηση.</h2>
+      <div class="process">
+        <article><span>01</span><h3>Ανακαλύψτε</h3><p>Δείτε το επιλεγμένο επενδυτικό έργο μέσα από την ειδικά διαμορφωμένη παρουσίασή του.</p></article>
+        <article><span>02</span><h3>Επικοινωνήστε</h3><p>Εκδηλώστε το ενδιαφέρον σας απευθείας στην ομάδα της SNK Real Estate.</p></article>
+        <article><span>03</span><h3>Αξιολογήστε</h3><p>Λάβετε πρόσθετες πληροφορίες και οργανώστε ιδιωτική επίσκεψη, όπου αυτό είναι κατάλληλο.</p></article>
+      </div>
+      <div class="contact-transition">
+        <p class="transition-label">ΕΤΟΙΜΟΙ ΓΙΑ ΙΔΙΩΤΙΚΗ ΑΞΙΟΛΟΓΗΣΗ;</p>
+        <p>Υποβάλετε το εμπιστευτικό σας αίτημα για περισσότερες πληροφορίες<br>και οργανώστε <span class="gold-text">το επόμενο βήμα.</span></p>
+      </div>
+    </section>'''
+
+          updated = text.replace(marker, section + marker, 1)
+          if updated.count('id="approach"') != 1:
+              raise SystemExit('EL approach section was not installed exactly once')
+
+          path.write_text(updated, encoding='utf-8')
+          print('Added only #approach to el/index.html')
           PY
 
-      - name: Verify and commit only the two required files
+      - name: Verify and commit the single-file change
         shell: bash
         run: |
-          changed="$(git diff --name-only | sort)"
-          expected="$(printf '%s\n' 'el/index.html' 'golden-visa/index.html' | sort)"
-          if [ "$changed" != "$expected" ]; then
-            echo "Unexpected changed files:"
-            echo "$changed"
+          changed="$(git diff --name-only)"
+          if [ "$changed" != "el/index.html" ]; then
+            echo "Unexpected changed files: $changed"
             exit 1
           fi
 
-          grep -F 'href="/golden-visa/?lang=zh">中文 GOLDEN VISA</a>' el/index.html
-          grep -F 'id="snk-golden-visa-direct-zh"' golden-visa/index.html
+          grep -F 'id="approach"' el/index.html
+          grep -F 'Η ΠΡΟΣΕΓΓΙΣΗ ΜΑΣ' el/index.html
           git diff --check
-          git config user.name 'SNK site update'
+          git config user.name 'SNK EL page update'
           git config user.email 'actions@users.noreply.github.com'
-          git add el/index.html golden-visa/index.html
-          git commit -m 'Add Chinese Golden Visa menu entry'
+          git add el/index.html
+          git commit -m 'Restore Approach section on EL homepage'
           git push origin HEAD:main
