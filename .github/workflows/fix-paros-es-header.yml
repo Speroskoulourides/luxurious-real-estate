@@ -1,4 +1,4 @@
-name: Point Chinese Golden Visa menu to EN page
+name: Add Chinese Golden Visa to EN header
 
 on:
   push:
@@ -16,42 +16,38 @@ jobs:
         with:
           ref: main
 
-      - name: Point Chinese Golden Visa menu items to EN page
+      - name: Add Chinese Golden Visa only to EN universal header
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
-          files = [Path('index.html'), Path('el/index.html'), Path('fr/index.html'), Path('es/index.html')]
-          old = 'href="/golden-visa/?lang=zh">中文 GOLDEN VISA</a>'
-          new = 'href="/golden-visa/">中文 GOLDEN VISA</a>'
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          target = '<a href="/#contact">CONTACT</a></nav>'
+          replacement = '<a href="/#contact">CONTACT</a><a href="/golden-visa/">中文 GOLDEN VISA</a></nav>'
 
-          changed = []
-          for path in files:
-              text = path.read_text(encoding='utf-8')
-              if old in text:
-                  path.write_text(text.replace(old, new), encoding='utf-8')
-                  changed.append(str(path))
-          if not changed:
-              raise SystemExit('No Chinese Golden Visa menu links found to update')
-          print('\n'.join(changed))
+          if replacement in text:
+              raise SystemExit('EN header already has Chinese Golden Visa')
+          if text.count(target) != 1:
+              raise SystemExit(f'Expected one EN header insertion point, found {text.count(target)}')
+
+          path.write_text(text.replace(target, replacement, 1), encoding='utf-8')
+          print('Added Chinese Golden Visa to EN universal header')
           PY
 
-      - name: Verify
+      - name: Verify and commit only EN homepage
         shell: bash
         run: |
-          if grep -R -F 'href="/golden-visa/?lang=zh">中文 GOLDEN VISA</a>' index.html el/index.html fr/index.html es/index.html; then
-            echo 'Old direct Chinese menu link still present'
+          changed="$(git diff --name-only)"
+          if [ "$changed" != "index.html" ]; then
+            echo "Unexpected changed files: $changed"
             exit 1
           fi
-          grep -R -F 'href="/golden-visa/">中文 GOLDEN VISA</a>' index.html el/index.html fr/index.html es/index.html
+          grep -F '<a href="/#contact">CONTACT</a><a href="/golden-visa/">中文 GOLDEN VISA</a></nav>' index.html
           git diff --check
-
-      - name: Commit
-        shell: bash
-        run: |
-          git config user.name 'SNK menu update'
+          git config user.name 'SNK EN menu update'
           git config user.email 'actions@users.noreply.github.com'
-          git add index.html el/index.html fr/index.html es/index.html
-          git commit -m 'Point Chinese Golden Visa menu to EN page'
+          git add index.html
+          git commit -m 'Add Chinese Golden Visa to EN header'
           git push origin HEAD:main
