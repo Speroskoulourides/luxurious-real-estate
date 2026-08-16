@@ -1,4 +1,4 @@
-name: Refine Paros card on EL homepage
+name: Connect Vouliagmeni EL enquiry button to contact
 
 on:
   push:
@@ -16,46 +16,46 @@ jobs:
         with:
           ref: main
 
-      - name: Update only the Paros card on the EL homepage
+      - name: Update only the Vouliagmeni EL enquiry button
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
-          path = Path('el/index.html')
+          path = Path('vouliagmeni/index.html')
           text = path.read_text(encoding='utf-8')
 
-          old = '<a class="project project-paros" href="../paros/"><span>03 · PAROS</span><h3>Ξενοδοχειακή Επένδυση</h3><em>ΑΝΑΚΑΛΥΨΤΕ ΤΗΝ ΕΠΕΝΔΥΣΗ ΣΤΗΝ ΠΑΡΟ ↗</em></a>'
-          new = '<a class="project project-paros" href="../paros/"><span>03 · PAROS</span><h3>Ξενοδοχειακό Επενδυτικό Έργο</h3><em>ΔΕΙΤΕ ΤΟΝ ΕΠΕΝΔΥΤΙΚΟ ΦΑΚΕΛΟ ↗</em></a>'
+          old = '<a class="btn" href="mailto:investments@snkrealestate.com?subject=Private%20Enquiry%20-%20Vouliagmeni">ΑΙΤΗΜΑ ΙΔΙΩΤΙΚΗΣ ΕΝΗΜΕΡΩΣΗΣ</a>'
+          new = '<a class="btn" href="/el/#contact">ΑΙΤΗΜΑ ΙΔΙΩΤΙΚΗΣ ΕΝΗΜΕΡΩΣΗΣ</a>'
 
           count = text.count(old)
           if count != 1:
-              raise SystemExit(f'Expected exactly one matching Paros card, found {count}')
+              raise SystemExit(f'Expected exactly one matching enquiry button, found {count}')
 
           updated = text.replace(old, new, 1)
           if old in updated:
-              raise SystemExit('Old Paros wording still remains')
+              raise SystemExit('Old mailto button still remains')
           if updated.count(new) != 1:
-              raise SystemExit('New Paros wording was not installed exactly once')
+              raise SystemExit('Contact-linked button was not installed exactly once')
 
           path.write_text(updated, encoding='utf-8')
-          print('Updated only el/index.html Paros card')
+          print('Updated only vouliagmeni/index.html enquiry button')
           PY
 
       - name: Verify and commit the single-file change
         shell: bash
         run: |
           changed="$(git diff --name-only)"
-          if [ "$changed" != "el/index.html" ]; then
+          if [ "$changed" != "vouliagmeni/index.html" ]; then
             echo "Unexpected changed files:"
             printf '%s\n' "$changed"
             exit 1
           fi
 
           git diff --check
-          git diff -- el/index.html
+          git diff -- vouliagmeni/index.html
           git config user.name 'SNK EL page update'
           git config user.email 'actions@users.noreply.github.com'
-          git add el/index.html
-          git commit -m 'Refine Paros investment project card on EL homepage'
+          git add vouliagmeni/index.html
+          git commit -m 'Connect Vouliagmeni EL enquiry button to contact'
           git push origin HEAD:main
