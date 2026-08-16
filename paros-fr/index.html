@@ -969,8 +969,77 @@
 .snk-site-header *{box-sizing:border-box}.snk-site-header a{text-decoration:none;color:inherit}.snk-site-brand{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:220px}.snk-site-brand-main{display:flex;align-items:baseline;gap:12px}.snk-site-brand-main strong{font:400 30px/1 Georgia,serif;letter-spacing:-.07em;color:#b88918}.snk-site-brand-main span{font-size:8px;font-weight:600;letter-spacing:.28em}.snk-site-slogan{font-size:9px;color:#7b7467;letter-spacing:.08em;white-space:nowrap}.snk-site-right{display:flex;align-items:center;margin-left:auto;gap:38px}.snk-site-nav{display:flex;gap:30px;align-items:center}.snk-site-nav a{font-size:9px;font-weight:600;letter-spacing:.16em;white-space:nowrap}.snk-site-langs{display:flex;align-items:center;gap:6px;font-size:9px;font-weight:500;letter-spacing:.14em;white-space:nowrap;color:#5f6670}.snk-site-langs a.active{color:#b88918}.snk-site-langs span{color:#9a9a94;font-size:8px}
 @media(max-width:1100px){.snk-site-header{padding:0 30px}.snk-site-right{gap:22px}.snk-site-nav{gap:18px}.snk-site-nav a{font-size:8px}.snk-site-langs{font-size:8px;gap:4px}}
 @media(max-width:900px){.snk-site-header{padding:0 20px}.snk-site-nav{display:none}.snk-site-langs{display:none}.snk-site-brand{min-width:0}}
-</style></head>
-<body class="text-white overflow-x-hidden"><header class="snk-site-header">
+</style>
+<!-- SNK UNIVERSAL HEADER STYLES START -->
+<style id="snk-universal-header-styles">
+html{scroll-padding-top:92px!important}
+body.snk-universal-header-enabled{padding-top:76px!important}
+body.snk-universal-header-enabled>main{margin-top:0!important;padding-top:0!important}
+body.snk-universal-header-enabled>header:not(#snk-universal-header),
+body.snk-universal-header-enabled header.topbar,
+body.snk-universal-header-enabled header.snk-opportunity-header:not(#snk-universal-header),
+body.snk-universal-header-enabled .snk-global-header:not(#snk-universal-header),
+body.snk-universal-header-enabled #snk-global-header:not(#snk-universal-header){display:none!important}
+body.snk-mykonos-document .page{height:calc(100vh - 76px)!important;min-height:calc(100vh - 76px)!important}
+body.snk-paros-document .page{min-height:calc(100vh - 76px)!important}
+main [id]{scroll-margin-top:92px}
+#snk-universal-header,
+#snk-universal-header *{box-sizing:border-box!important}
+#snk-universal-header{
+  position:fixed!important;top:0!important;left:0!important;right:0!important;z-index:2147483646!important;
+  height:76px!important;display:flex!important;align-items:center!important;padding:0 36px!important;
+  background:rgba(248,244,234,.985)!important;color:#101722!important;
+  border-bottom:1px solid rgba(16,23,34,.14)!important;box-shadow:0 1px 0 rgba(255,255,255,.55)!important;
+  backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important;
+  font-family:Montserrat,Arial,sans-serif!important
+}
+#snk-universal-header a{text-decoration:none!important;color:inherit!important}
+.snk-universal-brand{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:6px!important;min-width:260px!important}
+.snk-universal-brand-main{display:flex!important;align-items:baseline!important;gap:12px!important;white-space:nowrap!important}
+.snk-universal-brand-main strong{font:400 30px/1 Georgia,'Times New Roman',serif!important;letter-spacing:-.07em!important;color:#b88918!important}
+.snk-universal-brand-main span{font-size:8px!important;font-weight:700!important;letter-spacing:.28em!important;color:#101722!important}
+.snk-universal-slogan{font-size:7px!important;font-weight:500!important;letter-spacing:.18em!important;color:#7b7467!important;white-space:nowrap!important}
+.snk-universal-right{display:flex!important;align-items:center!important;margin-left:auto!important;gap:30px!important;min-width:0!important}
+.snk-universal-nav{display:flex!important;align-items:center!important;gap:28px!important}
+.snk-universal-nav a{position:relative!important;font-size:9px!important;font-weight:700!important;letter-spacing:.16em!important;white-space:nowrap!important;transition:color .2s ease!important}
+.snk-universal-nav a:after{content:''!important;position:absolute!important;left:0!important;right:100%!important;bottom:-9px!important;height:1px!important;background:#b88918!important;transition:right .22s ease!important}
+.snk-universal-nav a:hover{color:#b88918!important}.snk-universal-nav a:hover:after{right:0!important}
+.snk-universal-langs{display:flex!important;align-items:center!important;gap:6px!important;white-space:nowrap!important;font-size:9px!important;font-weight:600!important;letter-spacing:.12em!important;color:#5f6670!important}
+.snk-universal-langs a:hover,.snk-universal-langs a.active{color:#b88918!important}.snk-universal-langs span{font-size:8px!important;color:#9a9a94!important}
+.snk-universal-menu-button{display:none!important;border:0!important;background:transparent!important;color:#101722!important;padding:10px 0!important;font-size:9px!important;font-weight:700!important;letter-spacing:.18em!important;cursor:pointer!important}
+@media(max-width:1180px){
+  #snk-universal-header{padding:0 24px!important}.snk-universal-brand{min-width:220px!important}.snk-universal-right{gap:18px!important}.snk-universal-nav{gap:16px!important}.snk-universal-nav a,.snk-universal-langs{font-size:8px!important}.snk-universal-langs{gap:4px!important}
+}
+@media(max-width:940px){
+  .snk-universal-brand{min-width:0!important}.snk-universal-slogan{display:none!important}.snk-universal-menu-button{display:block!important;order:1!important}.snk-universal-langs{order:2!important}
+  .snk-universal-nav{position:fixed!important;top:76px!important;left:0!important;right:0!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;padding:14px 24px 20px!important;background:rgba(248,244,234,.995)!important;border-bottom:1px solid rgba(16,23,34,.14)!important;box-shadow:0 18px 36px rgba(16,23,34,.12)!important;opacity:0!important;visibility:hidden!important;transform:translateY(-10px)!important;pointer-events:none!important;transition:opacity .2s ease,transform .2s ease,visibility .2s ease!important}
+  #snk-universal-header.snk-menu-open .snk-universal-nav{opacity:1!important;visibility:visible!important;transform:translateY(0)!important;pointer-events:auto!important}
+  .snk-universal-nav a{padding:14px 0!important;border-bottom:1px solid rgba(16,23,34,.09)!important;font-size:10px!important}.snk-universal-nav a:last-child{border-bottom:0!important}.snk-universal-nav a:after{display:none!important}
+}
+@media(max-width:560px){
+  #snk-universal-header{height:68px!important;padding:0 16px!important}.snk-universal-brand-main strong{font-size:27px!important}.snk-universal-brand-main span{font-size:7px!important;letter-spacing:.22em!important}.snk-universal-right{gap:12px!important}.snk-universal-langs{font-size:7px!important;gap:3px!important}.snk-universal-menu-button{font-size:8px!important}.snk-universal-nav{top:68px!important;padding-left:18px!important;padding-right:18px!important}body.snk-universal-header-enabled{padding-top:68px!important}body.snk-mykonos-document .page{height:calc(100vh - 68px)!important;min-height:calc(100vh - 68px)!important}body.snk-paros-document .page{min-height:calc(100vh - 68px)!important}
+}
+</style>
+<!-- SNK UNIVERSAL HEADER STYLES END -->
+</head>
+<body class="text-white overflow-x-hidden snk-universal-header-enabled snk-paros-document">
+<!-- SNK UNIVERSAL HEADER START -->
+<header id="snk-universal-header" class="snk-opportunity-header" role="banner">
+  <a class="snk-universal-brand" href="/fr/#top" aria-label="SNK Real Estate home">
+    <span class="snk-universal-brand-main"><strong>SNK</strong><span>REAL ESTATE</span></span>
+    <span class="snk-universal-slogan">Connecting Exceptional Properties with Exceptional People</span>
+  </a>
+  <div class="snk-universal-right">
+    <button class="snk-universal-menu-button" type="button" aria-expanded="false" aria-controls="snk-universal-nav">MENU</button>
+    <nav id="snk-universal-nav" class="snk-universal-nav" aria-label="Main navigation"><a href="/fr/#company">SOCIÉTÉ</a><a href="/fr/#opportunities">OPPORTUNITÉS</a><a href="/signature-fr.html">SIGNATURE</a><a href="/fr/#approach">APPROCHE</a><a href="/fr/#contact">CONTACT</a></nav>
+    <div class="snk-universal-langs" aria-label="Language selection"><a href="/paros-en/">EN</a><span>·</span><a href="/paros/">EL</a><span>·</span><a class="active" aria-current="page" href="/paros-fr/">FR</a><span>·</span><a href="/paros-es/">ES</a></div>
+  </div>
+</header>
+<script id="snk-universal-header-script">
+(()=>{const h=document.getElementById('snk-universal-header');if(!h)return;const b=h.querySelector('.snk-universal-menu-button');const n=h.querySelector('.snk-universal-nav');if(!b||!n)return;const close=()=>{h.classList.remove('snk-menu-open');b.setAttribute('aria-expanded','false')};b.addEventListener('click',()=>{const open=h.classList.toggle('snk-menu-open');b.setAttribute('aria-expanded',String(open))});n.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});})();
+</script>
+<!-- SNK UNIVERSAL HEADER END -->
+<header class="snk-site-header">
 <a class="snk-site-brand" href="../index.html#top"><span class="snk-site-brand-main"><strong>SNK</strong><span>REAL ESTATE</span></span><span class="snk-site-slogan">Relier des propriétés d’exception à des personnes d’exception</span></a>
 <div class="snk-site-right"><nav aria-label="Navigation principale" class="snk-site-nav"><a href="../index.html#company">SOCIÉTÉ</a><a href="../index.html#opportunities">OPPORTUNITÉS</a><a href="../signature-fr.html">SIGNATURE</a><a href="../index.html#approach">APPROCHE</a><a href="../index.html#contact">CONTACT</a></nav><div aria-label="Sélection de la langue" class="snk-site-langs"><a href="/paros-en/">EN</a><span>·</span><a href="https://snkrealestate.com/el/">EL</a><span>·</span><a aria-current="page" class="active" href="https://snkrealestate.com/fr/">FR</a><span>·</span><a href="/paros-es/">ES</a><span>·</span><a href="https://snkrealestate.com/tr/">TR</a></div></div>
 </header>

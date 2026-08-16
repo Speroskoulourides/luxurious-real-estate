@@ -31,8 +31,77 @@
 .language-switch span{color:#9a9a94;font-size:8px}
 @media(max-width:1100px){.header-right{gap:24px}.topbar nav{gap:22px}.language-switch{font-size:8px;gap:5px}}
 @media(max-width:900px){.header-right{margin-left:auto}.language-switch{display:none}}
-</style></head>
-<body>
+</style>
+<!-- SNK UNIVERSAL HEADER STYLES START -->
+<style id="snk-universal-header-styles">
+html{scroll-padding-top:92px!important}
+body.snk-universal-header-enabled{padding-top:76px!important}
+body.snk-universal-header-enabled>main{margin-top:0!important;padding-top:0!important}
+body.snk-universal-header-enabled>header:not(#snk-universal-header),
+body.snk-universal-header-enabled header.topbar,
+body.snk-universal-header-enabled header.snk-opportunity-header:not(#snk-universal-header),
+body.snk-universal-header-enabled .snk-global-header:not(#snk-universal-header),
+body.snk-universal-header-enabled #snk-global-header:not(#snk-universal-header){display:none!important}
+body.snk-mykonos-document .page{height:calc(100vh - 76px)!important;min-height:calc(100vh - 76px)!important}
+body.snk-paros-document .page{min-height:calc(100vh - 76px)!important}
+main [id]{scroll-margin-top:92px}
+#snk-universal-header,
+#snk-universal-header *{box-sizing:border-box!important}
+#snk-universal-header{
+  position:fixed!important;top:0!important;left:0!important;right:0!important;z-index:2147483646!important;
+  height:76px!important;display:flex!important;align-items:center!important;padding:0 36px!important;
+  background:rgba(248,244,234,.985)!important;color:#101722!important;
+  border-bottom:1px solid rgba(16,23,34,.14)!important;box-shadow:0 1px 0 rgba(255,255,255,.55)!important;
+  backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important;
+  font-family:Montserrat,Arial,sans-serif!important
+}
+#snk-universal-header a{text-decoration:none!important;color:inherit!important}
+.snk-universal-brand{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:6px!important;min-width:260px!important}
+.snk-universal-brand-main{display:flex!important;align-items:baseline!important;gap:12px!important;white-space:nowrap!important}
+.snk-universal-brand-main strong{font:400 30px/1 Georgia,'Times New Roman',serif!important;letter-spacing:-.07em!important;color:#b88918!important}
+.snk-universal-brand-main span{font-size:8px!important;font-weight:700!important;letter-spacing:.28em!important;color:#101722!important}
+.snk-universal-slogan{font-size:7px!important;font-weight:500!important;letter-spacing:.18em!important;color:#7b7467!important;white-space:nowrap!important}
+.snk-universal-right{display:flex!important;align-items:center!important;margin-left:auto!important;gap:30px!important;min-width:0!important}
+.snk-universal-nav{display:flex!important;align-items:center!important;gap:28px!important}
+.snk-universal-nav a{position:relative!important;font-size:9px!important;font-weight:700!important;letter-spacing:.16em!important;white-space:nowrap!important;transition:color .2s ease!important}
+.snk-universal-nav a:after{content:''!important;position:absolute!important;left:0!important;right:100%!important;bottom:-9px!important;height:1px!important;background:#b88918!important;transition:right .22s ease!important}
+.snk-universal-nav a:hover{color:#b88918!important}.snk-universal-nav a:hover:after{right:0!important}
+.snk-universal-langs{display:flex!important;align-items:center!important;gap:6px!important;white-space:nowrap!important;font-size:9px!important;font-weight:600!important;letter-spacing:.12em!important;color:#5f6670!important}
+.snk-universal-langs a:hover,.snk-universal-langs a.active{color:#b88918!important}.snk-universal-langs span{font-size:8px!important;color:#9a9a94!important}
+.snk-universal-menu-button{display:none!important;border:0!important;background:transparent!important;color:#101722!important;padding:10px 0!important;font-size:9px!important;font-weight:700!important;letter-spacing:.18em!important;cursor:pointer!important}
+@media(max-width:1180px){
+  #snk-universal-header{padding:0 24px!important}.snk-universal-brand{min-width:220px!important}.snk-universal-right{gap:18px!important}.snk-universal-nav{gap:16px!important}.snk-universal-nav a,.snk-universal-langs{font-size:8px!important}.snk-universal-langs{gap:4px!important}
+}
+@media(max-width:940px){
+  .snk-universal-brand{min-width:0!important}.snk-universal-slogan{display:none!important}.snk-universal-menu-button{display:block!important;order:1!important}.snk-universal-langs{order:2!important}
+  .snk-universal-nav{position:fixed!important;top:76px!important;left:0!important;right:0!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;padding:14px 24px 20px!important;background:rgba(248,244,234,.995)!important;border-bottom:1px solid rgba(16,23,34,.14)!important;box-shadow:0 18px 36px rgba(16,23,34,.12)!important;opacity:0!important;visibility:hidden!important;transform:translateY(-10px)!important;pointer-events:none!important;transition:opacity .2s ease,transform .2s ease,visibility .2s ease!important}
+  #snk-universal-header.snk-menu-open .snk-universal-nav{opacity:1!important;visibility:visible!important;transform:translateY(0)!important;pointer-events:auto!important}
+  .snk-universal-nav a{padding:14px 0!important;border-bottom:1px solid rgba(16,23,34,.09)!important;font-size:10px!important}.snk-universal-nav a:last-child{border-bottom:0!important}.snk-universal-nav a:after{display:none!important}
+}
+@media(max-width:560px){
+  #snk-universal-header{height:68px!important;padding:0 16px!important}.snk-universal-brand-main strong{font-size:27px!important}.snk-universal-brand-main span{font-size:7px!important;letter-spacing:.22em!important}.snk-universal-right{gap:12px!important}.snk-universal-langs{font-size:7px!important;gap:3px!important}.snk-universal-menu-button{font-size:8px!important}.snk-universal-nav{top:68px!important;padding-left:18px!important;padding-right:18px!important}body.snk-universal-header-enabled{padding-top:68px!important}body.snk-mykonos-document .page{height:calc(100vh - 68px)!important;min-height:calc(100vh - 68px)!important}body.snk-paros-document .page{min-height:calc(100vh - 68px)!important}
+}
+</style>
+<!-- SNK UNIVERSAL HEADER STYLES END -->
+</head>
+<body class="snk-universal-header-enabled">
+<!-- SNK UNIVERSAL HEADER START -->
+<header id="snk-universal-header" class="snk-opportunity-header" role="banner">
+  <a class="snk-universal-brand" href="/fr/#top" aria-label="SNK Real Estate home">
+    <span class="snk-universal-brand-main"><strong>SNK</strong><span>REAL ESTATE</span></span>
+    <span class="snk-universal-slogan">Connecting Exceptional Properties with Exceptional People</span>
+  </a>
+  <div class="snk-universal-right">
+    <button class="snk-universal-menu-button" type="button" aria-expanded="false" aria-controls="snk-universal-nav">MENU</button>
+    <nav id="snk-universal-nav" class="snk-universal-nav" aria-label="Main navigation"><a href="/fr/#company">SOCIÉTÉ</a><a href="/fr/#opportunities">OPPORTUNITÉS</a><a href="/signature-fr.html">SIGNATURE</a><a href="/fr/#approach">APPROCHE</a><a href="/fr/#contact">CONTACT</a></nav>
+    <div class="snk-universal-langs" aria-label="Language selection"><a href="/">EN</a><span>·</span><a href="/el/">EL</a><span>·</span><a class="active" aria-current="page" href="/fr/">FR</a><span>·</span><a href="/es/">ES</a></div>
+  </div>
+</header>
+<script id="snk-universal-header-script">
+(()=>{const h=document.getElementById('snk-universal-header');if(!h)return;const b=h.querySelector('.snk-universal-menu-button');const n=h.querySelector('.snk-universal-nav');if(!b||!n)return;const close=()=>{h.classList.remove('snk-menu-open');b.setAttribute('aria-expanded','false')};b.addEventListener('click',()=>{const open=h.classList.toggle('snk-menu-open');b.setAttribute('aria-expanded',String(open))});n.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});})();
+</script>
+<!-- SNK UNIVERSAL HEADER END -->
+
 <header class="topbar">
 <a aria-label="Accueil SNK Real Estate" class="brand" href="#top">
 <span class="brand-main"><strong>SNK</strong><span>REAL ESTATE</span></span>
