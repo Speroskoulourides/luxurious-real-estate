@@ -1,4 +1,4 @@
-name: Audit correct EL investor contact location
+name: Point Vouliagmeni EL enquiry to correct EL contact form
 
 on:
   push:
@@ -6,44 +6,64 @@ on:
       - '.github/workflows/fix-paros-es-header.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  audit:
+  update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
 
-      - name: Find the correct EL investor contact screen
+      - name: Update only the Vouliagmeni EL enquiry button
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
-          needles = [
-              'Εκδηλώστε το επενδυτικό σας ενδιαφέρον',
-              'ΑΠΟΣΤΟΛΗ ΕΠΕΝΔΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ',
-              'Περιγράψτε συνοπτικά το επενδυτικό σας ενδιαφέρον',
+          path = Path('vouliagmeni/index.html')
+          text = path.read_text(encoding='utf-8')
+
+          targets = [
+              '/#contact',
+              '/el/#contact',
+              '/paros/#private-request',
+              'mailto:investments@snkrealestate.com?subject=Private%20Enquiry%20-%20Vouliagmeni',
           ]
 
-          matches = []
-          for path in Path('.').rglob('*.html'):
-              try:
-                  text = path.read_text(encoding='utf-8')
-              except Exception:
-                  continue
-              found = [needle for needle in needles if needle in text]
-              if found:
-                  matches.append((str(path), found))
+          found = []
+          for target in targets:
+              old = f'<a class="btn" href="{target}">ΑΙΤΗΜΑ ΙΔΙΩΤΙΚΗΣ ΕΝΗΜΕΡΩΣΗΣ</a>'
+              if old in text:
+                  found.append(old)
 
-          print('MATCHES:')
-          for path, found in matches:
-              print(path)
-              for needle in found:
-                  print('  -', needle)
+          if len(found) != 1:
+              raise SystemExit(f'Expected exactly one known Vouliagmeni enquiry button, found {len(found)}')
 
-          if not matches:
-              raise SystemExit('No matching EL investor contact screen found')
+          new = '<a class="btn" href="/athens-investment/#contact">ΑΙΤΗΜΑ ΙΔΙΩΤΙΚΗΣ ΕΝΗΜΕΡΩΣΗΣ</a>'
+          text = text.replace(found[0], new, 1)
+
+          if text.count(new) != 1:
+              raise SystemExit('Correct EL contact link was not installed exactly once')
+
+          path.write_text(text, encoding='utf-8')
+          print('Updated only vouliagmeni/index.html')
           PY
+
+      - name: Verify and commit the single-file change
+        shell: bash
+        run: |
+          changed="$(git diff --name-only)"
+          if [ "$changed" != "vouliagmeni/index.html" ]; then
+            echo "Unexpected changed files: $changed"
+            exit 1
+          fi
+
+          grep -F 'href="/athens-investment/#contact">ΑΙΤΗΜΑ ΙΔΙΩΤΙΚΗΣ ΕΝΗΜΕΡΩΣΗΣ' vouliagmeni/index.html
+          git diff --check
+          git config user.name 'SNK EL page update'
+          git config user.email 'actions@users.noreply.github.com'
+          git add vouliagmeni/index.html
+          git commit -m 'Point Vouliagmeni EL enquiry to correct EL contact form'
+          git push origin HEAD:main
