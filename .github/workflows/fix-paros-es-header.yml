@@ -1,4 +1,4 @@
-name: Point Vouliagmeni EL top menu contact to Greek form
+name: Restore EL approach section
 
 on:
   push:
@@ -16,42 +16,59 @@ jobs:
         with:
           ref: main
 
-      - name: Update only the Vouliagmeni EL top menu contact link
+      - name: Add only the missing EL approach section
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
-          path = Path('vouliagmeni/index.html')
+          path = Path('el/index.html')
           text = path.read_text(encoding='utf-8')
 
-          old = '<a href="/el/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>'
-          new = '<a href="/athens-investment/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>'
+          if 'id="approach"' in text:
+              raise SystemExit('EL approach section already exists; stopping to avoid duplication')
 
-          if text.count(old) != 1:
-              raise SystemExit(f'Expected exactly one universal EL contact menu link, found {text.count(old)}')
+          marker = '\n  </main>'
+          if text.count(marker) != 1:
+              raise SystemExit(f'Expected exactly one main closing tag, found {text.count(marker)}')
 
-          text = text.replace(old, new, 1)
-          if text.count(new) != 1:
-              raise SystemExit('Correct Greek contact form link was not installed exactly once')
+          section = '''
+    <section class="approach section-dark" id="approach">
+      <p class="eyebrow">Η ΠΡΟΣΕΓΓΙΣΗ ΜΑΣ</p>
+      <h2>Από το πρώτο ενδιαφέρον<br>στην ιδιωτική αξιολόγηση.</h2>
+      <div class="process">
+        <article><span>01</span><h3>Ανακαλύψτε</h3><p>Δείτε το επιλεγμένο επενδυτικό έργο μέσα από τον ειδικά διαμορφωμένο επενδυτικό του φάκελο.</p></article>
+        <article><span>02</span><h3>Επικοινωνήστε</h3><p>Εκδηλώστε το ενδιαφέρον σας απευθείας στην ομάδα της SNK Real Estate.</p></article>
+        <article><span>03</span><h3>Αξιολογήστε</h3><p>Λάβετε πρόσθετες πληροφορίες και οργανώστε ιδιωτική επίσκεψη, όπου αυτό είναι κατάλληλο.</p></article>
+      </div>
+      <div class="contact-transition">
+        <p class="transition-label">ΕΤΟΙΜΟΙ ΓΙΑ ΤΗΝ ΕΠΟΜΕΝΗ ΑΞΙΟΛΟΓΗΣΗ;</p>
+        <p>Υποβάλετε το εμπιστευτικό σας αίτημα για περισσότερες πληροφορίες<br>και οργανώστε <span class="gold-text">το επόμενο βήμα.</span></p>
+      </div>
+    </section>'''
 
-          path.write_text(text, encoding='utf-8')
-          print('Updated only Vouliagmeni EL top menu contact link')
+          updated = text.replace(marker, section + marker, 1)
+          if updated.count('id="approach"') != 1:
+              raise SystemExit('EL approach section was not installed exactly once')
+
+          path.write_text(updated, encoding='utf-8')
+          print('Added only #approach to el/index.html')
           PY
 
       - name: Verify and commit the single-file change
         shell: bash
         run: |
           changed="$(git diff --name-only)"
-          if [ "$changed" != "vouliagmeni/index.html" ]; then
+          if [ "$changed" != "el/index.html" ]; then
             echo "Unexpected changed files: $changed"
             exit 1
           fi
 
-          grep -F 'href="/athens-investment/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>' vouliagmeni/index.html
+          grep -F 'id="approach"' el/index.html
+          grep -F 'Η ΠΡΟΣΕΓΓΙΣΗ ΜΑΣ' el/index.html
           git diff --check
           git config user.name 'SNK EL page update'
           git config user.email 'actions@users.noreply.github.com'
-          git add vouliagmeni/index.html
-          git commit -m 'Point Vouliagmeni EL top menu contact to Greek form'
+          git add el/index.html
+          git commit -m 'Restore Approach section on EL homepage'
           git push origin HEAD:main
