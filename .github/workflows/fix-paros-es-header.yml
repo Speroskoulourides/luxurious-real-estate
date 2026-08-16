@@ -1,4 +1,4 @@
-name: Restore Chinese Golden Visa query link in EN header
+name: Point EL Contact to exact Paros form anchor
 
 on:
   push:
@@ -16,36 +16,70 @@ jobs:
         with:
           ref: main
 
-      - name: Change only EN Chinese Golden Visa link
+      - name: Detect Paros form anchor and update EL Contact
         shell: bash
         run: |
           python3 - <<'PY'
+          from html.parser import HTMLParser
           from pathlib import Path
 
-          path = Path('index.html')
-          text = path.read_text(encoding='utf-8')
-          old = '<a href="/golden-visa/">中文 GOLDEN VISA</a>'
-          new = '<a href="/golden-visa/?lang=zh">中文 GOLDEN VISA</a>'
+          target_text = 'ΕΜΠΙΣΤΕΥΤΙΚΗ ΦΟΡΜΑ ΕΠΕΝΔΥΤΗ'
 
-          if text.count(old) != 1:
-              raise SystemExit(f'Expected exactly one EN Chinese Golden Visa link, found {text.count(old)}')
+          class Finder(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.stack = []
+                  self.matches = []
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  self.stack.append((tag, attrs.get('id')))
+              def handle_startendtag(self, tag, attrs):
+                  pass
+              def handle_endtag(self, tag):
+                  for i in range(len(self.stack)-1, -1, -1):
+                      if self.stack[i][0] == tag:
+                          self.stack = self.stack[:i]
+                          break
+              def handle_data(self, data):
+                  if target_text in data:
+                      ids = [element_id for _, element_id in self.stack if element_id]
+                      self.matches.append(ids[-1] if ids else None)
 
-          path.write_text(text.replace(old, new, 1), encoding='utf-8')
-          print('Restored ?lang=zh in EN header')
+          paros = Path('paros/index.html').read_text(encoding='utf-8')
+          finder = Finder()
+          finder.feed(paros)
+          anchors = [a for a in finder.matches if a]
+          unique = list(dict.fromkeys(anchors))
+          print('Detected Paros form anchors:', unique)
+          if len(unique) != 1:
+              raise SystemExit(f'Expected exactly one Paros form anchor, found {unique}')
+          anchor = unique[0]
+
+          el_path = Path('el/index.html')
+          el = el_path.read_text(encoding='utf-8')
+          old = '<a href="/paros/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>'
+          new = f'<a href="/paros/#{anchor}">ΕΠΙΚΟΙΝΩΝΙΑ</a>'
+          if el.count(old) != 1:
+              raise SystemExit(f'Expected exactly one current EL Contact link, found {el.count(old)}')
+          if old == new:
+              raise SystemExit('Current #contact is already the detected form anchor; issue is elsewhere')
+
+          el_path.write_text(el.replace(old, new, 1), encoding='utf-8')
+          print('Updated EL Contact to:', f'/paros/#{anchor}')
           PY
 
-      - name: Verify and commit only EN homepage
+      - name: Verify and commit only EL homepage
         shell: bash
         run: |
           changed="$(git diff --name-only)"
-          if [ "$changed" != "index.html" ]; then
+          if [ "$changed" != "el/index.html" ]; then
             echo "Unexpected changed files: $changed"
             exit 1
           fi
-          grep -F '<a href="/golden-visa/?lang=zh">中文 GOLDEN VISA</a>' index.html
+          grep -F 'ΕΠΙΚΟΙΝΩΝΙΑ</a>' el/index.html
           git diff --check
-          git config user.name 'SNK EN menu update'
+          git config user.name 'SNK EL contact update'
           git config user.email 'actions@users.noreply.github.com'
-          git add index.html
-          git commit -m 'Restore Chinese Golden Visa query link in EN header'
+          git add el/index.html
+          git commit -m 'Point EL Contact to exact Paros form anchor'
           git push origin HEAD:main
