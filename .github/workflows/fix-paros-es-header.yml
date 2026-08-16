@@ -1,4 +1,4 @@
-name: Point Vouliagmeni EL enquiry to correct EL contact form
+name: Point Vouliagmeni EL top menu contact to Greek form
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
         with:
           ref: main
 
-      - name: Update only the Vouliagmeni EL enquiry button
+      - name: Update only the Vouliagmeni EL top menu contact link
         shell: bash
         run: |
           python3 - <<'PY'
@@ -25,30 +25,18 @@ jobs:
           path = Path('vouliagmeni/index.html')
           text = path.read_text(encoding='utf-8')
 
-          targets = [
-              '/#contact',
-              '/el/#contact',
-              '/paros/#private-request',
-              'mailto:investments@snkrealestate.com?subject=Private%20Enquiry%20-%20Vouliagmeni',
-          ]
+          old = '<a href="/el/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>'
+          new = '<a href="/athens-investment/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>'
 
-          found = []
-          for target in targets:
-              old = f'<a class="btn" href="{target}">ΑΙΤΗΜΑ ΙΔΙΩΤΙΚΗΣ ΕΝΗΜΕΡΩΣΗΣ</a>'
-              if old in text:
-                  found.append(old)
+          if text.count(old) != 1:
+              raise SystemExit(f'Expected exactly one universal EL contact menu link, found {text.count(old)}')
 
-          if len(found) != 1:
-              raise SystemExit(f'Expected exactly one known Vouliagmeni enquiry button, found {len(found)}')
-
-          new = '<a class="btn" href="/athens-investment/#contact">ΑΙΤΗΜΑ ΙΔΙΩΤΙΚΗΣ ΕΝΗΜΕΡΩΣΗΣ</a>'
-          text = text.replace(found[0], new, 1)
-
+          text = text.replace(old, new, 1)
           if text.count(new) != 1:
-              raise SystemExit('Correct EL contact link was not installed exactly once')
+              raise SystemExit('Correct Greek contact form link was not installed exactly once')
 
           path.write_text(text, encoding='utf-8')
-          print('Updated only vouliagmeni/index.html')
+          print('Updated only Vouliagmeni EL top menu contact link')
           PY
 
       - name: Verify and commit the single-file change
@@ -60,10 +48,10 @@ jobs:
             exit 1
           fi
 
-          grep -F 'href="/athens-investment/#contact">ΑΙΤΗΜΑ ΙΔΙΩΤΙΚΗΣ ΕΝΗΜΕΡΩΣΗΣ' vouliagmeni/index.html
+          grep -F 'href="/athens-investment/#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>' vouliagmeni/index.html
           git diff --check
           git config user.name 'SNK EL page update'
           git config user.email 'actions@users.noreply.github.com'
           git add vouliagmeni/index.html
-          git commit -m 'Point Vouliagmeni EL enquiry to correct EL contact form'
+          git commit -m 'Point Vouliagmeni EL top menu contact to Greek form'
           git push origin HEAD:main
