@@ -1,4 +1,4 @@
-name: Add contact section to EL homepage
+name: Point Vouliagmeni EL button to main contact
 
 on:
   push:
@@ -16,90 +16,36 @@ jobs:
         with:
           ref: main
 
-      - name: Add only the missing Contact section to the EL homepage
+      - name: Change only the Vouliagmeni EL button destination
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
-          path = Path('el/index.html')
+          path = Path('vouliagmeni/index.html')
           text = path.read_text(encoding='utf-8')
 
-          if 'id="contact"' in text:
-              raise SystemExit('EL Contact section already exists; stopping to avoid duplication')
+          old = '<a class="btn" href="/el/#contact">ΑΙΤΗΜΑ ΙΔΙΩΤΙΚΗΣ ΕΝΗΜΕΡΩΣΗΣ</a>'
+          new = '<a class="btn" href="/#contact">ΑΙΤΗΜΑ ΙΔΙΩΤΙΚΗΣ ΕΝΗΜΕΡΩΣΗΣ</a>'
 
-          marker = '\n  </main>\n  <script>const menu='
-          if text.count(marker) != 1:
-              raise SystemExit(f'Expected one EL main closing marker, found {text.count(marker)}')
+          if text.count(old) != 1:
+              raise SystemExit('Expected exactly one EL contact button')
 
-          contact = '''
-    <section class="contact" id="contact">
-      <p class="eyebrow">ΙΔΙΩΤΙΚΗ ΕΠΙΚΟΙΝΩΝΙΑ ΕΠΕΝΔΥΤΩΝ</p>
-      <h2>Υποβάλετε το εμπιστευτικό αίτημά σας.</h2>
-      <p class="contact-intro">Επιλέξτε το επενδυτικό έργο που σας ενδιαφέρει και υποβάλετε το αίτημά σας. Η ομάδα μας θα επικοινωνήσει μαζί σας με απόλυτη διακριτικότητα.</p>
-      <iframe class="contact-submit-frame" name="snkHiddenSubmitFrameEL" title="Υποβολή φόρμας"></iframe>
-      <form class="contact-form" id="snkInvestorFormEL" action="https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec" method="POST" target="snkHiddenSubmitFrameEL">
-        <input type="hidden" name="origin" value="https://snkrealestate.com/el/">
-        <input type="hidden" name="source" value="SNK Corporate Website EL">
-        <div class="contact-fields">
-          <label><span>ΟΝΟΜΑΤΕΠΩΝΥΜΟ *</span><input name="fullName" required></label>
-          <label><span>EMAIL *</span><input name="email" type="email" required></label>
-          <label><span>ΕΤΑΙΡΕΙΑ / ΟΡΓΑΝΙΣΜΟΣ *</span><input name="company" required></label>
-          <label><span>ΘΕΣΗ / ΤΙΤΛΟΣ *</span><input name="position" required></label>
-          <label><span>ΧΩΡΑ *</span><input name="country" required></label>
-          <label><span>ΚΙΝΗΤΟ / ΤΗΛΕΦΩΝΟ *</span><input name="mobile" type="tel" required></label>
-        </div>
-        <label><span>ΤΥΠΟΣ ΕΠΕΝΔΥΤΗ *</span><select name="investorType" required>
-          <option value="" selected disabled>Επιλέξτε τύπο επενδυτή</option>
-          <option value="Family Office">Family Office</option>
-          <option value="Private Investor">Ιδιώτης Επενδυτής</option>
-          <option value="Investment Fund">Επενδυτικό Κεφάλαιο</option>
-          <option value="Hotel Group / Operator">Ξενοδοχειακός Όμιλος / Operator</option>
-          <option value="Real Estate Investor / Developer">Επενδυτής / Developer Ακινήτων</option>
-          <option value="Institutional Investor">Θεσμικός Επενδυτής</option>
-          <option value="Other">Άλλο</option>
-        </select></label>
-        <label><span>ΕΠΕΝΔΥΤΙΚΟ ΕΥΡΟΣ *</span><select name="investmentRange" required>
-          <option value="" selected disabled>Επιλέξτε επενδυτικό εύρος</option>
-          <option>€250K – €500K</option><option>€500K – €1M</option><option>€1M – €5M</option><option>€5M – €10M</option><option>€10M – €25M</option><option>€25M+</option>
-        </select></label>
-        <label><span>ΠΕΡΙΟΧΗ ΕΝΔΙΑΦΕΡΟΝΤΟΣ *</span><select name="interest" required>
-          <option value="" selected disabled>Επιλέξτε περιοχή ενδιαφέροντος</option>
-          <option value="General investment enquiry">Γενικό επενδυτικό αίτημα</option>
-          <option>Μύκονος</option><option>Πάρος</option><option>Αθήνα</option><option>Golden Visa</option><option value="Other">Άλλο</option>
-        </select></label>
-        <label class="message-field"><span>ΜΗΝΥΜΑ</span><textarea name="message" rows="5"></textarea></label>
-        <button id="snkSubmitButtonEL" type="submit">ΥΠΟΒΟΛΗ ΕΜΠΙΣΤΕΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ</button>
-        <p class="contact-status" id="snkFormStatusEL" role="status" hidden></p>
-      </form>
-      <div class="direct-contact"><a href="mailto:investments@snkrealestate.com">investments@snkrealestate.com</a><a href="tel:+306985821148">+30 6985 821148</a></div>
-    </section>'''
-
-          updated = text.replace(marker, contact + marker, 1)
-          if updated.count('id="contact"') != 1:
-              raise SystemExit('Contact section was not installed exactly once')
-          if 'action="https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec"' not in updated:
-              raise SystemExit('Contact form action is missing')
-
-          path.write_text(updated, encoding='utf-8')
-          print('Added Contact section only to el/index.html')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
           PY
 
       - name: Verify and commit the single-file change
         shell: bash
         run: |
           changed="$(git diff --name-only)"
-          if [ "$changed" != "el/index.html" ]; then
-            echo "Unexpected changed files:"
-            printf '%s\n' "$changed"
+          if [ "$changed" != "vouliagmeni/index.html" ]; then
+            echo "Unexpected changed files: $changed"
             exit 1
           fi
-
+          grep -F 'href="/#contact">ΑΙΤΗΜΑ ΙΔΙΩΤΙΚΗΣ ΕΝΗΜΕΡΩΣΗΣ' vouliagmeni/index.html
           git diff --check
-          grep -F 'id="contact"' el/index.html
-          grep -F 'id="snkInvestorFormEL"' el/index.html
           git config user.name 'SNK EL page update'
           git config user.email 'actions@users.noreply.github.com'
-          git add el/index.html
-          git commit -m 'Add functional Contact section to EL homepage'
+          git add vouliagmeni/index.html
+          git commit -m 'Point Vouliagmeni EL enquiry button to main contact'
           git push origin HEAD:main
