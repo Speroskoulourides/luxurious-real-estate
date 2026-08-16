@@ -1,4 +1,4 @@
-name: Fix persistent Chinese Golden Visa mode
+name: Restore Greek Approach section on EL homepage
 
 on:
   push:
@@ -16,70 +16,60 @@ jobs:
         with:
           ref: main
 
-      - name: Fix Chinese mode without simulated click
+      - name: Add only Greek Approach section
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
-          path = Path('golden-visa/index.html')
+          path = Path('el/index.html')
           text = path.read_text(encoding='utf-8')
 
-          old_handler = "document.querySelectorAll('.zh-button').forEach(button=>button.addEventListener('click',()=>{const zh=button.dataset.lang==='zh';document.documentElement.lang=zh?'zh-CN':'en';Object.entries(translations).forEach(([selector,text])=>{const el=document.querySelector(selector);if(el)el.innerHTML=text[zh?1:0]});document.querySelectorAll('.language.button').forEach(b=>b.classList.toggle('active',b===button));}));"
-          new_handler = "document.querySelectorAll('.zh-button').forEach(button=>button.addEventListener('click',(event)=>{event.preventDefault();const zh=button.dataset.lang==='zh';document.documentElement.lang=zh?'zh-CN':'en';Object.entries(translations).forEach(([selector,text])=>{const el=document.querySelector(selector);if(el)el.innerHTML=text[zh?1:0]});document.querySelectorAll('.zh-button').forEach(b=>b.classList.toggle('active',b===button));}));"
+          if 'id="approach"' in text:
+              raise SystemExit('EL approach section already exists; stopping to avoid duplication')
 
-          old_direct = '''<script id="snk-golden-visa-direct-zh">
-(()=>{
-  const activate=()=>{
-    if(new URLSearchParams(window.location.search).get('lang')!=='zh')return;
-    const button=document.querySelector('.zh-button[data-lang="zh"]');
-    if(button)button.click();
-  };
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',activate,{once:true});else activate();
-})();
-</script>'''
+          marker = '\n  </main>'
+          if text.count(marker) != 1:
+              raise SystemExit(f'Expected exactly one main closing marker, found {text.count(marker)}')
 
-          new_direct = '''<script id="snk-golden-visa-direct-zh">
-(()=>{
-  const activate=()=>{
-    if(new URLSearchParams(window.location.search).get('lang')!=='zh')return;
-    document.documentElement.lang='zh-CN';
-    if(typeof translations!=='object')return;
-    Object.entries(translations).forEach(([selector,text])=>{
-      const el=document.querySelector(selector);
-      if(el)el.innerHTML=text[1];
-    });
-    document.querySelectorAll('.zh-button').forEach(b=>b.classList.add('active'));
-  };
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',activate,{once:true});else activate();
-})();
-</script>'''
+          section = '''
+    <section class="approach section-dark" id="approach">
+      <p class="eyebrow">Η ΠΡΟΣΕΓΓΙΣΗ ΜΑΣ</p>
+      <h2>Από το πρώτο ενδιαφέρον<br>στην ιδιωτική αξιολόγηση.</h2>
+      <div class="process">
+        <article><span>01</span><h3>Ανακαλύψτε</h3><p>Δείτε το επιλεγμένο επενδυτικό έργο μέσα από την ειδικά διαμορφωμένη παρουσίασή του.</p></article>
+        <article><span>02</span><h3>Επικοινωνήστε</h3><p>Εκδηλώστε το ενδιαφέρον σας απευθείας στην ομάδα της SNK Real Estate.</p></article>
+        <article><span>03</span><h3>Αξιολογήστε</h3><p>Λάβετε πρόσθετες πληροφορίες και οργανώστε ιδιωτική επίσκεψη, όπου αυτό είναι κατάλληλο.</p></article>
+      </div>
+      <div class="contact-transition">
+        <p class="transition-label">ΕΤΟΙΜΟΙ ΓΙΑ ΙΔΙΩΤΙΚΗ ΑΞΙΟΛΟΓΗΣΗ;</p>
+        <p>Υποβάλετε το εμπιστευτικό σας αίτημα για περισσότερες πληροφορίες<br>και οργανώστε <span class="gold-text">το επόμενο βήμα.</span></p>
+      </div>
+    </section>'''
 
-          if text.count(old_handler) != 1:
-              raise SystemExit(f'Expected one old Chinese click handler, found {text.count(old_handler)}')
-          if text.count(old_direct) != 1:
-              raise SystemExit(f'Expected one old direct Chinese script, found {text.count(old_direct)}')
+          updated = text.replace(marker, section + marker, 1)
+          if updated.count('id="approach"') != 1:
+              raise SystemExit('Greek Approach section was not installed exactly once')
 
-          updated = text.replace(old_handler, new_handler, 1).replace(old_direct, new_direct, 1)
           path.write_text(updated, encoding='utf-8')
-          print('Fixed persistent Chinese mode in golden-visa/index.html')
+          print('Added only Greek #approach to el/index.html')
           PY
 
-      - name: Verify and commit only Golden Visa
+      - name: Verify and commit only EL homepage
         shell: bash
         run: |
           changed="$(git diff --name-only)"
-          if [ "$changed" != "golden-visa/index.html" ]; then
+          if [ "$changed" != "el/index.html" ]; then
             echo "Unexpected changed files: $changed"
             exit 1
           fi
 
-          grep -F 'event.preventDefault()' golden-visa/index.html
-          grep -F "document.documentElement.lang='zh-CN'" golden-visa/index.html
-          grep -F 'if(el)el.innerHTML=text[1]' golden-visa/index.html
+          grep -F 'id="approach"' el/index.html
+          grep -F 'Η ΠΡΟΣΕΓΓΙΣΗ ΜΑΣ' el/index.html
+          grep -F 'Από το πρώτο ενδιαφέρον' el/index.html
           git diff --check
-          git config user.name 'SNK Golden Visa update'
+          git config user.name 'SNK EL page update'
           git config user.email 'actions@users.noreply.github.com'
-          git add golden-visa/index.html
-          git commit -m 'Fix persistent Chinese Golden Visa mode'
+          git add el/index.html
+          git commit -m 'Restore Greek Approach section on EL homepage'
           git push origin HEAD:main
