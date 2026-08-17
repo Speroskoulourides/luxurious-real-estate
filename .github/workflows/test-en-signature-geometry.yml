@@ -1,4 +1,4 @@
-name: Set EN Company height
+name: Make EN Company full viewport section
 
 on:
   push:
@@ -15,26 +15,26 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - name: Set EN Company to 80vh
+      - name: Set EN Company viewport height and anchor
         run: |
           python3 - <<'PY'
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          old = '#company{min-height:auto!important}'
-          new = '#company{min-height:80vh!important}'
+          old = '#company{min-height:80vh!important}'
+          new = '#company{min-height:calc(100vh - 76px)!important;scroll-margin-top:76px!important}'
           if s.count(old) != 1:
-              raise SystemExit(f'Expected exactly one EN Company auto height rule, found {s.count(old)}')
+              raise SystemExit(f'Expected exactly one EN Company 80vh rule, found {s.count(old)}')
           s = s.replace(old, new, 1)
           p.write_text(s, encoding='utf-8')
           PY
       - name: Verify and commit
         run: |
-          grep -F '#company{min-height:80vh!important}' index.html
+          grep -F '#company{min-height:calc(100vh - 76px)!important;scroll-margin-top:76px!important}' index.html
           test "$(git diff --name-only)" = "index.html"
           git diff --check
-          git config user.name 'SNK EN Company spacing'
+          git config user.name 'SNK EN Company geometry'
           git config user.email 'actions@users.noreply.github.com'
           git add index.html
-          git commit -m 'Set EN Company height to 80vh'
+          git commit -m 'Make EN Company a full viewport section'
           git push origin HEAD:main
