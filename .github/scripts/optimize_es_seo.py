@@ -4,7 +4,7 @@ p = Path('es/index.html')
 s = p.read_text(encoding='utf-8')
 
 repls = {
-' <title>SNK Real Estate | Oportunidades de Inversión Privada en Grecia</title> ': ' <title>SNK Real Estate | Inmobiliario de Lujo e Inversión en Grecia</title> ',
+' <title>SNK Real Estate | Oportunidades de Inversión Privada en Grecia</title> ': ' <title>SNK Real Estate | Inmobiliario de Lujo e Inversión en Grecia</title>',
 '  <meta name="description" content="SNK presenta oportunidades cuidadosamente seleccionadas de inversión inmobiliaria privada y hotelera en Grecia, incluyendo Mykonos, Paros y Atenas.">': '  <meta name="description" content="SNK Real Estate presenta propiedades de lujo, villas e inversiones inmobiliarias y hoteleras seleccionadas en Grecia, incluyendo Mykonos, Paros y Atenas.">',
 '  <meta property="og:title" content="SNK Real Estate | Oportunidades de Inversión Privada en Grecia">': '  <meta property="og:title" content="SNK Real Estate | Inmobiliario de Lujo e Inversión en Grecia">',
 '  <meta property="og:image" content="../athens-investment-en/monastiraki-view.jpg">': '  <meta property="og:image" content="https://snkrealestate.com/athens-investment-en/monastiraki-view.jpg">',
