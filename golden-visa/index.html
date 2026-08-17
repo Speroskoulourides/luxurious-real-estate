@@ -215,7 +215,7 @@ main [id]{scroll-margin-top:92px}
   <a href="https://snkrealestate.com/fr/">FR</a><span>·</span>
   <a href="https://snkrealestate.com/es/">ES</a><span>·</span>
   <a href="https://snkrealestate.com/tr/">TR</a><span>·</span>
- <a href="#" class="zh-button" data-lang="zh">中文</a><span>·</span>
+ <a href="/golden-visa/?lang=zh" class="zh-button" data-lang="zh">中文</a><span>·</span>
   <a href="https://snkrealestate.com/pt/">PT</a>
 </div>
 </header>
@@ -252,6 +252,28 @@ document.querySelectorAll('.zh-button').forEach(button=>button.addEventListener(
     Object.entries(translations).forEach(([selector,text])=>{const el=document.querySelector(selector);if(el)el.innerHTML=text[1]});
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',activate,{once:true});else activate();
+})();
+</script>
+<script id="snk-golden-visa-zh-lock">
+(()=>{
+  if(new URLSearchParams(window.location.search).get('lang')!=='zh') return;
+  let busy=false;
+  const applyZh=()=>{
+    if(busy) return;
+    busy=true;
+    document.documentElement.lang='zh-CN';
+    Object.entries(translations).forEach(([selector,text])=>{
+      const el=document.querySelector(selector);
+      if(el && el.innerHTML!==text[1]) el.innerHTML=text[1];
+    });
+    busy=false;
+  };
+  const start=()=>{
+    applyZh();
+    new MutationObserver(()=>applyZh()).observe(document.body,{subtree:true,childList:true,characterData:true});
+  };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start,{once:true});
+  else start();
 })();
 </script>
 </body></html>
