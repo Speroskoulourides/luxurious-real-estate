@@ -1,4 +1,4 @@
-name: Fix EN Company anchor offset
+name: Fix EN Opportunities anchor offset
 
 on:
   push:
@@ -15,37 +15,28 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - name: Use one fixed-header anchor offset in EN
+      - name: Align EN Opportunities anchor with fixed header
         run: |
           python3 - <<'PY'
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          old_company = '#company{min-height:calc(100vh - 76px)!important;scroll-margin-top:76px!important}'
-          new_company = '#company{min-height:calc(100vh - 76px)!important;scroll-margin-top:0!important}'
-          if s.count(old_company) != 1:
-              raise SystemExit(f'Expected exactly one current EN Company anchor rule, found {s.count(old_company)}')
-          s = s.replace(old_company, new_company, 1)
-          marker = '<style id="en-corporate-geometry-test">\n'
+          marker = '#company{min-height:calc(100vh - 76px)!important;scroll-margin-top:0!important}\n'
+          insert = marker + '#opportunities{scroll-margin-top:0!important}\n'
           if s.count(marker) != 1:
-              raise SystemExit(f'Expected exactly one EN geometry style block, found {s.count(marker)}')
-          s = s.replace(marker, marker + 'html{scroll-padding-top:76px!important}\n', 1)
-          mobile_old = '@media(max-width:560px){body.snk-universal-header-enabled{padding-top:0!important}.hero{height:100vh!important}}'
-          mobile_new = '@media(max-width:560px){html{scroll-padding-top:68px!important}body.snk-universal-header-enabled{padding-top:0!important}.hero{height:100vh!important}}'
-          if s.count(mobile_old) != 1:
-              raise SystemExit(f'Expected exactly one EN mobile geometry rule, found {s.count(mobile_old)}')
-          s = s.replace(mobile_old, mobile_new, 1)
+              raise SystemExit(f'Expected exactly one EN Company rule marker, found {s.count(marker)}')
+          if '#opportunities{scroll-margin-top:0!important}' in s:
+              raise SystemExit('EN Opportunities anchor rule already present')
+          s = s.replace(marker, insert, 1)
           p.write_text(s, encoding='utf-8')
           PY
       - name: Verify and commit
         run: |
-          grep -F 'html{scroll-padding-top:76px!important}' index.html
-          grep -F '#company{min-height:calc(100vh - 76px)!important;scroll-margin-top:0!important}' index.html
-          grep -F 'html{scroll-padding-top:68px!important}' index.html
+          grep -F '#opportunities{scroll-margin-top:0!important}' index.html
           test "$(git diff --name-only)" = "index.html"
           git diff --check
-          git config user.name 'SNK EN anchor geometry'
+          git config user.name 'SNK EN Opportunities anchor'
           git config user.email 'actions@users.noreply.github.com'
           git add index.html
-          git commit -m 'Fix EN Company anchor offset'
+          git commit -m 'Fix EN Opportunities anchor offset'
           git push origin HEAD:main
