@@ -22,12 +22,7 @@ jobs:
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
           marker = '<!-- SNK UNIVERSAL HEADER STYLES END -->'
-          block = '''<style id="en-corporate-geometry-test">
-body.snk-universal-header-enabled{padding-top:76px!important}
-.hero{height:100vh!important}
-@media(max-width:560px){body.snk-universal-header-enabled{padding-top:68px!important}.hero{height:100vh!important}}
-</style>
-'''
+          block = '<style id="en-corporate-geometry-test">\nbody.snk-universal-header-enabled{padding-top:76px!important}\n.hero{height:100vh!important}\n@media(max-width:560px){body.snk-universal-header-enabled{padding-top:68px!important}.hero{height:100vh!important}}\n</style>\n'
           if 'id="en-corporate-geometry-test"' in s:
               raise SystemExit('EN geometry test already present')
           if marker not in s:
