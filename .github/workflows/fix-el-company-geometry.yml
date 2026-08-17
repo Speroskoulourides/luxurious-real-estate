@@ -15,29 +15,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - name: Align EL Company with fixed header
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p = Path('el/index.html')
-          s = p.read_text(encoding='utf-8')
-          marker = '<!-- SNK UNIVERSAL HEADER STYLES END -->\n'
-          block = '''<!-- SNK UNIVERSAL HEADER STYLES END -->
-<style id="el-corporate-geometry-test">
-html{scroll-padding-top:76px!important}
-body.snk-universal-header-enabled{padding-top:0!important}
-.hero{height:100vh!important}
-#company{min-height:calc(100vh - 76px)!important;scroll-margin-top:0!important}
-@media(max-width:560px){html{scroll-padding-top:68px!important}body.snk-universal-header-enabled{padding-top:0!important}.hero{height:100vh!important}}
-</style>
-'''
-          if s.count(marker) != 1:
-              raise SystemExit(f'Expected one universal header end marker, found {s.count(marker)}')
-          if 'id="el-corporate-geometry-test"' in s:
-              raise SystemExit('EL geometry block already exists')
-          s = s.replace(marker, block, 1)
-          p.write_text(s, encoding='utf-8')
-          PY
+      - name: Apply EL Company geometry
+        run: python3 .github/scripts/fix_el_company_geometry.py
       - name: Verify and commit
         run: |
           grep -F '#company{min-height:calc(100vh - 76px)!important;scroll-margin-top:0!important}' el/index.html
