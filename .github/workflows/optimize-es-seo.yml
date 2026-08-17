@@ -37,3 +37,5 @@ jobs:
           git add es/index.html
           git commit -m "Optimize ES SEO"
           git push origin main
+
+# retrigger after whitespace fix
