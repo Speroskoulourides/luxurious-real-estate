@@ -1,0 +1,49 @@
+name: Fix corporate top offset
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-corporate-top-offset.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Remove duplicate corporate top offset
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          files = [Path('index.html'), Path('el/index.html'), Path('fr/index.html'), Path('es/index.html')]
+          for p in files:
+              s = p.read_text(encoding='utf-8')
+              old_desktop = 'body.snk-universal-header-enabled{padding-top:76px!important}'
+              new_desktop = 'body.snk-universal-header-enabled{padding-top:0!important}'
+              old_mobile = 'body.snk-universal-header-enabled{padding-top:68px!important}'
+              new_mobile = 'body.snk-universal-header-enabled{padding-top:0!important}'
+              if old_desktop not in s:
+                  raise SystemExit(f'Desktop offset not found in {p}')
+              if old_mobile not in s:
+                  raise SystemExit(f'Mobile offset not found in {p}')
+              s = s.replace(old_desktop, new_desktop, 1)
+              s = s.replace(old_mobile, new_mobile, 1)
+              p.write_text(s, encoding='utf-8')
+          PY
+      - name: Verify and commit
+        run: |
+          for f in index.html el/index.html fr/index.html es/index.html; do
+            grep -F 'body.snk-universal-header-enabled{padding-top:0!important}' "$f"
+          done
+          test "$(git diff --name-only | sort)" = "$(printf 'el/index.html\nes/index.html\nfr/index.html\nindex.html\n' | sort)"
+          git diff --check
+          git config user.name 'SNK corporate offset update'
+          git config user.email 'actions@users.noreply.github.com'
+          git add index.html el/index.html fr/index.html es/index.html
+          git commit -m 'Remove duplicate corporate top offset'
+          git push origin HEAD:main

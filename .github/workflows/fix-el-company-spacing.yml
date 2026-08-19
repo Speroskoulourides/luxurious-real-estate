@@ -1,0 +1,42 @@
+name: Fix EL Company spacing
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-el-company-spacing.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Fix company spacing
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('el/index.html')
+          s = p.read_text(encoding='utf-8')
+          marker = '<!-- SNK UNIVERSAL HEADER STYLES START -->'
+          fix = '<style id="el-company-spacing-fix">#company{padding-top:24px!important}</style>\n\n'
+          if 'id="el-company-spacing-fix"' not in s:
+              if marker not in s:
+                  raise SystemExit('Header styles marker not found')
+              s = s.replace(marker, fix + marker, 1)
+              p.write_text(s, encoding='utf-8')
+          PY
+      - name: Verify and commit
+        run: |
+          grep -F 'id="el-company-spacing-fix"' el/index.html
+          grep -F '#company{padding-top:24px!important}' el/index.html
+          test "$(git diff --name-only)" = "el/index.html"
+          git diff --check
+          git config user.name 'SNK EL company update'
+          git config user.email 'actions@users.noreply.github.com'
+          git add el/index.html
+          git commit -m 'Reduce EL Company top spacing'
+          git push origin HEAD:main

@@ -1,0 +1,42 @@
+name: Fix EN Contact anchor offset
+
+on:
+  push:
+    paths:
+      - '.github/workflows/test-en-signature-geometry.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Align EN Contact anchor with fixed header
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          marker = '#approach{scroll-margin-top:0!important}\n'
+          insert = marker + '#contact{scroll-margin-top:0!important}\n'
+          if s.count(marker) != 1:
+              raise SystemExit(f'Expected exactly one EN Approach rule marker, found {s.count(marker)}')
+          if '#contact{scroll-margin-top:0!important}' in s:
+              raise SystemExit('EN Contact anchor rule already present')
+          s = s.replace(marker, insert, 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Verify and commit
+        run: |
+          grep -F '#contact{scroll-margin-top:0!important}' index.html
+          test "$(git diff --name-only)" = "index.html"
+          git diff --check
+          git config user.name 'SNK EN Contact anchor'
+          git config user.email 'actions@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Fix EN Contact anchor offset'
+          git push origin HEAD:main

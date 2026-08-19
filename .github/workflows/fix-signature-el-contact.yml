@@ -1,0 +1,41 @@
+name: Fix Signature EL Contact
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-signature-el-contact.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Update contact link
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('vouliagmeni/index.html')
+          s = p.read_text(encoding='utf-8')
+          old = 'href="/el/#contact"'
+          new = 'href="/el-contact/"'
+          i = s.find(old)
+          if i < 0:
+              raise SystemExit('Old Signature EL Contact link not found')
+          s = s[:i] + new + s[i+len(old):]
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Verify and commit
+        run: |
+          grep -F 'href="/el-contact/">ΕΠΙΚΟΙΝΩΝΙΑ</a>' vouliagmeni/index.html
+          test "$(git diff --name-only)" = "vouliagmeni/index.html"
+          git diff --check
+          git config user.name 'SNK Signature EL update'
+          git config user.email 'actions@users.noreply.github.com'
+          git add vouliagmeni/index.html
+          git commit -m 'Fix Signature EL Contact link'
+          git push origin HEAD:main

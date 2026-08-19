@@ -126,8 +126,77 @@
 
 
 <style id="snk-global-header-spacing">body{padding-top:74px!important}@media(max-width:900px){body{padding-top:64px!important}}</style>
+
+<!-- SNK UNIVERSAL HEADER STYLES START -->
+<style id="snk-universal-header-styles">
+html{scroll-padding-top:92px!important}
+body.snk-universal-header-enabled{padding-top:76px!important}
+body.snk-universal-header-enabled>main{margin-top:0!important;padding-top:0!important}
+body.snk-universal-header-enabled>header:not(#snk-universal-header),
+body.snk-universal-header-enabled header.topbar,
+body.snk-universal-header-enabled header.snk-opportunity-header:not(#snk-universal-header),
+body.snk-universal-header-enabled .snk-global-header:not(#snk-universal-header),
+body.snk-universal-header-enabled #snk-global-header:not(#snk-universal-header){display:none!important}
+body.snk-mykonos-document .page{height:calc(100vh - 76px)!important;min-height:calc(100vh - 76px)!important}
+body.snk-paros-document .page{min-height:calc(100vh - 76px)!important}
+main [id]{scroll-margin-top:92px}
+#snk-universal-header,
+#snk-universal-header *{box-sizing:border-box!important}
+#snk-universal-header{
+  position:fixed!important;top:0!important;left:0!important;right:0!important;z-index:2147483646!important;
+  height:76px!important;display:flex!important;align-items:center!important;padding:0 36px!important;
+  background:rgba(248,244,234,.985)!important;color:#101722!important;
+  border-bottom:1px solid rgba(16,23,34,.14)!important;box-shadow:0 1px 0 rgba(255,255,255,.55)!important;
+  backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important;
+  font-family:Montserrat,Arial,sans-serif!important
+}
+#snk-universal-header a{text-decoration:none!important;color:inherit!important}
+.snk-universal-brand{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:6px!important;min-width:260px!important}
+.snk-universal-brand-main{display:flex!important;align-items:baseline!important;gap:12px!important;white-space:nowrap!important}
+.snk-universal-brand-main strong{font:400 30px/1 Georgia,'Times New Roman',serif!important;letter-spacing:-.07em!important;color:#b88918!important}
+.snk-universal-brand-main span{font-size:8px!important;font-weight:700!important;letter-spacing:.28em!important;color:#101722!important}
+.snk-universal-slogan{font-size:7px!important;font-weight:500!important;letter-spacing:.18em!important;color:#7b7467!important;white-space:nowrap!important}
+.snk-universal-right{display:flex!important;align-items:center!important;margin-left:auto!important;gap:30px!important;min-width:0!important}
+.snk-universal-nav{display:flex!important;align-items:center!important;gap:28px!important}
+.snk-universal-nav a{position:relative!important;font-size:9px!important;font-weight:700!important;letter-spacing:.16em!important;white-space:nowrap!important;transition:color .2s ease!important}
+.snk-universal-nav a:after{content:''!important;position:absolute!important;left:0!important;right:100%!important;bottom:-9px!important;height:1px!important;background:#b88918!important;transition:right .22s ease!important}
+.snk-universal-nav a:hover{color:#b88918!important}.snk-universal-nav a:hover:after{right:0!important}
+.snk-universal-langs{display:flex!important;align-items:center!important;gap:6px!important;white-space:nowrap!important;font-size:9px!important;font-weight:600!important;letter-spacing:.12em!important;color:#5f6670!important}
+.snk-universal-langs a:hover,.snk-universal-langs a.active{color:#b88918!important}.snk-universal-langs span{font-size:8px!important;color:#9a9a94!important}
+.snk-universal-menu-button{display:none!important;border:0!important;background:transparent!important;color:#101722!important;padding:10px 0!important;font-size:9px!important;font-weight:700!important;letter-spacing:.18em!important;cursor:pointer!important}
+@media(max-width:1180px){
+  #snk-universal-header{padding:0 24px!important}.snk-universal-brand{min-width:220px!important}.snk-universal-right{gap:18px!important}.snk-universal-nav{gap:16px!important}.snk-universal-nav a,.snk-universal-langs{font-size:8px!important}.snk-universal-langs{gap:4px!important}
+}
+@media(max-width:940px){
+  .snk-universal-brand{min-width:0!important}.snk-universal-slogan{display:none!important}.snk-universal-menu-button{display:block!important;order:1!important}.snk-universal-langs{order:2!important}
+  .snk-universal-nav{position:fixed!important;top:76px!important;left:0!important;right:0!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;padding:14px 24px 20px!important;background:rgba(248,244,234,.995)!important;border-bottom:1px solid rgba(16,23,34,.14)!important;box-shadow:0 18px 36px rgba(16,23,34,.12)!important;opacity:0!important;visibility:hidden!important;transform:translateY(-10px)!important;pointer-events:none!important;transition:opacity .2s ease,transform .2s ease,visibility .2s ease!important}
+  #snk-universal-header.snk-menu-open .snk-universal-nav{opacity:1!important;visibility:visible!important;transform:translateY(0)!important;pointer-events:auto!important}
+  .snk-universal-nav a{padding:14px 0!important;border-bottom:1px solid rgba(16,23,34,.09)!important;font-size:10px!important}.snk-universal-nav a:last-child{border-bottom:0!important}.snk-universal-nav a:after{display:none!important}
+}
+@media(max-width:560px){
+  #snk-universal-header{height:68px!important;padding:0 16px!important}.snk-universal-brand-main strong{font-size:27px!important}.snk-universal-brand-main span{font-size:7px!important;letter-spacing:.22em!important}.snk-universal-right{gap:12px!important}.snk-universal-langs{font-size:7px!important;gap:3px!important}.snk-universal-menu-button{font-size:8px!important}.snk-universal-nav{top:68px!important;padding-left:18px!important;padding-right:18px!important}body.snk-universal-header-enabled{padding-top:68px!important}body.snk-mykonos-document .page{height:calc(100vh - 68px)!important;min-height:calc(100vh - 68px)!important}body.snk-paros-document .page{min-height:calc(100vh - 68px)!important}
+}
+</style>
+<!-- SNK UNIVERSAL HEADER STYLES END -->
 </head>
-<body id="top">
+<body id="top" class="snk-universal-header-enabled">
+<!-- SNK UNIVERSAL HEADER START -->
+<header id="snk-universal-header" class="snk-opportunity-header" role="banner">
+  <a class="snk-universal-brand" href="/#top" aria-label="SNK Real Estate home">
+    <span class="snk-universal-brand-main"><strong>SNK</strong><span>REAL ESTATE</span></span>
+    <span class="snk-universal-slogan">Connecting Exceptional Properties with Exceptional People</span>
+  </a>
+  <div class="snk-universal-right">
+    <button class="snk-universal-menu-button" type="button" aria-expanded="false" aria-controls="snk-universal-nav">MENU</button>
+    <nav id="snk-universal-nav" class="snk-universal-nav" aria-label="Main navigation"><a href="/#company">COMPANY</a><a href="/#opportunities">OPPORTUNITIES</a><a href="/vouliagmeni-en/">SIGNATURE</a><a href="/#approach">APPROACH</a><a href="/#contact">CONTACT</a></nav>
+    <div class="snk-universal-langs" aria-label="Language selection"><a class="active" aria-current="page" href="/golden-visa/">EN</a><span>·</span><a href="/el/#opportunities">EL</a><span>·</span><a href="/golden-visa-fr/">FR</a><span>·</span><a href="/golden-visa-es/">ES</a></div>
+  </div>
+</header>
+<script id="snk-universal-header-script">
+(()=>{const h=document.getElementById('snk-universal-header');if(!h)return;const b=h.querySelector('.snk-universal-menu-button');const n=h.querySelector('.snk-universal-nav');if(!b||!n)return;const close=()=>{h.classList.remove('snk-menu-open');b.setAttribute('aria-expanded','false')};b.addEventListener('click',()=>{const open=h.classList.toggle('snk-menu-open');b.setAttribute('aria-expanded',String(open))});n.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});})();
+</script>
+<!-- SNK UNIVERSAL HEADER END -->
+
 <header id="snk-global-header" aria-label="SNK Real Estate navigation">
   <a class="snk-global-brand" href="/" aria-label="SNK Real Estate home">
     <span class="snk-global-mark">SNK</span>
@@ -146,7 +215,7 @@
   <a href="https://snkrealestate.com/fr/">FR</a><span>·</span>
   <a href="https://snkrealestate.com/es/">ES</a><span>·</span>
   <a href="https://snkrealestate.com/tr/">TR</a><span>·</span>
- <a href="#" class="zh-button" data-lang="zh">中文</a><span>·</span>
+ <a href="/golden-visa/?lang=zh" class="zh-button" data-lang="zh">中文</a><span>·</span>
   <a href="https://snkrealestate.com/pt/">PT</a>
 </div>
 </header>
@@ -173,7 +242,39 @@ const translations={
   '#contact .eyebrow':['Private & confidential enquiry','私人保密咨询'],'#contact h2':['Discuss the Athens opportunity','咨询雅典投资机会'],'#contact .copy':['The exact address and full supporting file are shared privately following an initial qualified enquiry.','在完成初步意向确认后，我们将以保密方式提供准确地址及完整资料。'],
   '.field:nth-child(1) label':['Full name *','姓名 *'],'.field:nth-child(2) label':['Email *','电子邮箱 *'],'.field:nth-child(3) label':['Company / organisation','公司 / 机构'],'.field:nth-child(4) label':['Position / capacity','职位 / 身份'],'.field:nth-child(5) label':['Country *','国家 *'],'.field:nth-child(6) label':['Mobile / telephone *','手机 / 电话 *'],'.field:nth-child(7) label':['Investor type','投资者类型'],'.field:nth-child(8) label':['Investment range','投资范围'],'.field:nth-child(9) label':['Message','留言'],'.privacy':['By submitting this enquiry, you consent to the confidential use of the supplied information solely for investment-related communication.','提交本咨询即表示您同意所提供的信息仅用于投资相关沟通并予以保密处理。'],'.submit':['Submit confidential enquiry','提交保密咨询']
 };
-document.querySelectorAll('.zh-button').forEach(button=>button.addEventListener('click',()=>{const zh=button.dataset.lang==='zh';document.documentElement.lang=zh?'zh-CN':'en';Object.entries(translations).forEach(([selector,text])=>{const el=document.querySelector(selector);if(el)el.innerHTML=text[zh?1:0]});document.querySelectorAll('.language.button').forEach(b=>b.classList.toggle('active',b===button));}));
+document.querySelectorAll('.zh-button').forEach(button=>button.addEventListener('click',(event)=>{event.preventDefault();const zh=button.dataset.lang==='zh';document.documentElement.lang=zh?'zh-CN':'en';Object.entries(translations).forEach(([selector,text])=>{const el=document.querySelector(selector);if(el)el.innerHTML=text[zh?1:0]});document.querySelectorAll('.language.button').forEach(b=>b.classList.toggle('active',b===button));}));
+</script>
+<script id="snk-golden-visa-direct-zh">
+(()=>{
+  const activate=()=>{
+    if(new URLSearchParams(window.location.search).get('lang')!=='zh')return;
+    document.documentElement.lang='zh-CN';
+    Object.entries(translations).forEach(([selector,text])=>{const el=document.querySelector(selector);if(el)el.innerHTML=text[1]});
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',activate,{once:true});else activate();
+})();
+</script>
+<script id="snk-golden-visa-zh-lock">
+(()=>{
+  if(new URLSearchParams(window.location.search).get('lang')!=='zh') return;
+  let busy=false;
+  const applyZh=()=>{
+    if(busy) return;
+    busy=true;
+    document.documentElement.lang='zh-CN';
+    Object.entries(translations).forEach(([selector,text])=>{
+      const el=document.querySelector(selector);
+      if(el && el.innerHTML!==text[1]) el.innerHTML=text[1];
+    });
+    busy=false;
+  };
+  const start=()=>{
+    applyZh();
+    new MutationObserver(()=>applyZh()).observe(document.body,{subtree:true,childList:true,characterData:true});
+  };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start,{once:true});
+  else start();
+})();
 </script>
 </body></html>
 

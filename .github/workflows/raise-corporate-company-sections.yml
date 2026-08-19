@@ -1,0 +1,48 @@
+name: Raise corporate Company sections
+
+on:
+  push:
+    paths:
+      - '.github/workflows/raise-corporate-company-sections.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Update shared company spacing
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          css = Path('corporate-styles.css')
+          s = css.read_text(encoding='utf-8')
+          old = '/* COMPANY — FINAL LAYOUT */\n#company {\n    display: block;\n    padding-top: 290px;\n}'
+          new = '/* COMPANY — FINAL LAYOUT */\n#company {\n    display: block;\n    padding-top: 220px;\n}'
+          if old not in s:
+              raise SystemExit('Corporate company spacing block not found')
+          css.write_text(s.replace(old, new, 1), encoding='utf-8')
+
+          el = Path('el/index.html')
+          t = el.read_text(encoding='utf-8')
+          override = '<style id="el-company-spacing-fix">#company{padding-top:24px!important}</style>\n\n'
+          if override in t:
+              t = t.replace(override, '', 1)
+              el.write_text(t, encoding='utf-8')
+          PY
+      - name: Verify and commit
+        run: |
+          grep -F 'padding-top: 220px;' corporate-styles.css
+          ! grep -F 'el-company-spacing-fix' el/index.html
+          test "$(git diff --name-only | sort)" = "$(printf 'corporate-styles.css\nel/index.html\n' | sort)"
+          git diff --check
+          git config user.name 'SNK corporate layout update'
+          git config user.email 'actions@users.noreply.github.com'
+          git add corporate-styles.css el/index.html
+          git commit -m 'Raise corporate Company sections'
+          git push origin HEAD:main

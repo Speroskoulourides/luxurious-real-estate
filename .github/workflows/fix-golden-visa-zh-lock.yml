@@ -1,0 +1,31 @@
+name: Lock Chinese Golden Visa mode
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-golden-visa-zh-lock.yml'
+      - '.github/scripts/fix_golden_visa_zh.py'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply persistent Chinese mode
+        run: python3 .github/scripts/fix_golden_visa_zh.py
+      - name: Verify and commit
+        run: |
+          grep -F 'id="snk-golden-visa-zh-lock"' golden-visa/index.html
+          grep -F '/golden-visa/?lang=zh' golden-visa/index.html
+          test "$(git diff --name-only)" = "golden-visa/index.html"
+          git diff --check
+          git config user.name 'SNK Golden Visa zh lock'
+          git config user.email 'actions@users.noreply.github.com'
+          git add golden-visa/index.html
+          git commit -m 'Lock Chinese Golden Visa mode'
+          git push origin HEAD:main
