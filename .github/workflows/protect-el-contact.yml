@@ -1,0 +1,124 @@
+name: Protect EL contact form
+
+on:
+  push:
+    paths:
+      - '.github/el-contact-security-trigger.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  protect-el-contact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add Greek reCAPTCHA and secure handling
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('el-contact/index.html')
+          text = path.read_text(encoding='utf-8')
+
+          old_endpoint = 'https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec'
+          new_endpoint = 'https://script.google.com/macros/s/AKfycbwZA8TyuMbwKy2PO7zK1pvycVJf4htzf3umHRy7rMJbVpeOJH6Q4f1IDm066F63XmBFzQ/exec'
+          site_key = '6LcywJEtAAAAALEc3lpTmbk4TvAtnb4AjhzIRN5c'
+          recaptcha_script = '<script src="https://www.google.com/recaptcha/api.js?hl=el" async defer></script>'
+
+          if recaptcha_script not in text:
+              text = text.replace('</head>', recaptcha_script + '\n</head>', 1)
+
+          text = text.replace(old_endpoint, new_endpoint)
+          text = text.replace('name="snkElSubmit"', 'name="snkHiddenSubmitFrame"')
+
+          text = re.sub(
+              r'<form\s+action="[^"]+"\s+method="POST"\s+target="snkHiddenSubmitFrame">',
+              f'<form id="snkInvestorForm" action="{new_endpoint}" method="POST" target="snkHiddenSubmitFrame">',
+              text,
+              count=1
+          )
+
+          text = text.replace(
+              '<input type="hidden" name="origin" value="https://snkrealestate.com/el-contact/">',
+              '<input type="hidden" name="origin" value="https://snkrealestate.com">'
+          )
+          text = text.replace(
+              '<input type="hidden" name="source" value="SNK EL Investor Contact">',
+              '<input type="hidden" name="source" value="SNK Corporate Website">'
+          )
+
+          marker = '<input type="hidden" name="source" value="SNK Corporate Website">'
+          security_fields = '''\n      <input type="hidden" name="formStartedAt" id="snkFormStartedAt" value="">\n      <input type="text" name="website" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;">'''
+          if 'name="formStartedAt"' not in text:
+              text = text.replace(marker, marker + security_fields, 1)
+
+          investor_row = '<label class="field full"><span>ΤΥΠΟΣ ΕΠΕΝΔΥΤΗ *</span><select name="investorType" required><option value="">Επιλέξτε τύπο επενδυτή</option><option>Ιδιώτης Επενδυτής</option><option>Family Office</option><option>Επενδυτικό Fund</option><option>Εταιρεία / Οργανισμός</option><option>Άλλο</option></select></label>'
+          extra_fields = '''\n        <label class="field full"><span>ΕΠΕΝΔΥΤΙΚΟ ΕΥΡΟΣ *</span><select name="investmentRange" required><option value="">Επιλέξτε επενδυτικό εύρος</option><option>€250K – €500K</option><option>€500K – €1M</option><option>€1M – €5M</option><option>€5M – €10M</option><option>€10M – €25M</option><option>€25M+</option></select></label>\n        <label class="field full"><span>ΠΕΡΙΟΧΗ ΕΝΔΙΑΦΕΡΟΝΤΟΣ *</span><select name="interest" required><option value="">Επιλέξτε περιοχή ενδιαφέροντος</option><option>Γενικό επενδυτικό αίτημα</option><option>Mykonos</option><option>Paros</option><option>Επένδυση στην Αθήνα</option><option>Golden Visa</option><option>Άλλο</option></select></label>'''
+          if 'name="investmentRange"' not in text:
+              text = text.replace(investor_row, investor_row + extra_fields, 1)
+
+          captcha = f'<div class="g-recaptcha" data-sitekey="{site_key}" style="margin:18px 0 6px;"></div>'
+          old_button = '<button type="submit">ΑΠΟΣΤΟΛΗ ΕΠΕΝΔΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ</button>'
+          new_button = captcha + '\n      <button id="snkSubmitButton" type="submit">ΑΠΟΣΤΟΛΗ ΕΠΕΝΔΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ</button>\n      <p id="snkFormStatus" role="status" hidden style="margin:14px 0 0;color:#d7ac2e;font-size:13px;line-height:1.5"></p>'
+          if 'class="g-recaptcha"' not in text:
+              text = text.replace(old_button, new_button, 1)
+          else:
+              text = text.replace(old_button, '<button id="snkSubmitButton" type="submit">ΑΠΟΣΤΟΛΗ ΕΠΕΝΔΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ</button>', 1)
+
+          security_js = r'''<script id="snk-el-form-security">
+          (()=>{
+            const form=document.getElementById('snkInvestorForm');
+            if(!form)return;
+            const button=document.getElementById('snkSubmitButton');
+            const status=document.getElementById('snkFormStatus');
+            const started=document.getElementById('snkFormStartedAt');
+            const frame=document.querySelector('iframe[name="snkHiddenSubmitFrame"]');
+            const setStarted=()=>{if(started)started.value=String(Date.now())};
+            setStarted();
+            form.addEventListener('submit',(event)=>{
+              const token=(window.grecaptcha&&typeof grecaptcha.getResponse==='function')?grecaptcha.getResponse():'';
+              if(!token){
+                event.preventDefault();
+                if(status){status.hidden=false;status.textContent='Παρακαλώ επιβεβαιώστε ότι δεν είστε ρομπότ.';}
+                return;
+              }
+              if(button){button.disabled=true;}
+              if(status){status.hidden=false;status.textContent='Αποστολή αιτήματος…';}
+            });
+            window.addEventListener('message',(event)=>{
+              if(frame&&event.source!==frame.contentWindow)return;
+              const data=event.data||{};
+              if(data.source!=='snk-form')return;
+              if(data.ok){
+                if(status){status.hidden=false;status.textContent='Ευχαριστούμε. Το αίτημά σας παραλήφθηκε και η SNK Real Estate θα επικοινωνήσει μαζί σας σύντομα.';}
+                form.reset();
+              }else{
+                if(status){status.hidden=false;status.textContent='Το αίτημα δεν μπόρεσε να αποσταλεί. Παρακαλώ δοκιμάστε ξανά ή επικοινωνήστε στο investments@snkrealestate.com.';}
+              }
+              if(window.grecaptcha&&typeof grecaptcha.reset==='function')grecaptcha.reset();
+              if(button){button.disabled=false;}
+              setStarted();
+            });
+          })();
+          </script>'''
+
+          text = re.sub(r'\s*<script id="snk-el-form-security">.*?</script>\s*', '\n', text, flags=re.S)
+          text = text.replace('</body>', security_js + '\n</body>', 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+      - name: Commit EL contact protection
+        shell: bash
+        run: |
+          git config user.name "SNK Website Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add el-contact/index.html
+          if git diff --cached --quiet; then
+            echo "No changes required"
+          else
+            git commit -m "Protect Greek investor contact form with reCAPTCHA"
+            git push
+          fi
