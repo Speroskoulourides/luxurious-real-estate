@@ -12,6 +12,7 @@
 @media(max-width:900px){.wrap{padding:40px 24px}.grid{grid-template-columns:1fr}.left{grid-template-columns:1fr 1fr}.title{font-size:38px}}
 @media(max-width:640px){body{padding-top:68px}.wrap{padding:32px 16px}.left,.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.title{font-size:31px}.panel,.form-panel{padding:22px 20px}#snk-universal-header{height:68px!important;padding:0 16px!important}.snk-universal-brand-main strong{font-size:27px!important}.snk-universal-brand-main span{font-size:7px!important;letter-spacing:.22em!important}.snk-universal-right{gap:12px!important}.snk-universal-langs{font-size:7px!important;gap:3px!important}.snk-universal-menu-button{font-size:8px!important}.snk-universal-nav{top:68px!important;padding-left:18px!important;padding-right:18px!important}}
 </style>
+<script src="https://www.google.com/recaptcha/api.js?hl=el" async defer></script>
 </head>
 <body>
 <header id="snk-universal-header" role="banner">
@@ -48,10 +49,12 @@
     <div class="form-kicker">ΕΜΠΙΣΤΕΥΤΙΚΗ ΦΟΡΜΑ ΕΠΕΝΔΥΤΗ</div>
     <h2>Αίτημα Επενδυτικής Πληροφόρησης</h2>
     <p class="form-intro">Όλα τα στοιχεία που υποβάλλονται αντιμετωπίζονται με απόλυτη εμπιστευτικότητα και χρησιμοποιούνται αποκλειστικά για την αξιολόγηση του επενδυτικού ενδιαφέροντος.</p>
-    <iframe class="hidden" name="snkElSubmit" title="Υποβολή φόρμας"></iframe>
-    <form action="https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec" method="POST" target="snkElSubmit">
-      <input type="hidden" name="origin" value="https://snkrealestate.com/el-contact/">
-      <input type="hidden" name="source" value="SNK EL Investor Contact">
+    <iframe class="hidden" name="snkHiddenSubmitFrame" title="Υποβολή φόρμας"></iframe>
+    <form action="https://script.google.com/macros/s/AKfycbwZA8TyuMbwKy2PO7zK1pvycVJf4htzf3umHRy7rMJbVpeOJH6Q4f1IDm066F63XmBFzQ/exec" method="POST" target="snkElSubmit">
+      <input type="hidden" name="origin" value="https://snkrealestate.com">
+      <input type="hidden" name="source" value="SNK Corporate Website">
+      <input type="hidden" name="formStartedAt" id="snkFormStartedAt" value="">
+      <input type="text" name="website" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;">
       <div class="fields">
         <label class="field"><span>ΟΝΟΜΑΤΕΠΩΝΥΜΟ *</span><input name="fullName" required placeholder="Your full name"></label>
         <label class="field"><span>EMAIL *</span><input name="email" type="email" required placeholder="name@company.com"></label>
@@ -60,14 +63,54 @@
         <label class="field"><span>ΧΩΡΑ *</span><input name="country" required placeholder="Country"></label>
         <label class="field"><span>ΚΙΝΗΤΟ / ΤΗΛΕΦΩΝΟ *</span><input name="mobile" type="tel" required placeholder="+30 ..."></label>
         <label class="field full"><span>ΤΥΠΟΣ ΕΠΕΝΔΥΤΗ *</span><select name="investorType" required><option value="">Επιλέξτε τύπο επενδυτή</option><option>Ιδιώτης Επενδυτής</option><option>Family Office</option><option>Επενδυτικό Fund</option><option>Εταιρεία / Οργανισμός</option><option>Άλλο</option></select></label>
+        <label class="field full"><span>ΕΠΕΝΔΥΤΙΚΟ ΕΥΡΟΣ *</span><select name="investmentRange" required><option value="">Επιλέξτε επενδυτικό εύρος</option><option>€250K – €500K</option><option>€500K – €1M</option><option>€1M – €5M</option><option>€5M – €10M</option><option>€10M – €25M</option><option>€25M+</option></select></label>
+        <label class="field full"><span>ΠΕΡΙΟΧΗ ΕΝΔΙΑΦΕΡΟΝΤΟΣ *</span><select name="interest" required><option value="">Επιλέξτε περιοχή ενδιαφέροντος</option><option>Γενικό επενδυτικό αίτημα</option><option>Mykonos</option><option>Paros</option><option>Επένδυση στην Αθήνα</option><option>Golden Visa</option><option>Άλλο</option></select></label>
         <label class="field full"><span>ΜΗΝΥΜΑ</span><textarea name="message" placeholder="Briefly describe your investment interest"></textarea></label>
       </div>
-      <button type="submit">ΑΠΟΣΤΟΛΗ ΕΠΕΝΔΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ</button>
+      <div class="g-recaptcha" data-sitekey="6LcywJEtAAAAALEc3lpTmbk4TvAtnb4AjhzIRN5c" style="margin:18px 0 6px;"></div>
+      <button id="snkSubmitButton" type="submit">ΑΠΟΣΤΟΛΗ ΕΠΕΝΔΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ</button>
+      <p id="snkFormStatus" role="status" hidden style="margin:14px 0 0;color:#d7ac2e;font-size:13px;line-height:1.5"></p>
     </form>
   </section>
 </div>
 <div class="footer">SNK Luxury Real Estate</div>
 <div class="conf">ΕΜΠΙΣΤΕΥΤΙΚΟ | ΜΟΝΟ ΓΙΑ ΕΠΙΛΕΓΜΕΝΟΥΣ ΕΠΕΝΔΥΤΕΣ</div>
 </main>
+<script id="snk-el-form-security">
+(()=>{
+  const form=document.getElementById('snkInvestorForm');
+  if(!form)return;
+  const button=document.getElementById('snkSubmitButton');
+  const status=document.getElementById('snkFormStatus');
+  const started=document.getElementById('snkFormStartedAt');
+  const frame=document.querySelector('iframe[name="snkHiddenSubmitFrame"]');
+  const setStarted=()=>{if(started)started.value=String(Date.now())};
+  setStarted();
+  form.addEventListener('submit',(event)=>{
+    const token=(window.grecaptcha&&typeof grecaptcha.getResponse==='function')?grecaptcha.getResponse():'';
+    if(!token){
+      event.preventDefault();
+      if(status){status.hidden=false;status.textContent='Παρακαλώ επιβεβαιώστε ότι δεν είστε ρομπότ.';}
+      return;
+    }
+    if(button){button.disabled=true;}
+    if(status){status.hidden=false;status.textContent='Αποστολή αιτήματος…';}
+  });
+  window.addEventListener('message',(event)=>{
+    if(frame&&event.source!==frame.contentWindow)return;
+    const data=event.data||{};
+    if(data.source!=='snk-form')return;
+    if(data.ok){
+      if(status){status.hidden=false;status.textContent='Ευχαριστούμε. Το αίτημά σας παραλήφθηκε και η SNK Real Estate θα επικοινωνήσει μαζί σας σύντομα.';}
+      form.reset();
+    }else{
+      if(status){status.hidden=false;status.textContent='Το αίτημα δεν μπόρεσε να αποσταλεί. Παρακαλώ δοκιμάστε ξανά ή επικοινωνήστε στο investments@snkrealestate.com.';}
+    }
+    if(window.grecaptcha&&typeof grecaptcha.reset==='function')grecaptcha.reset();
+    if(button){button.disabled=false;}
+    setStarted();
+  });
+})();
+</script>
 </body>
 </html>
