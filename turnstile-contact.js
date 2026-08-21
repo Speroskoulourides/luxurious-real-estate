@@ -6,7 +6,7 @@
   const button = document.getElementById('snkSubmitButton');
   const status = document.getElementById('snkFormStatus');
   const started = document.getElementById('snkFormStartedAt');
-  const lang = document.documentElement.lang || 'en';
+  const lang = (document.documentElement.lang || 'en').toLowerCase().split('-')[0];
   const messages = {
     en: {
       verify: 'Please complete the human verification.',
@@ -31,6 +31,12 @@
       sending: 'Enviando su consulta…',
       success: 'Gracias. Hemos recibido su consulta y SNK Real Estate se pondrá en contacto con usted en breve.',
       error: 'No se pudo enviar la consulta. Inténtelo de nuevo o contacte con investments@snkrealestate.com.'
+    },
+    zh: {
+      verify: '请完成人机验证。',
+      sending: '正在发送您的咨询…',
+      success: '感谢您。我们已收到您的咨询，SNK Real Estate 将很快与您联系。',
+      error: '您的咨询未能发送。请重试或联系 investments@snkrealestate.com。'
     }
   };
   const msg = messages[lang] || messages.en;
