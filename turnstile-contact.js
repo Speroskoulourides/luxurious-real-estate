@@ -57,7 +57,10 @@
     setStatus(msg.sending);
 
     try {
-      const response = await fetch('/api/contact', { method: 'POST', body: data });
+      const endpoint = window.location.hostname.endsWith('.pages.dev')
+        ? '/api/contact'
+        : 'https://luxurious-real-estate.pages.dev/api/contact';
+      const response = await fetch(endpoint, { method: 'POST', body: data });
       const result = await response.json();
       if (!response.ok || !result.ok) throw new Error(result.error || 'submission_failed');
       setStatus(msg.success);
