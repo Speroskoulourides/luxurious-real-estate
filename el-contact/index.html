@@ -12,7 +12,7 @@
 @media(max-width:900px){.wrap{padding:40px 24px}.grid{grid-template-columns:1fr}.left{grid-template-columns:1fr 1fr}.title{font-size:38px}}
 @media(max-width:640px){body{padding-top:68px}.wrap{padding:32px 16px}.left,.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.title{font-size:31px}.panel,.form-panel{padding:22px 20px}#snk-universal-header{height:68px!important;padding:0 16px!important}.snk-universal-brand-main strong{font-size:27px!important}.snk-universal-brand-main span{font-size:7px!important;letter-spacing:.22em!important}.snk-universal-right{gap:12px!important}.snk-universal-langs{font-size:7px!important;gap:3px!important}.snk-universal-menu-button{font-size:8px!important}.snk-universal-nav{top:68px!important;padding-left:18px!important;padding-right:18px!important}}
 </style>
-<script src="https://www.google.com/recaptcha/api.js?hl=el" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <header id="snk-universal-header" role="banner">
@@ -67,7 +67,7 @@
         <label class="field full"><span>ΠΕΡΙΟΧΗ ΕΝΔΙΑΦΕΡΟΝΤΟΣ *</span><select name="interest" required><option value="">Επιλέξτε περιοχή ενδιαφέροντος</option><option>Γενικό επενδυτικό αίτημα</option><option>Mykonos</option><option>Paros</option><option>Επένδυση στην Αθήνα</option><option>Golden Visa</option><option>Άλλο</option></select></label>
         <label class="field full"><span>ΜΗΝΥΜΑ</span><textarea name="message" placeholder="Briefly describe your investment interest"></textarea></label>
       </div>
-      <div class="g-recaptcha" data-sitekey="6LcywJEtAAAAALEc3lpTmbk4TvAtnb4AjhzIRN5c" style="margin:18px 0 6px;"></div>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAAEX69RENyP6U2fS2" style="margin:18px 0 6px;"></div>
       <button id="snkSubmitButton" type="submit">ΑΠΟΣΤΟΛΗ ΕΠΕΝΔΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ</button>
       <p id="snkFormStatus" role="status" hidden style="margin:14px 0 0;color:#d7ac2e;font-size:13px;line-height:1.5"></p>
     </form>
@@ -76,41 +76,6 @@
 <div class="footer">SNK Luxury Real Estate</div>
 <div class="conf">ΕΜΠΙΣΤΕΥΤΙΚΟ | ΜΟΝΟ ΓΙΑ ΕΠΙΛΕΓΜΕΝΟΥΣ ΕΠΕΝΔΥΤΕΣ</div>
 </main>
-<script id="snk-el-form-security">
-(()=>{
-  const form=document.getElementById('snkInvestorForm');
-  if(!form)return;
-  const button=document.getElementById('snkSubmitButton');
-  const status=document.getElementById('snkFormStatus');
-  const started=document.getElementById('snkFormStartedAt');
-  const frame=document.querySelector('iframe[name="snkHiddenSubmitFrame"]');
-  const setStarted=()=>{if(started)started.value=String(Date.now())};
-  setStarted();
-  form.addEventListener('submit',(event)=>{
-    const token=(window.grecaptcha&&typeof grecaptcha.getResponse==='function')?grecaptcha.getResponse():'';
-    if(!token){
-      event.preventDefault();
-      if(status){status.hidden=false;status.textContent='Παρακαλώ επιβεβαιώστε ότι δεν είστε ρομπότ.';}
-      return;
-    }
-    if(button){button.disabled=true;}
-    if(status){status.hidden=false;status.textContent='Αποστολή αιτήματος…';}
-  });
-  window.addEventListener('message',(event)=>{
-    if(frame&&event.source!==frame.contentWindow)return;
-    const data=event.data||{};
-    if(data.source!=='snk-form')return;
-    if(data.ok){
-      if(status){status.hidden=false;status.textContent='Ευχαριστούμε. Το αίτημά σας παραλήφθηκε και η SNK Real Estate θα επικοινωνήσει μαζί σας σύντομα.';}
-      form.reset();
-    }else{
-      if(status){status.hidden=false;status.textContent='Το αίτημα δεν μπόρεσε να αποσταλεί. Παρακαλώ δοκιμάστε ξανά ή επικοινωνήστε στο investments@snkrealestate.com.';}
-    }
-    if(window.grecaptcha&&typeof grecaptcha.reset==='function')grecaptcha.reset();
-    if(button){button.disabled=false;}
-    setStarted();
-  });
-})();
-</script>
+<script src="/turnstile-contact.js"></script>
 </body>
 </html>

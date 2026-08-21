@@ -90,7 +90,7 @@ body.snk-universal-header-enabled{padding-top:0!important}
 #contact{scroll-margin-top:0!important}
 @media(max-width:560px){html{scroll-padding-top:68px!important}body.snk-universal-header-enabled{padding-top:0!important}.hero{height:100vh!important}}
 </style>
-<script src="https://www.google.com/recaptcha/api.js?hl=es" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body class="snk-universal-header-enabled">
 <!-- SNK UNIVERSAL HEADER START -->
@@ -328,7 +328,7 @@ SNK Real Estate ofrece a inversores cualificados acceso directo a propiedades de
      <textarea name="message" rows="5" placeholder="¿Cómo podemos ayudarle?"></textarea> 
     </label>
 
-    <div class="g-recaptcha" data-sitekey="6LcywJEtAAAAALEc3lpTmbk4TvAtnb4AjhzIRN5c" style="margin:18px 0 24px;"></div>
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAEX69RENyP6U2fS2" style="margin:18px 0 24px;"></div>
 <button id="snkSubmitButton" type="submit">ENVIAR CONSULTA</button>
     <p class="contact-status" id="snkFormStatus" role="status" hidden></p>
   </form>
@@ -347,63 +347,6 @@ SNK Real Estate ofrece a inversores cualificados acceso directo a propiedades de
     menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!open));nav.classList.toggle('open',!open)});
     nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.setAttribute('aria-expanded','false');nav.classList.remove('open')}));
   </script>
-<script id="snk-form-security">
-(()=>{
-  const form=document.getElementById('snkInvestorForm');
-  if(!form)return;
-  const button=document.getElementById('snkSubmitButton');
-  const status=document.getElementById('snkFormStatus');
-  const started=document.getElementById('snkFormStartedAt');
-  const frame=document.querySelector('iframe[name="snkHiddenSubmitFrame"]');
-  const isFr=location.pathname.startsWith('/fr/');
-  const isEs=location.pathname.startsWith('/es/');
-  const msg=isFr?{
-    captcha:'Veuillez confirmer que vous n\'êtes pas un robot.',
-    sending:'Envoi de votre demande…',
-    success:'Merci. Votre demande a bien été reçue et SNK Real Estate vous contactera prochainement.',
-    error:'La demande n\'a pas pu être envoyée. Veuillez réessayer ou contacter investments@snkrealestate.com.'
-  }:isEs?{
-    captcha:'Confirme que no es un robot.',
-    sending:'Enviando su consulta…',
-    success:'Gracias. Hemos recibido su consulta y SNK Real Estate se pondrá en contacto con usted en breve.',
-    error:'No se pudo enviar la consulta. Inténtelo de nuevo o contacte con investments@snkrealestate.com.'
-  }:{
-    captcha:'Please confirm that you are not a robot.',
-    sending:'Sending your enquiry…',
-    success:'Thank you. Your enquiry has been received and SNK Real Estate will contact you shortly.',
-    error:'Your enquiry could not be sent. Please try again or contact investments@snkrealestate.com.'
-  };
-  const setStarted=()=>{if(started)started.value=String(Date.now())};
-  setStarted();
-  form.addEventListener('submit',(event)=>{
-    const token=(window.grecaptcha&&typeof grecaptcha.getResponse==='function')?grecaptcha.getResponse():'';
-    if(!token){
-      event.preventDefault();
-      if(status){status.hidden=false;status.textContent=msg.captcha;}
-      return;
-    }
-    if(button){
-      button.disabled=true;
-      button.dataset.originalText=button.dataset.originalText||button.textContent;
-    }
-    if(status){status.hidden=false;status.textContent=msg.sending;}
-  });
-  window.addEventListener('message',(event)=>{
-    if(frame&&event.source!==frame.contentWindow)return;
-    const data=event.data||{};
-    if(data.source!=='snk-form')return;
-    if(data.ok){
-      if(status){status.hidden=false;status.textContent=msg.success;}
-      form.reset();
-      if(window.grecaptcha&&typeof grecaptcha.reset==='function')grecaptcha.reset();
-    }else{
-      if(status){status.hidden=false;status.textContent=msg.error;}
-      if(window.grecaptcha&&typeof grecaptcha.reset==='function')grecaptcha.reset();
-    }
-    if(button){button.disabled=false;}
-    setStarted();
-  });
-})();
-</script>
+<script src="/turnstile-contact.js"></script>
 </body>
 </html>
