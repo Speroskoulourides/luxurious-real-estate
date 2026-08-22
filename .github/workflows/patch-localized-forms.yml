@@ -1,0 +1,56 @@
+name: Patch localized contact forms
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-localized-forms.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Patch EL FR ES contact forms
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          # Localized shared handler
+          p = Path('snk-formsubmit.js')
+          p.write_text("""(()=>{const form=document.getElementById('snkInvestorForm');if(!form)return;const status=document.getElementById('snkFormStatus');const button=document.getElementById('snkSubmitButton');const lang=(document.documentElement.lang||'en').toLowerCase();const copy={en:{sending:'Sending your enquiry...',ok:'Thank you. Your enquiry has been submitted.',err:'Your enquiry could not be sent. Please email investments@snkrealestate.com.'},el:{sending:'Αποστολή του αιτήματός σας...',ok:'Ευχαριστούμε. Το αίτημά σας υποβλήθηκε με επιτυχία.',err:'Το αίτημά σας δεν μπόρεσε να σταλεί. Παρακαλούμε στείλτε email στο investments@snkrealestate.com.'},fr:{sending:'Envoi de votre demande...',ok:'Merci. Votre demande a bien été envoyée.',err:'Votre demande n’a pas pu être envoyée. Veuillez écrire à investments@snkrealestate.com.'},es:{sending:'Enviando su consulta...',ok:'Gracias. Su consulta ha sido enviada correctamente.',err:'No se pudo enviar su consulta. Escriba a investments@snkrealestate.com.'}}[lang]||{sending:'Sending your enquiry...',ok:'Thank you. Your enquiry has been submitted.',err:'Your enquiry could not be sent. Please email investments@snkrealestate.com.'};form.addEventListener('submit',async e=>{e.preventDefault();e.stopImmediatePropagation();if(!form.reportValidity())return;if(button)button.disabled=true;if(status){status.hidden=false;status.textContent=copy.sending;}try{const data=Object.fromEntries(new FormData(form).entries());data._subject='New SNK Website Enquiry';data._template='table';data._captcha='false';data.source=data.source||'SNK Corporate Website';const r=await fetch('https://formsubmit.co/ajax/sperosk1@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)});const out=await r.json().catch(()=>({}));if(!r.ok||out.success===false)throw new Error('submit failed');if(status)status.textContent=copy.ok;form.reset();}catch(err){if(status)status.textContent=copy.err;}finally{if(button)button.disabled=false;}},true);})();\n""", encoding='utf-8')
+
+          # FR and ES: load shared handler. Capture listener stops old submit handlers.
+          for file in ['fr/index.html','es/index.html']:
+              path=Path(file)
+              text=path.read_text(encoding='utf-8')
+              tag='<script src="../snk-formsubmit.js"></script>'
+              if tag not in text:
+                  text=text.replace('</body>',tag+'\n</body>',1)
+              path.write_text(text,encoding='utf-8')
+
+          # EL contact page: give form/button/status the same IDs and load shared handler.
+          path=Path('el-contact/index.html')
+          text=path.read_text(encoding='utf-8')
+          text=text.replace('<form action="https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec" method="POST" target="snkElSubmit">','<form id="snkInvestorForm" action="https://formsubmit.co/ajax/sperosk1@gmail.com" method="POST">',1)
+          text=text.replace('<button type="submit">ΑΠΟΣΤΟΛΗ ΕΠΕΝΔΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ</button>','<button id="snkSubmitButton" type="submit">ΑΠΟΣΤΟΛΗ ΕΠΕΝΔΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ</button>\n      <p id="snkFormStatus" role="status" hidden></p>',1)
+          tag='<script src="../snk-formsubmit.js"></script>'
+          if tag not in text:
+              text=text.replace('</body>',tag+'\n</body>',1)
+          path.write_text(text,encoding='utf-8')
+          PY
+
+      - name: Commit localized form fixes
+        shell: bash
+        run: |
+          git config user.name "SNK Form Fix"
+          git config user.email "actions@users.noreply.github.com"
+          git add snk-formsubmit.js fr/index.html es/index.html el-contact/index.html
+          git commit -m "Enable AJAX contact forms for EL FR ES"
+          git push origin main
