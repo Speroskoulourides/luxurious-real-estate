@@ -1,4 +1,4 @@
-name: Restore FormSubmit delivery
+name: Apply EN form fallback
 
 on:
   push:
@@ -9,74 +9,68 @@ permissions:
   contents: write
 
 jobs:
-  restore:
+  patch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
 
-      - name: Restore proven FormSubmit form delivery
+      - name: Patch EN contact form directly
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re
 
-          files = [
-              Path('index.html'),
-              Path('el/index.html'),
-              Path('fr/index.html'),
-              Path('es/index.html'),
-              Path('golden-visa/index.html'),
-          ]
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          marker = 'id="snk-en-mail-fallback"'
+          if marker in text:
+              raise SystemExit('EN fallback already present')
 
-          next_urls = {
-              'index.html': 'https://snkrealestate.com/?submitted=1#contact',
-              'el/index.html': 'https://snkrealestate.com/el/?submitted=1#contact',
-              'fr/index.html': 'https://snkrealestate.com/fr/?submitted=1#contact',
-              'es/index.html': 'https://snkrealestate.com/es/?submitted=1#contact',
-              'golden-visa/index.html': 'https://snkrealestate.com/golden-visa/?submitted=1#contact',
-          }
-
-          changed = []
-          for path in files:
-              if not path.exists():
-                  continue
-              text = path.read_text(encoding='utf-8')
-              original = text
-
-              # Only touch forms whose action currently points to Google Apps Script.
-              pattern = re.compile(r'<form\b(?P<attrs>[^>]*?)action=["\']https://script\.google\.com/macros/s/[^"\']+/exec["\'](?P<rest>[^>]*)>', re.I | re.S)
-
-              def repl(match):
-                  attrs = match.group('attrs') + match.group('rest')
-                  attrs = re.sub(r'\s+target=["\'][^"\']*["\']', '', attrs, flags=re.I)
-                  # Avoid duplicate delivery-control fields if this workflow is ever re-run.
-                  opening = '<form' + attrs + ' action="https://formsubmit.co/investments@snkrealestate.com">'
-                  hidden = (
-                      '<input type="hidden" name="_subject" value="New SNK Website Enquiry">'
-                      '<input type="hidden" name="_template" value="table">'
-                      '<input type="hidden" name="_captcha" value="false">'
-                      f'<input type="hidden" name="_next" value="{next_urls[str(path)]}">'
-                  )
-                  return opening + hidden
-
-              text, count = pattern.subn(repl, text)
-              if count:
-                  path.write_text(text, encoding='utf-8')
-                  changed.append(f'{path}: {count} form(s)')
-
-          if not changed:
-              raise SystemExit('No Google Apps Script form actions found; no files changed.')
-          print('\n'.join(changed))
+          script = r'''
+<script id="snk-en-mail-fallback">
+(()=>{
+  const form=document.getElementById('snkInvestorForm');
+  if(!form)return;
+  form.removeAttribute('action');
+  form.removeAttribute('target');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!form.reportValidity())return;
+    const fd=new FormData(form);
+    const get=n=>String(fd.get(n)||'').trim();
+    const subject='SNK Website Enquiry - '+(get('fullName')||'Investor');
+    const body=[
+      'New SNK Website Enquiry','',
+      'Full Name: '+get('fullName'),
+      'Email: '+get('email'),
+      'Company / Organisation: '+get('company'),
+      'Position / Title: '+get('position'),
+      'Country: '+get('country'),
+      'Mobile / Telephone: '+get('mobile'),
+      'Investor Type: '+get('investorType'),
+      'Investment Range: '+get('investmentRange'),
+      'Area of Interest: '+get('interest'),
+      'Message: '+get('message')
+    ].join('\n');
+    window.location.href='mailto:investments@snkrealestate.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  });
+})();
+</script>
+'''
+          if '</body>' not in text:
+              raise SystemExit('No closing body tag found')
+          text = text.replace('</body>', script + '</body>', 1)
+          path.write_text(text, encoding='utf-8')
+          print('Patched index.html with EN mail fallback')
           PY
 
-      - name: Commit restored delivery mechanism
+      - name: Commit EN fallback
         shell: bash
         run: |
           git config user.name "SNK Form Restore"
           git config user.email "actions@users.noreply.github.com"
-          git add index.html el/index.html fr/index.html es/index.html golden-visa/index.html
-          git commit -m "Restore FormSubmit contact delivery"
+          git add index.html
+          git commit -m "Apply EN email fallback directly"
           git push origin main
