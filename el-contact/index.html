@@ -49,7 +49,7 @@
     <h2>Αίτημα Επενδυτικής Πληροφόρησης</h2>
     <p class="form-intro">Όλα τα στοιχεία που υποβάλλονται αντιμετωπίζονται με απόλυτη εμπιστευτικότητα και χρησιμοποιούνται αποκλειστικά για την αξιολόγηση του επενδυτικού ενδιαφέροντος.</p>
     <iframe class="hidden" name="snkElSubmit" title="Υποβολή φόρμας"></iframe>
-    <form action="https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec" method="POST" target="snkElSubmit">
+    <form id="snkInvestorForm" action="https://formsubmit.co/ajax/sperosk1@gmail.com" method="POST">
       <input type="hidden" name="origin" value="https://snkrealestate.com/el-contact/">
       <input type="hidden" name="source" value="SNK EL Investor Contact">
       <div class="fields">
@@ -62,12 +62,14 @@
         <label class="field full"><span>ΤΥΠΟΣ ΕΠΕΝΔΥΤΗ *</span><select name="investorType" required><option value="">Επιλέξτε τύπο επενδυτή</option><option>Ιδιώτης Επενδυτής</option><option>Family Office</option><option>Επενδυτικό Fund</option><option>Εταιρεία / Οργανισμός</option><option>Άλλο</option></select></label>
         <label class="field full"><span>ΜΗΝΥΜΑ</span><textarea name="message" placeholder="Briefly describe your investment interest"></textarea></label>
       </div>
-      <button type="submit">ΑΠΟΣΤΟΛΗ ΕΠΕΝΔΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ</button>
+      <button id="snkSubmitButton" type="submit">ΑΠΟΣΤΟΛΗ ΕΠΕΝΔΥΤΙΚΟΥ ΑΙΤΗΜΑΤΟΣ</button>
+      <p id="snkFormStatus" role="status" hidden></p>
     </form>
   </section>
 </div>
 <div class="footer">SNK Luxury Real Estate</div>
 <div class="conf">ΕΜΠΙΣΤΕΥΤΙΚΟ | ΜΟΝΟ ΓΙΑ ΕΠΙΛΕΓΜΕΝΟΥΣ ΕΠΕΝΔΥΤΕΣ</div>
 </main>
+<script src="../snk-formsubmit.js"></script>
 </body>
 </html>
