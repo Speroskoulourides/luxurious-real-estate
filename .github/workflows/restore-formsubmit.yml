@@ -1,0 +1,82 @@
+name: Restore FormSubmit delivery
+
+on:
+  push:
+    paths:
+      - '.github/workflows/restore-formsubmit.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Restore proven FormSubmit form delivery
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          files = [
+              Path('index.html'),
+              Path('el/index.html'),
+              Path('fr/index.html'),
+              Path('es/index.html'),
+              Path('golden-visa/index.html'),
+          ]
+
+          next_urls = {
+              'index.html': 'https://snkrealestate.com/?submitted=1#contact',
+              'el/index.html': 'https://snkrealestate.com/el/?submitted=1#contact',
+              'fr/index.html': 'https://snkrealestate.com/fr/?submitted=1#contact',
+              'es/index.html': 'https://snkrealestate.com/es/?submitted=1#contact',
+              'golden-visa/index.html': 'https://snkrealestate.com/golden-visa/?submitted=1#contact',
+          }
+
+          changed = []
+          for path in files:
+              if not path.exists():
+                  continue
+              text = path.read_text(encoding='utf-8')
+              original = text
+
+              # Only touch forms whose action currently points to Google Apps Script.
+              pattern = re.compile(r'<form\b(?P<attrs>[^>]*?)action=["\']https://script\.google\.com/macros/s/[^"\']+/exec["\'](?P<rest>[^>]*)>', re.I | re.S)
+
+              def repl(match):
+                  attrs = match.group('attrs') + match.group('rest')
+                  attrs = re.sub(r'\s+target=["\'][^"\']*["\']', '', attrs, flags=re.I)
+                  # Avoid duplicate delivery-control fields if this workflow is ever re-run.
+                  opening = '<form' + attrs + ' action="https://formsubmit.co/investments@snkrealestate.com">'
+                  hidden = (
+                      '<input type="hidden" name="_subject" value="New SNK Website Enquiry">'
+                      '<input type="hidden" name="_template" value="table">'
+                      '<input type="hidden" name="_captcha" value="false">'
+                      f'<input type="hidden" name="_next" value="{next_urls[str(path)]}">'
+                  )
+                  return opening + hidden
+
+              text, count = pattern.subn(repl, text)
+              if count:
+                  path.write_text(text, encoding='utf-8')
+                  changed.append(f'{path}: {count} form(s)')
+
+          if not changed:
+              raise SystemExit('No Google Apps Script form actions found; no files changed.')
+          print('\n'.join(changed))
+          PY
+
+      - name: Commit restored delivery mechanism
+        shell: bash
+        run: |
+          git config user.name "SNK Form Restore"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html el/index.html fr/index.html es/index.html golden-visa/index.html
+          git commit -m "Restore FormSubmit contact delivery"
+          git push origin main
