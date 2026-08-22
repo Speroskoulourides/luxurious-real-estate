@@ -1,4 +1,4 @@
-// SNK contact form: Cloudflare Turnstile verification and Pages Function submission.
+
 (() => {
   const form = document.getElementById('snkInvestorForm');
   if (!form) return;

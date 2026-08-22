@@ -53,7 +53,7 @@ export async function onRequestPost({ request, env }) {
   const ip = request.headers.get('CF-Connecting-IP');
   if (ip) verifyBody.set('remoteip', ip);
 
-  const verifyResponse = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+  
     method: 'POST',
     body: verifyBody
   });
