@@ -66,7 +66,15 @@ export async function onRequestPost({ request, env }) {
     body: form,
     redirect: 'follow'
   });
-  if (!upstream.ok) return json(request, { ok: false, error: 'delivery_failed' }, 502);
+  const upstreamBody = await upstream.text();
+  const deliverySucceeded = /\bok\s*:\s*true\b/.test(upstreamBody);
+  if (!upstream.ok || !deliverySucceeded) {
+    console.error('Apps Script delivery failed', {
+      status: upstream.status,
+      response: upstreamBody.slice(0, 500)
+    });
+    return json(request, { ok: false, error: 'delivery_failed' }, 502);
+  }
 
   return json(request, { ok: true });
 }
