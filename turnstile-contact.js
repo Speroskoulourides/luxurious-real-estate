@@ -45,6 +45,9 @@
   };
 
   if (turnstile) turnstile.remove();
+  form.action = 'https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec';
+  form.method = 'POST';
+  form.target = 'snkHiddenSubmitFrame';
   setStarted();
 
   form.addEventListener('submit', () => {
