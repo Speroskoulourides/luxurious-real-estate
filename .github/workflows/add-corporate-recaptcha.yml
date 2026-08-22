@@ -1,0 +1,153 @@
+name: Add corporate reCAPTCHA protection
+
+on:
+  push:
+    paths:
+      - '.github/recaptcha-trigger.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  protect-forms:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add reCAPTCHA and secure form handling
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          SITE_KEY = '6LcywJEtAAAAALEc3lpTmbk4TvAtnb4AjhzIRN5c'
+          CAPTCHA_SCRIPT = '<script src="https://www.google.com/recaptcha/api.js" async defer></script>'
+
+          SECURITY_JS = r'''<script id="snk-form-security">
+          (()=>{
+            const form=document.getElementById('snkInvestorForm');
+            if(!form)return;
+            const button=document.getElementById('snkSubmitButton');
+            const status=document.getElementById('snkFormStatus');
+            const started=document.getElementById('snkFormStartedAt');
+            const frame=document.querySelector('iframe[name="snkHiddenSubmitFrame"]');
+            const isFr=location.pathname.startsWith('/fr/');
+            const isEs=location.pathname.startsWith('/es/');
+            const msg=isFr?{
+              captcha:'Veuillez confirmer que vous n\'êtes pas un robot.',
+              sending:'Envoi de votre demande…',
+              success:'Merci. Votre demande a bien été reçue et SNK Real Estate vous contactera prochainement.',
+              error:'La demande n\'a pas pu être envoyée. Veuillez réessayer ou contacter investments@snkrealestate.com.'
+            }:isEs?{
+              captcha:'Confirme que no es un robot.',
+              sending:'Enviando su consulta…',
+              success:'Gracias. Hemos recibido su consulta y SNK Real Estate se pondrá en contacto con usted en breve.',
+              error:'No se pudo enviar la consulta. Inténtelo de nuevo o contacte con investments@snkrealestate.com.'
+            }:{
+              captcha:'Please confirm that you are not a robot.',
+              sending:'Sending your enquiry…',
+              success:'Thank you. Your enquiry has been received and SNK Real Estate will contact you shortly.',
+              error:'Your enquiry could not be sent. Please try again or contact investments@snkrealestate.com.'
+            };
+            const setStarted=()=>{if(started)started.value=String(Date.now())};
+            setStarted();
+            form.addEventListener('submit',(event)=>{
+              const token=(window.grecaptcha&&typeof grecaptcha.getResponse==='function')?grecaptcha.getResponse():'';
+              if(!token){
+                event.preventDefault();
+                if(status){status.hidden=false;status.textContent=msg.captcha;}
+                return;
+              }
+              if(button){
+                button.disabled=true;
+                button.dataset.originalText=button.dataset.originalText||button.textContent;
+              }
+              if(status){status.hidden=false;status.textContent=msg.sending;}
+            });
+            window.addEventListener('message',(event)=>{
+              if(frame&&event.source!==frame.contentWindow)return;
+              const data=event.data||{};
+              if(data.source!=='snk-form')return;
+              if(data.ok){
+                if(status){status.hidden=false;status.textContent=msg.success;}
+                form.reset();
+                if(window.grecaptcha&&typeof grecaptcha.reset==='function')grecaptcha.reset();
+              }else{
+                if(status){status.hidden=false;status.textContent=msg.error;}
+                if(window.grecaptcha&&typeof grecaptcha.reset==='function')grecaptcha.reset();
+              }
+              if(button){button.disabled=false;}
+              setStarted();
+            });
+          })();
+          </script>'''
+
+          HONEYPOT = '<input type="text" name="website" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;">'
+          STARTED = '<input type="hidden" name="formStartedAt" id="snkFormStartedAt" value="">'
+          CAPTCHA = f'<div class="g-recaptcha" data-sitekey="{SITE_KEY}" style="margin:18px 0 24px;"></div>'
+
+          for path in [Path('index.html'), Path('fr/index.html'), Path('es/index.html')]:
+            if not path.exists():
+              continue
+            text = path.read_text(encoding='utf-8')
+            if 'id="snkInvestorForm"' not in text:
+              continue
+
+            if CAPTCHA_SCRIPT not in text:
+              text = text.replace('</head>', CAPTCHA_SCRIPT + '\n</head>', 1)
+
+            # Remove any previous security block so the patch is safely re-runnable.
+            text = re.sub(r'\s*<script id="snk-form-security">.*?</script>\s*', '\n', text, flags=re.S)
+
+            # Remove the older simulated success handler from FR/ES.
+            text = re.sub(
+              r"\n\s*const snkForm=document\.getElementById\('snkInvestorForm'\);.*?(?=\n\s*</script>)",
+              '',
+              text,
+              flags=re.S
+            )
+
+            form_match = re.search(r'(<form\b[^>]*id="snkInvestorForm"[^>]*>)', text, flags=re.S)
+            if not form_match:
+              raise RuntimeError(f'Form opening tag not found in {path}')
+
+            preview = text[form_match.end():form_match.end()+2500]
+            inserts = []
+            if 'name="website"' not in preview:
+              inserts.append(HONEYPOT)
+            if 'name="formStartedAt"' not in preview:
+              inserts.append(STARTED)
+            if inserts:
+              text = text[:form_match.end()] + '\n' + '\n'.join(inserts) + text[form_match.end():]
+
+            # Replace an old CAPTCHA widget if one exists, otherwise add it before submit.
+            text = re.sub(r'<div\s+class="g-recaptcha"[^>]*></div>', CAPTCHA, text, count=1)
+            if f'data-sitekey="{SITE_KEY}"' not in text:
+              text, count = re.subn(
+                r'(<button\b[^>]*id="snkSubmitButton"[^>]*>)',
+                CAPTCHA + '\n\\1',
+                text,
+                count=1,
+                flags=re.S
+              )
+              if count != 1:
+                raise RuntimeError(f'Submit button not found in {path}')
+
+            text = text.replace('</body>', SECURITY_JS + '\n</body>', 1)
+            path.write_text(text, encoding='utf-8')
+            print('Patched', path)
+          PY
+
+      - name: Commit protected corporate forms
+        shell: bash
+        run: |
+          git config user.name "SNK Website Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html fr/index.html es/index.html
+          if git diff --cached --quiet; then
+            echo "No changes required"
+          else
+            git commit -m "Protect corporate forms with reCAPTCHA"
+            git push
+          fi

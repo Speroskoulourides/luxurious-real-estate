@@ -1,0 +1,37 @@
+name: Fix EL contact form hook
+
+on:
+  push:
+    paths:
+      - '.github/el-contact-hook-trigger.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  fix-el-contact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix Greek form id and iframe target
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('el-contact/index.html')
+          text = p.read_text(encoding='utf-8')
+          old = '<form action="https://script.google.com/macros/s/AKfycbwZA8TyuMbwKy2PO7zK1pvycVJf4htzf3umHRy7rMJbVpeOJH6Q4f1IDm066F63XmBFzQ/exec" method="POST" target="snkElSubmit">'
+          new = '<form id="snkInvestorForm" action="https://script.google.com/macros/s/AKfycbwZA8TyuMbwKy2PO7zK1pvycVJf4htzf3umHRy7rMJbVpeOJH6Q4f1IDm066F63XmBFzQ/exec" method="POST" target="snkHiddenSubmitFrame">'
+          if old not in text:
+              raise SystemExit('Expected EL form opening tag not found')
+          text = text.replace(old, new, 1)
+          p.write_text(text, encoding='utf-8')
+          PY
+      - name: Commit fix
+        shell: bash
+        run: |
+          git config user.name "SNK Website Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add el-contact/index.html
+          git commit -m "Fix Greek contact form security hook"
+          git push

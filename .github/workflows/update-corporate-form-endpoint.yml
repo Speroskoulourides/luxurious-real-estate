@@ -1,0 +1,49 @@
+name: Update corporate form endpoint
+
+on:
+  push:
+    paths:
+      - '.github/endpoint-trigger.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  update-endpoint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Replace Apps Script endpoint
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          old = 'https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec'
+          new = 'https://script.google.com/macros/s/AKfycbwZA8TyuMbwKy2PO7zK1pvycVJf4htzf3umHRy7rMJbVpeOJH6Q4f1IDm066F63XmBFzQ/exec'
+
+          for path in [Path('index.html'), Path('fr/index.html'), Path('es/index.html')]:
+            if not path.exists():
+              continue
+            text = path.read_text(encoding='utf-8')
+            if old not in text:
+              print('Old endpoint not found in', path)
+              continue
+            text = text.replace(old, new)
+            path.write_text(text, encoding='utf-8')
+            print('Updated', path)
+          PY
+
+      - name: Commit endpoint update
+        shell: bash
+        run: |
+          git config user.name "SNK Website Automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html fr/index.html es/index.html
+          if git diff --cached --quiet; then
+            echo "No changes required"
+          else
+            git commit -m "Point corporate forms to secure Apps Script deployment"
+            git push
+          fi

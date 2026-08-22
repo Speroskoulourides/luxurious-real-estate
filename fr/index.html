@@ -98,6 +98,7 @@ body.snk-universal-header-enabled{padding-top:0!important}
 #contact{scroll-margin-top:0!important}
 @media(max-width:560px){html{scroll-padding-top:68px!important}body.snk-universal-header-enabled{padding-top:0!important}.hero{height:100vh!important}}
 </style>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body class="snk-universal-header-enabled">
 <!-- SNK UNIVERSAL HEADER START -->
@@ -215,7 +216,8 @@ Accès direct.
     Sélectionnez votre opportunité d’investissement et envoyez votre demande. Notre équipe vous répondra en toute confidentialité.
   </p>
 <iframe class="contact-submit-frame" name="snkHiddenSubmitFrame" title="Form submission"></iframe>
-<form action="https://script.google.com/macros/s/AKfycbzu85eEupba-TbVPBW2ZK4_phDFODMpzcE8t6tP5rmE0IG9bJYSFLvO9KHdreiq2nvePA/exec" class="contact-form" id="snkInvestorForm" method="POST" target="snkHiddenSubmitFrame">
+<form action="https://script.google.com/macros/s/AKfycbwZA8TyuMbwKy2PO7zK1pvycVJf4htzf3umHRy7rMJbVpeOJH6Q4f1IDm066F63XmBFzQ/exec" class="contact-form" id="snkInvestorForm" method="POST" target="snkHiddenSubmitFrame">
+<input type="hidden" name="formStartedAt" id="snkFormStartedAt" value="">
 <input aria-hidden="true" autocomplete="off" name="website" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;" tabindex="-1" type="text"/>
 <input name="origin" type="hidden" value="https://snkrealestate.com"/>
 <input name="source" type="hidden" value="SNK Corporate Website"/>
@@ -286,6 +288,7 @@ Accès direct.
 <span>MESSAGE</span>
 <textarea name="message" placeholder="Comment pouvons-nous vous aider ?" rows="5"></textarea>
 </label>
+<div class="cf-turnstile" data-sitekey="0x4AAAAAAEX69RENyP6U2fS2" style="margin:18px 0 24px;"></div>
 <button id="snkSubmitButton" type="submit">ENVOYER LA DEMANDE</button>
 <p class="contact-status" hidden="" id="snkFormStatus" role="status"></p>
 </form>
@@ -301,12 +304,7 @@ Accès direct.
     const menu=document.querySelector('.menu-button'), nav=document.getElementById('main-nav');
     menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!open));nav.classList.toggle('open',!open)});
     nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.setAttribute('aria-expanded','false');nav.classList.remove('open')}));
-    const snkForm=document.getElementById('snkInvestorForm');
-    if(snkForm) snkForm.addEventListener('submit',function(){
-      const form=this,button=document.getElementById('snkSubmitButton'),status=document.getElementById('snkFormStatus');
-      button.disabled=true;button.textContent='ENVOI…';status.hidden=false;status.textContent='Envoi de votre demande…';
-      setTimeout(()=>{status.textContent='Merci. Votre demande a bien été reçue et SNK Real Estate vous contactera prochainement.';button.disabled=false;button.textContent='ENVOYER LA DEMANDE';form.reset()},2500);
-    });
   </script>
+<script src="/turnstile-contact.js"></script>
 </body>
 </html>
