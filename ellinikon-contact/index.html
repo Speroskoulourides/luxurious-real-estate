@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Ellinikon | Private Residential Enquiry</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#121512;color:#f5f2ea;font-family:Arial,Helvetica,sans-serif}.wrap{max-width:1180px;margin:0 auto;padding:54px 28px 64px}.brand{font-size:14px;letter-spacing:.28em;color:#c8a364;font-weight:700}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start;margin-top:56px}.eyebrow{font-size:12px;letter-spacing:.25em;color:#c8a364;font-weight:700;margin-bottom:18px}.hero h1{font-size:54px;line-height:1.02;margin:0 0 20px;max-width:680px}.lead{color:#d7d4cc;font-size:19px;line-height:1.6;max-width:650px}.note{margin-top:34px;padding-top:26px;border-top:1px solid rgba(200,163,100,.35);color:#aaa79f;font-size:13px;line-height:1.6}.formbox{background:#1a1d1a;border:1px solid rgba(200,163,100,.55);border-radius:18px;padding:28px}.formbox h2{margin:0 0 8px;font-size:26px}.formbox p{margin:0 0 24px;color:#aaa79f;font-size:14px;line-height:1.5}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:7px}.full{grid-column:1/-1}.field label{font-size:10px;letter-spacing:.16em;color:#c8a364;font-weight:700}.field input,.field select,.field textarea{width:100%;border:1px solid rgba(200,163,100,.42);background:#101210;color:#f5f2ea;border-radius:9px;padding:13px 14px;font-size:14px;outline:none}.field textarea{min-height:120px;resize:vertical}.submit{width:100%;margin-top:18px;border:0;border-radius:9px;background:#b89458;color:#fff;padding:15px 18px;font-size:13px;font-weight:700;letter-spacing:.12em;cursor:pointer}.submit:disabled{opacity:.6;cursor:wait}.status{display:none;margin-top:16px;padding:14px;border:1px solid rgba(200,163,100,.45);border-radius:9px;text-align:center;line-height:1.5}.contact{margin-top:38px;color:#d7d4cc;font-size:15px}.contact strong{color:#fff}.private{margin-top:14px;color:#8d8b84;font-size:11px;letter-spacing:.12em}@media(max-width:840px){.hero{grid-template-columns:1fr}.hero h1{font-size:42px}}@media(max-width:560px){.wrap{padding:36px 18px 48px}.grid{grid-template-columns:1fr}.full{grid-column:auto}.hero h1{font-size:34px}.lead{font-size:17px}.formbox{padding:22px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="brand">SNK LUXURY REAL ESTATE</div>
+<section class="hero">
+<div>
+<div class="eyebrow">THE ELLINIKON · PRIVATE RESIDENTIAL SELECTION</div>
+<h1>Request the current selection.</h1>
+<p class="lead">Receive current availability, floor plans and exact pricing for selected residences in Little Athens and East Village.</p>
+<div class="note">Your enquiry is handled privately and directly by SNK Luxury Real Estate. We will review your requirements and respond with the most relevant available residences.</div>
+<div class="contact"><strong>WhatsApp / Call</strong> +30 698 582 1148</div>
+<div class="private">PRIVATE &amp; CONFIDENTIAL</div>
+</div>
+<div class="formbox">
+<h2>Private enquiry</h2>
+<p>Tell us what you are looking for and we will send the current selection.</p>
+<form id="ellinikonForm">
+<div class="grid">
+<div class="field"><label>FULL NAME *</label><input name="fullName" required></div>
+<div class="field"><label>EMAIL *</label><input type="email" name="email" required></div>
+<div class="field"><label>COUNTRY</label><input name="country"></div>
+<div class="field"><label>MOBILE / TELEPHONE</label><input name="mobile"></div>
+<div class="field full"><label>AREA OF INTEREST *</label><select name="interest" required><option value="">Select</option><option>Little Athens</option><option>East Village</option><option>Little Athens & East Village</option></select></div>
+<div class="field full"><label>INDICATIVE BUDGET</label><select name="budget"><option value="">Select</option><option>Up to €1M</option><option>€1M – €2M</option><option>€2M – €3M</option><option>€3M+</option></select></div>
+<div class="field full"><label>MESSAGE</label><textarea name="message" placeholder="Preferred size, bedrooms, floor, view or timing"></textarea></div>
+</div>
+<button class="submit" id="submitButton" type="submit">REQUEST CURRENT SELECTION</button>
+<div class="status" id="status"></div>
+</form>
+</div>
+</section>
+</main>
+<script>
+(()=>{const form=document.getElementById('ellinikonForm'),btn=document.getElementById('submitButton'),status=document.getElementById('status');const show=(msg,ok)=>{status.style.display='block';status.textContent=msg;status.style.color=ok?'#d6b77e':'#f0b0b0'};form.addEventListener('submit',async e=>{e.preventDefault();if(!form.reportValidity())return;btn.disabled=true;show('Sending your enquiry…',true);try{const data=Object.fromEntries(new FormData(form).entries());const stamp=new Date().toISOString().replace('T',' ').replace(/\.\d{3}Z$/,' UTC');data._subject=`The Ellinikon Enquiry - ${data.fullName||'Prospect'} - ${stamp}`;data._template='table';data._captcha='false';data.source='The Ellinikon Private Residential Selection';const r=await fetch('https://formsubmit.co/ajax/sperosk1@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)});if(!r.ok)throw new Error('send failed');form.reset();show('Thank you. Your enquiry has been received. SNK Luxury Real Estate will contact you shortly.',true);}catch(err){show('Your enquiry could not be sent. Please contact us on +30 698 582 1148.',false);}finally{btn.disabled=false;}});})();
+</script>
+</body>
+</html>
