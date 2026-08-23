@@ -1,0 +1,40 @@
+name: Finalize EN contact form
+
+on:
+  push:
+    paths:
+      - '.github/workflows/en-final-form-patch.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Connect EN to shared FormSubmit handler
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          tag='<script src="/snk-formsubmit.js"></script>'
+          if tag not in s:
+              s=s.replace('</body>',tag+'\n</body>',1)
+          p.write_text(s,encoding='utf-8')
+          PY
+
+      - name: Commit and remove temporary workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/en-final-form-patch.yml
+          git config user.name "SNK Form Fix"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html .github/workflows/en-final-form-patch.yml
+          git commit -m "Finalize EN AJAX contact handler"
+          git push origin main
